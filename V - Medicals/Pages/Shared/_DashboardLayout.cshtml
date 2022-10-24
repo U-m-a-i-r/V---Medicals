@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - V-Medicals</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/V___Medicals.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Sidebar/css/style.css">
+    <style>
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+  margin: 0;
+  padding:0;
+  padding-top:20px;
+  width: 200px;
+  background-color: #f1f1f1;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  overflow-x: hidden;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 10px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+                    background-color: #108784;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+</style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-info border-bottom box-shadow mb-0">
+            <div class="container">
+                @*<img width="100" height="100" src="~/css/Sidebar/images/logo.png" />*@
+                <a class="navbar-brand" asp-area="" asp-page="/Index">V-Medicals</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                   
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="sidebar">
+        <ul class="list-unstyled components mb-5">
+            <li class="active">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pr-3">Patients & Appointments</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                        <a href="#">All Patients</a>
+                    </li>
+                    <li>
+                        <a href="#">All Appointments</a>
+                    </li>
+                    <li>
+                        <a href="#">OutStanding Appointments</a>
+                    </li>
+                    <li>
+                        <a href="#">Cancelled Appointments</a>
+                    </li>
+                    <li>
+                        <a href="#">OutStanding Appointments</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a asp-page="">Manage Doctors</a>
+            </li>
+            <li>
+                <a  href="/Specialities/Index">Manage Specialities</a>
+            </li>
+            <li class="active">
+                <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pr-2">Manage Users</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu2">
+                    <li>
+                        <a href="/Users/Index">All Users</a>
+                    </li>
+                    <li>
+                        <a href="/Roles/Index">Roles</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <main role="main">
+            @RenderBody()
+        </main>
+        
+    </div>
+    <footer class="border-top footer text-muted ml-10">
+        <div class="container">
+            &copy; 2022 - V-Medicals - All Rights Reserved.
+        </div>
+    </footer>
+
+    @*<div class="wrapper d-flex align-items-stretch">
+    </div>
+
+
+    <div class="mb-5">
+        <main role="main">
+            @RenderBody()
+        </main>
+
+    </div>*@
+    
+
+    <script src="~/css/Sidebar/js/jquery.min.js"></script>
+    <script src="~/css/Sidebar/js/popper.js"></script>
+    <script src="~/css/Sidebar/js/bootstrap.min.js"></script>
+    <script src="~/css/Sidebar/js/main.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
