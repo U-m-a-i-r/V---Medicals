@@ -1,18 +1,11 @@
 ﻿/*using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace V___Medicals.Models
 {
-    public class Role
+    public class Role : IdentityRole<string>
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RoleId { get; set; }
-
-        [Required]
-        public string UserRole { get; set; }
-
-        [Required]
-        public bool IsActive { get; set; } = true;
+        public ICollection<UserRole> UserRoles { get; set; }
     }
 }*/

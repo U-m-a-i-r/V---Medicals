@@ -1,0 +1,85 @@
+﻿@page
+@model V___Medicals.Pages.Appointments.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_DashBoardLayout";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].Patient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].Doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].ClinicDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].UpdatedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].LastModifiedBy)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Appointment) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patient.PatientId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClinicDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastModifiedBy)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.AppointmentId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

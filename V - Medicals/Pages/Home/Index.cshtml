@@ -1,0 +1,22 @@
+﻿@page
+@model V___Medicals.Pages.Home.IndexModel
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Dashboard";
+}
+<div class ="row">
+    <div class="card  ml-3" style="width: 18rem;">
+        <img class="card-img-top" src="~/Files/patient_icon.png" alt="Card image cap" width="50" height="200">
+        <div class="card-body">
+            <a href="/Patients/Index" class="card-text">Total Patients: @Model.TotalPatients</a>
+        </div>
+    </div>
+    <div class="card ml-3" style="width: 18rem;">
+        <img class="card-img-top" src="~/Files/doctor_icon.png" alt="Card image cap" width="50" height="200">
+        <div class="card-body">
+            <a href="/Doctors/Index" class="card-text">Total Doctors: @Model.TotalDoctors</a>
+        </div>
+    </div>
+
+</div>
+

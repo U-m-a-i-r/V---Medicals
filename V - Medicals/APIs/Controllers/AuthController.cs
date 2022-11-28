@@ -209,6 +209,31 @@ namespace V___Medicals.APIs.Controllers
 
         [AllowAnonymous]
         [HttpPost]
+        [Route("checkemail")]
+        public async Task<IActionResult> CheckEmail([FromBody] EmailViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var userByEmail = _appDbContext.Users.Where(predicate => predicate.Email == model.Email).FirstOrDefault();
+               // var userByEmail = await _userManager.FindByEmailAsync(model.Email);
+                if (userByEmail == null)
+                {
+                    return Ok(new Response { Status="Success", Message="Email is available"});
+                }
+                else
+                {
+                    return Ok(new Response { Status = "Error", Message = "Email already Registered" });
+                }
+            }
+            else
+            {
+                return ValidationProblem();
+            }
+
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterModel model)
         {
@@ -218,26 +243,27 @@ namespace V___Medicals.APIs.Controllers
                 var userByEmail = await _userManager.FindByEmailAsync(model.Email);
                 if (userByEmail != null)
                 {
-                    ModelState.AddModelError(nameof(UserRegisterModel.Email), "Email already Registered");
-                    return ValidationProblem();
+                    //ModelState.AddModelError(nameof(UserRegisterModel.Email), "Email already Registered");
+                    return BadRequest(new Response { Status = "Error", Message = "Email already Registered" });
                 }
 
                 var userByName = await _userManager.FindByNameAsync(model.UserName);
                 if (userByName != null)
                 {
-                    ModelState.AddModelError(nameof(UserRegisterModel.UserName), "Username already registed.");
-                    return ValidationProblem();
+                    //ModelState.AddModelError(nameof(UserRegisterModel.UserName), "Username already registed.");
+                    // return ValidationProblem();
+                    return BadRequest(new Response { Status = "Error", Message = "Username already Registered" });
                 }
 
                 User user = new()
                 { 
-                    Name = model.Name,
+                    Name = model.Name!,
                     Created = DateTime.UtcNow,
                     Updated = DateTime.UtcNow,
-                    Email = model.Email.Trim(),
+                    Email = model.Email!.Trim(),
                     SecurityStamp = Guid.NewGuid().ToString(),
                     UserName = model.UserName.Trim(),
-                    PhoneNumber = model.PhoneNumber.Trim(),
+                    PhoneNumber = model.PhoneNumber!.Trim(),
                     IsActive = true
                 };
 
@@ -245,9 +271,9 @@ namespace V___Medicals.APIs.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    if (!await _roleManager.RoleExistsAsync(Constants.Constants.ROLE_ADMIN))
+                    if (!await _roleManager.RoleExistsAsync(Constants.Constants.ROLE_PATIENT))
                     {
-                        IdentityResult result3 = await _roleManager.CreateAsync(new IdentityRole(Constants.Constants.ROLE_ADMIN));
+                        IdentityResult result3 = await _roleManager.CreateAsync(new IdentityRole(Constants.Constants.ROLE_PATIENT));
                     }
 
                     // IdentityResult result3 = await _roleManager.CreateAsync(new IdentityRole(FYP_VMedicals.Constants.Constants.ROLE_PATIENT));
@@ -256,7 +282,7 @@ namespace V___Medicals.APIs.Controllers
                     if (result.Succeeded)
                     {
                         var currentUser = HttpContext.User;
-                        var Model = new PatientRegisterModel()
+                        var Model = new PatientViewModel()
                         {
                             FirstName = model.Name.Trim().Split(' ').First(),
                             LastName = model.Name.Trim().Split(' ').First(),
@@ -265,6 +291,7 @@ namespace V___Medicals.APIs.Controllers
 
                         };
                         var result2 = await _Patientrepository.CreateAsync(Model, user);
+                        _appDbContext.SaveChanges();
                         return Ok(new { Status = "Success", Message = "User & Patient has been registered successfully." });
 
                     }
@@ -294,7 +321,7 @@ namespace V___Medicals.APIs.Controllers
         {
             var user = await _userManager.FindByNameAsync(model.UserName);
 
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            if (user != null && await  _userManager.CheckPasswordAsync(user, model.Password))
             {
                 if (!user.IsActive)
                     return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "USER_DELETED", Message = "This user is deleted." });
@@ -303,13 +330,30 @@ namespace V___Medicals.APIs.Controllers
 
                 user.Token = token;
                 user.Updated = DateTime.UtcNow;
-                var UserRole = _userManager.GetRolesAsync(user);
+                var UserRole =  await  _userManager.GetRolesAsync(user);
                 await _userManager.UpdateAsync(user);
-                var currentUser = HttpContext.User;
+                var currentUser =  HttpContext.User;
+                if (UserRole.Contains(Constants.Constants.ROLE_DOCTOR))
+                {
+                    var doctor = _appDbContext.Doctors.Where(d=>d.Id == user.Id && d.IsDeleted==false && d.Status== DoctorStatusTypes.Active).FirstOrDefault();
+                    if(doctor != null)
+                    {
+                        return Ok(new
+                        {
+                            Token = token,
+                            Role = UserRole,
+                            Name = user.Name,
+                            UserId = user.Id,
+                            Doctor = doctor
+                        });
+
+                    }
+                    return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "INVALID_CREDENTIALS", Message = "User is not active!" });
+                }
                 return Ok(new
                 {
                     Token = token,
-                    Role = UserRole.Result,
+                    Role =  UserRole,
                     Name = user.Name,
                     UserId = user.Id
                 });

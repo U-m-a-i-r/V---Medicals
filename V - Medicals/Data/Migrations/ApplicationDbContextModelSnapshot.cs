@@ -155,18 +155,133 @@ namespace V___Medicals.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("V___Medicals.Models.Address", b =>
+            modelBuilder.Entity("V___Medicals.Models.Appointment", b =>
                 {
-                    b.Property<int>("AddressId")
+                    b.Property<int>("AppointmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppointmentId"), 1L, 1);
 
-                    b.Property<string>("AddressLine1")
+                    b.Property<DateTime>("ClinicDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AddressLine2")
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("AppointmentId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("Appointment");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.AppointmentDocument", b =>
+                {
+                    b.Property<int>("AppointmentDocumentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppointmentDocumentId"), 1L, 1);
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DocumentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DocumentPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("AppointmentDocumentId");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.ToTable("AppointmentDocuments");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.Availability", b =>
+                {
+                    b.Property<int>("AvailabilityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AvailabilityId"), 1L, 1);
+
+                    b.Property<int>("AvailableSlots")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BookedSlots")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ClinicDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ClinicId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SlotLenght")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("AvailabilityId");
+
+                    b.HasIndex("ClinicId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("Availabilities");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.Clinic", b =>
+                {
+                    b.Property<int>("ClinicId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClinicId"), 1L, 1);
+
+                    b.Property<string>("AddressLine")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
@@ -175,25 +290,29 @@ namespace V___Medicals.Data.Migrations
                     b.Property<string>("District")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DoctorId")
-                        .HasColumnType("int");
+                    b.Property<string>("MapLink")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PatientId")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Region")
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Summary")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AddressId");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
-                    b.HasIndex("PatientId")
-                        .IsUnique()
-                        .HasFilter("[PatientId] IS NOT NULL");
+                    b.HasKey("ClinicId");
 
-                    b.ToTable("Address");
+                    b.ToTable("Clinic");
                 });
 
             modelBuilder.Entity("V___Medicals.Models.Doctor", b =>
@@ -204,8 +323,21 @@ namespace V___Medicals.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorId"), 1L, 1);
 
+                    b.Property<string>("AddressLine")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("DOB")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Discription")
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("District")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -214,8 +346,8 @@ namespace V___Medicals.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -233,16 +365,24 @@ namespace V___Medicals.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Qualification")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SpecialityId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Title")
+                        .HasColumnType("int");
 
                     b.HasKey("DoctorId");
 
@@ -253,6 +393,50 @@ namespace V___Medicals.Data.Migrations
                     b.ToTable("Doctor");
                 });
 
+            modelBuilder.Entity("V___Medicals.Models.DoctorClinic", b =>
+                {
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClinicId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DoctorId", "ClinicId");
+
+                    b.HasIndex("ClinicId");
+
+                    b.ToTable("DoctorClinics");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.DoctorDocument", b =>
+                {
+                    b.Property<int>("DoctorDocumentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorDocumentId"), 1L, 1);
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DocumentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DocumentPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("DoctorDocumentId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("DoctorDocuments");
+                });
+
             modelBuilder.Entity("V___Medicals.Models.Patient", b =>
                 {
                     b.Property<int>("PatientId")
@@ -261,11 +445,23 @@ namespace V___Medicals.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientId"), 1L, 1);
 
+                    b.Property<string>("AddressLine")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CNIC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DOB")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("District")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -273,8 +469,8 @@ namespace V___Medicals.Data.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -294,14 +490,16 @@ namespace V___Medicals.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Title")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PatientId");
@@ -309,6 +507,62 @@ namespace V___Medicals.Data.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("Patient");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.PatientDocument", b =>
+                {
+                    b.Property<int>("PatientDocumentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientDocumentId"), 1L, 1);
+
+                    b.Property<string>("DocumentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DocumentPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PatientDocumentId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("PatientDocuments");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.Slot", b =>
+                {
+                    b.Property<int>("SlotId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SlotId"), 1L, 1);
+
+                    b.Property<int>("AvailabilityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SlotLenght")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SlotTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("SlotId");
+
+                    b.HasIndex("AvailabilityId");
+
+                    b.ToTable("Slots");
                 });
 
             modelBuilder.Entity("V___Medicals.Models.Speciality", b =>
@@ -457,7 +711,7 @@ namespace V___Medicals.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("V___Medicals.Models.User", null)
-                        .WithMany()
+                        .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -472,11 +726,53 @@ namespace V___Medicals.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("V___Medicals.Models.Address", b =>
+            modelBuilder.Entity("V___Medicals.Models.Appointment", b =>
                 {
-                    b.HasOne("V___Medicals.Models.Patient", null)
-                        .WithOne("Address")
-                        .HasForeignKey("V___Medicals.Models.Address", "PatientId");
+                    b.HasOne("V___Medicals.Models.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("V___Medicals.Models.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.AppointmentDocument", b =>
+                {
+                    b.HasOne("V___Medicals.Models.Appointment", "Appointment")
+                        .WithMany("Documents")
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.Availability", b =>
+                {
+                    b.HasOne("V___Medicals.Models.Clinic", "Clinic")
+                        .WithMany("Availabilities")
+                        .HasForeignKey("ClinicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("V___Medicals.Models.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Clinic");
+
+                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("V___Medicals.Models.Doctor", b =>
@@ -496,6 +792,36 @@ namespace V___Medicals.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("V___Medicals.Models.DoctorClinic", b =>
+                {
+                    b.HasOne("V___Medicals.Models.Clinic", "Clinic")
+                        .WithMany("DoctorClinics")
+                        .HasForeignKey("ClinicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("V___Medicals.Models.Doctor", "Doctor")
+                        .WithMany("DoctorClinics")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Clinic");
+
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.DoctorDocument", b =>
+                {
+                    b.HasOne("V___Medicals.Models.Doctor", "Doctor")
+                        .WithMany("Documents")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+                });
+
             modelBuilder.Entity("V___Medicals.Models.Patient", b =>
                 {
                     b.HasOne("V___Medicals.Models.User", "User")
@@ -505,9 +831,60 @@ namespace V___Medicals.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("V___Medicals.Models.PatientDocument", b =>
+                {
+                    b.HasOne("V___Medicals.Models.Patient", "Patient")
+                        .WithMany("Documents")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.Slot", b =>
+                {
+                    b.HasOne("V___Medicals.Models.Availability", "Availability")
+                        .WithMany("Slots")
+                        .HasForeignKey("AvailabilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Availability");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.Appointment", b =>
+                {
+                    b.Navigation("Documents");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.Availability", b =>
+                {
+                    b.Navigation("Slots");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.Clinic", b =>
+                {
+                    b.Navigation("Availabilities");
+
+                    b.Navigation("DoctorClinics");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.Doctor", b =>
+                {
+                    b.Navigation("DoctorClinics");
+
+                    b.Navigation("Documents");
+                });
+
             modelBuilder.Entity("V___Medicals.Models.Patient", b =>
                 {
-                    b.Navigation("Address");
+                    b.Navigation("Documents");
+                });
+
+            modelBuilder.Entity("V___Medicals.Models.User", b =>
+                {
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

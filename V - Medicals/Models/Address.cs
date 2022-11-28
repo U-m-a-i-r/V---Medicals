@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿/*using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace V___Medicals.Models
@@ -26,4 +26,4 @@ namespace V___Medicals.Models
 
         //public Doctor? Doctor { get; set; }
     }
-}
+}*/

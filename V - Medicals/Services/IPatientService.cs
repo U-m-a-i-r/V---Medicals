@@ -8,8 +8,8 @@ namespace V___Medicals.Services
 
         Task<IEnumerable<Patient>> GetAll();
         Task<Patient> GetById(int Id);
-        Task<Patient> CreateAsync(PatientRegisterModel Model, User user = null);
+        Task<Patient> CreateAsync(PatientViewModel Model, User user = null);
         Task DeleteAsync(int Id);
-        Task<Patient> UpdateAsync(PatientRegisterModel model);
+        Task<Patient> UpdateAsync(PatientViewModel model);
     }
 }

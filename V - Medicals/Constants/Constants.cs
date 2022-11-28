@@ -8,5 +8,6 @@
         // Users with role of user
 
         public const string ROLE_DOCTOR = "Doctor";
+
     }
 }

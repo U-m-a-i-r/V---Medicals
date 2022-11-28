@@ -1,0 +1,121 @@
+﻿@page
+@model V___Medicals.Pages.Patients.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "_DashBoardLayout";
+}
+
+<h1>Edit</h1>
+
+<h4>Patient</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Patient.PatientId" />
+            <div class="form-group">
+                <label asp-for="Patient.Title" class="control-label"></label>
+                <input asp-for="Patient.Title" class="form-control" />
+                <span asp-validation-for="Patient.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.FirstName" class="control-label"></label>
+                <input asp-for="Patient.FirstName" class="form-control" />
+                <span asp-validation-for="Patient.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.MiddleName" class="control-label"></label>
+                <input asp-for="Patient.MiddleName" class="form-control" />
+                <span asp-validation-for="Patient.MiddleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.LastName" class="control-label"></label>
+                <input asp-for="Patient.LastName" class="form-control" />
+                <span asp-validation-for="Patient.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.Gender" class="control-label"></label>
+                <input asp-for="Patient.Gender" class="form-control" />
+                <span asp-validation-for="Patient.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.DOB" class="control-label"></label>
+                <input asp-for="Patient.DOB" class="form-control" />
+                <span asp-validation-for="Patient.DOB" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.Email" class="control-label"></label>
+                <input asp-for="Patient.Email" class="form-control" />
+                <span asp-validation-for="Patient.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.PhoneNumber" class="control-label"></label>
+                <input asp-for="Patient.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Patient.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.CNIC" class="control-label"></label>
+                <input asp-for="Patient.CNIC" class="form-control" />
+                <span asp-validation-for="Patient.CNIC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.AddressLine" class="control-label"></label>
+                <input asp-for="Patient.AddressLine" class="form-control" />
+                <span asp-validation-for="Patient.AddressLine" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.District" class="control-label"></label>
+                <input asp-for="Patient.District" class="form-control" />
+                <span asp-validation-for="Patient.District" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.City" class="control-label"></label>
+                <input asp-for="Patient.City" class="form-control" />
+                <span asp-validation-for="Patient.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.PostalCode" class="control-label"></label>
+                <input asp-for="Patient.PostalCode" class="form-control" />
+                <span asp-validation-for="Patient.PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.UserId" class="control-label"></label>
+                <input asp-for="Patient.UserId" class="form-control" />
+                <span asp-validation-for="Patient.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.IsDeleted" class="control-label"></label>
+                <input asp-for="Patient.IsDeleted" class="form-control" />
+                <span asp-validation-for="Patient.IsDeleted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.CreatedOn" class="control-label"></label>
+                <input asp-for="Patient.CreatedOn" class="form-control" />
+                <span asp-validation-for="Patient.CreatedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.UpdatedOn" class="control-label"></label>
+                <input asp-for="Patient.UpdatedOn" class="form-control" />
+                <span asp-validation-for="Patient.UpdatedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patient.LastModifiedBy" class="control-label"></label>
+                <input asp-for="Patient.LastModifiedBy" class="form-control" />
+                <span asp-validation-for="Patient.LastModifiedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

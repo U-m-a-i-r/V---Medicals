@@ -15,10 +15,11 @@ namespace V___Medicals.Services.Implementation
         }
 
 
-        public async Task<Patient> CreateAsync(PatientRegisterModel Model, User user = null)
+        public async Task<Patient> CreateAsync(PatientViewModel Model, User user = null)
         {
             if (user == null)
             {
+                var userId = User.GetUserId();
                 var userEmail = User.GetUserEmail();
                 user = await _userManager.FindByEmailAsync(userEmail);
             }
@@ -39,16 +40,13 @@ namespace V___Medicals.Services.Implementation
             patient.UserId = user.Id;
             if (Model.Address != null)
             {
-                patient.Address = new Address()
-                {
-                    AddressLine1 = Model.Address.AddressLine1,
-                    AddressLine2 = Model.Address.AddressLine2,
-                    City = Model.Address.City,
-                    District = Model.Address.District,
-                    Region = Model.Address.Region,
-                    PostalCode = Model.Address.PostalCode,
-                    DoctorId = null,
-                };
+
+
+                patient.AddressLine = Model.Address.AddressLine;
+                patient.City = Model.Address.City;
+                patient.District = Model.Address.District;
+                patient.PostalCode = Model.Address.PostalCode;
+                
             }
             var entity = await _dbContext.Patients.AddAsync(patient);
             _dbContext.SaveChanges();
@@ -79,9 +77,16 @@ namespace V___Medicals.Services.Implementation
                 DOB = p.DOB,
                 Email = p.Email,
                 PhoneNumber = p.PhoneNumber,
-                User = p.User,
+                City = p.City,
+                CNIC = p.CNIC,
+                District = p.District,
+                Documents = p.Documents,
+                UserId = p.UserId,
+                PostalCode = p.PostalCode,
+                LastModifiedBy = p.LastModifiedBy,
+                //User = p.User,
                 // User =p.User,
-                Address = p.Address,
+                AddressLine = p.AddressLine,
                 CreatedOn = p.CreatedOn,
                 UpdatedOn = p.UpdatedOn
             }).ToList();
@@ -92,7 +97,7 @@ namespace V___Medicals.Services.Implementation
             throw new NotImplementedException();
         }
 
-        public Task<Patient> UpdateAsync(PatientRegisterModel model)
+        public Task<Patient> UpdateAsync(PatientViewModel model)
         {
             throw new NotImplementedException();
         }

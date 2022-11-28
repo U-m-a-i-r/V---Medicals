@@ -17,10 +17,9 @@ namespace V___Medicals.Models
         public DateTime? Updated { get; set; }
         public string? Token { get; set; }
         public string? ProfilePicture { get; set; }
+        public virtual ICollection<IdentityUserRole<string>> Roles { get; } = new List<IdentityUserRole<string>>();
 
         [Required]
         public bool IsActive { get; set; } = true;
-        
-
     }
 }

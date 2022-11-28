@@ -10,11 +10,11 @@ namespace V___Medicals.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SpecialityId { get; set; }
         [Required]
-        public string Name { get; set; }
+        public String Name { get; set; }
         
         //public FormFile icon { get; set; }
         [Required(ErrorMessage = "Please choose icon")]
-        public string Icon{ get; set; }
+        public String Icon{ get; set; }
         public bool IsActive { get; set; } = true;
     }
 }   

@@ -14,11 +14,15 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="RoleName" class="control-label"></label>
-                <select class="form-select" asp-for="RoleName" aria-label="Default select example" asp-items="@(new SelectList(Model.Roles))"><option selected>Please Select</option></select>
+                <select id="SelectRole" onchange="myFunction()" class="form-select" asp-for="RoleName" aria-label="Default select example" asp-items="@(new SelectList(Model.Roles))"><option selected>Please Select</option></select>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="SelectDoctor" onchange="myFunction2()" style="display:none;">
+                <label asp-for="SelectedDoctorId" class="control-label">Select Doctor</label>
+                <select class="form-select" asp-for="SelectedDoctorId" aria-label="Default select " asp-items="@(new SelectList(Model.Doctors,"DoctorId","FullName"))"></select>
+            </div>
+            <div class="form-group" id="Name">
                 <label asp-for="User.Name" class="control-label"></label>
-                <input required asp-for="User.Name" class="form-control" />
+                <input asp-for="User.Name" class="form-control" />
                 <span asp-validation-for="User.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -26,26 +30,27 @@
                 <input required asp-for="User.UserName" class="form-control" />
                 <span asp-validation-for="User.UserName" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="Email">
                 <label asp-for="User.Email" class="control-label"></label>
-                <input required asp-for="User.Email" class="form-control" />
+                <input asp-for="User.Email" class="form-control" />
                 <span asp-validation-for="User.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="PhoneNumber">
+                <label asp-for="User.PhoneNumber" class="control-label"></label>
+                <input asp-for="User.PhoneNumber" class="form-control" />
+                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="User.Password" class="control-label"></label>
                 <input required asp-for="User.Password" class="form-control" />
                 <span asp-validation-for="User.Password" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="User.ProfilePicture" class="control-label"></label>
-                <input asp-for="User.ProfilePicture" class="form-control" />
+            <div class="form-group" id="ProfilePicture">
+                <label asp-for="User.ProfilePicture" class="control-label">Profile Picture</label>
+                <input asp-for="User.ProfilePicture" accept=".png,.jpeg,.jpg" class="form-control" />
                 <span asp-validation-for="User.ProfilePicture" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="User.PhoneNumber" class="control-label"></label>
-                <input required asp-for="User.PhoneNumber" class="form-control" />
-                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -58,5 +63,29 @@
 </div>
 
 @section Scripts {
+    <script>
+        function myFunction() {
+            var x = document.getElementById("SelectRole").value;
+            if(x=="Doctor"){
+                document.getElementById("SelectDoctor").style.display="block";
+                document.getElementById("Name").style.display = "none";
+                document.getElementById("Email").style.display = "none";
+                document.getElementById("ProfilePicture").style.display = "none";
+                document.getElementById("PhoneNumber").style.display = "none";
+            }else{
+                document.getElementById("SelectDoctor").style.display = "none";
+                document.getElementById("Name").style.display = "block";
+                document.getElementById("Email").style.display = "block";
+                document.getElementById("ProfilePicture").style.display = "block";
+                document.getElementById("PhoneNumber").style.display = "block";
+            }
+            console.log(x);
+        }
+        function myFunction2(){
+            var x = document.getElementById("SelectDoctor").value;
+            
+            console.log(x);
+        }
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

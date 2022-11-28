@@ -89,6 +89,7 @@ builder.Services.AddApiVersioning(config =>
 builder.Services.AddHttpClient();
 //builder.Services.AddTransient<IPatientService, PatientService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<IDoctorService, DoctorService>();
 
 builder.Services.AddSwaggerGen(s =>
 {

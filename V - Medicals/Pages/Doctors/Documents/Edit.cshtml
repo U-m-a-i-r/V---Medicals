@@ -1,0 +1,51 @@
+﻿@page
+@model V___Medicals.Pages.Doctors.Documents.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "_DashBoardLayout";
+}
+
+<h1>Edit</h1>
+
+<h4>DoctorDocument</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DoctorDocument.DoctorDocumentId" />
+            <div class="form-group">
+                <label asp-for="DoctorDocument.DoctorId" class="control-label"></label>
+                <select asp-for="DoctorDocument.DoctorId" class="form-control" asp-items="ViewBag.DoctorId"></select>
+                <span asp-validation-for="DoctorDocument.DoctorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DoctorDocument.DocumentName" class="control-label"></label>
+                <input asp-for="DoctorDocument.DocumentName" class="form-control" />
+                <span asp-validation-for="DoctorDocument.DocumentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DoctorDocument.DocumentPath" class="control-label"></label>
+                <input asp-for="DoctorDocument.DocumentPath" class="form-control" />
+                <span asp-validation-for="DoctorDocument.DocumentPath" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DoctorDocument.IsDeleted" /> @Html.DisplayNameFor(model => model.DoctorDocument.IsDeleted)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

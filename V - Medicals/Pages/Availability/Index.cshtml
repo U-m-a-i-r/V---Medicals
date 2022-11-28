@@ -1,0 +1,77 @@
+﻿@page
+@model V___Medicals.Pages.Availability.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_DashBoardLayout";
+}
+
+<p>
+    <a asp-page="Create">Add New Availability</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Availability[0].Clinic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Availability[0].Doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Availability[0].ClinicDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Availability[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Availability[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Availability[0].SlotLenght)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Availability[0].AvailableSlots)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Availability[0].BookedSlots)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Availability) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Clinic.AddressLine)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClinicDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SlotLenght)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailableSlots)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookedSlots)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.AvailabilityId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.AvailabilityId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.AvailabilityId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

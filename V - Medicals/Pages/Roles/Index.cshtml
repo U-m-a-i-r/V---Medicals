@@ -4,31 +4,28 @@
     ViewData["Title"] = "Index";
     Layout = "_DashBoardLayout";
 }
-
-<h1>Index</h1>
-
 <p>
     <a asp-page="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Roles[0].Id)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Roles[0].Name)
             </th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Roles)
         {
             <tr>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.Id)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>

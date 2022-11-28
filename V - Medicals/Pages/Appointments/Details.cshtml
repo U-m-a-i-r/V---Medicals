@@ -1,0 +1,74 @@
+﻿@page
+@model V___Medicals.Pages.Appointments.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_DashBoardLayout";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Appointment</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Appointment.Patient)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Appointment.Patient.PatientId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Appointment.Doctor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Appointment.Doctor.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Appointment.ClinicDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Appointment.ClinicDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Appointment.Time)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Appointment.Time)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Appointment.CreatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Appointment.CreatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Appointment.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Appointment.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Appointment.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Appointment.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Appointment.UpdatedOn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Appointment.UpdatedOn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Appointment.LastModifiedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Appointment.LastModifiedBy)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Appointment?.AppointmentId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

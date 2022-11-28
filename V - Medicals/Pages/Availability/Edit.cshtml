@@ -1,0 +1,71 @@
+﻿@page
+@model V___Medicals.Pages.Availability.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "_DashBoardLayout";
+}
+
+<h1>Edit</h1>
+
+<h4>Availability</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Availability.AvailabilityId" />
+            <div class="form-group">
+                <label asp-for="Availability.ClinicId" class="control-label"></label>
+                <select asp-for="Availability.ClinicId" class="form-control" asp-items="ViewBag.ClinicId"></select>
+                <span asp-validation-for="Availability.ClinicId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Availability.DoctorId" class="control-label"></label>
+                <select asp-for="Availability.DoctorId" class="form-control" asp-items="ViewBag.DoctorId"></select>
+                <span asp-validation-for="Availability.DoctorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Availability.ClinicDate" class="control-label"></label>
+                <input asp-for="Availability.ClinicDate" class="form-control" />
+                <span asp-validation-for="Availability.ClinicDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Availability.StartTime" class="control-label"></label>
+                <input asp-for="Availability.StartTime" class="form-control" />
+                <span asp-validation-for="Availability.StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Availability.EndTime" class="control-label"></label>
+                <input asp-for="Availability.EndTime" class="form-control" />
+                <span asp-validation-for="Availability.EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Availability.SlotLenght" class="control-label"></label>
+                <input asp-for="Availability.SlotLenght" class="form-control" />
+                <span asp-validation-for="Availability.SlotLenght" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Availability.AvailableSlots" class="control-label"></label>
+                <input asp-for="Availability.AvailableSlots" class="form-control" />
+                <span asp-validation-for="Availability.AvailableSlots" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Availability.BookedSlots" class="control-label"></label>
+                <input asp-for="Availability.BookedSlots" class="form-control" />
+                <span asp-validation-for="Availability.BookedSlots" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

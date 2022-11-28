@@ -1,0 +1,78 @@
+﻿@page
+@using V___Medicals.Constants
+@model V___Medicals.Pages.Clinics.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_DashBoardLayout";
+}
+
+<h4>Create New Clinic</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DoctorId" class="control-label">Speciality</label>
+                <select asp-for="DoctorId" class="form-control" asp-items="ViewBag.Doctor"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="InputModel.Name" class="control-label"></label>
+                <input asp-for="InputModel.Name" class="form-control" />
+                <span asp-validation-for="InputModel.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InputModel.AddressLine" class="control-label"></label>
+                <input asp-for="InputModel.AddressLine" class="form-control" />
+                <span asp-validation-for="InputModel.AddressLine" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InputModel.District" class="control-label"></label>
+                <input asp-for="InputModel.District" class="form-control" />
+                <span asp-validation-for="InputModel.District" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InputModel.City" class="control-label"></label>
+                <input asp-for="InputModel.City" class="form-control" />
+                <span asp-validation-for="InputModel.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InputModel.PostalCode" class="control-label"></label>
+                <input asp-for="InputModel.PostalCode" class="form-control" />
+                <span asp-validation-for="InputModel.PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InputModel.MapLink" class="control-label"></label>
+                <input asp-for="InputModel.MapLink" class="form-control" />
+                <span asp-validation-for="InputModel.MapLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InputModel.Summary" class="control-label"></label>
+                <textarea asp-for="InputModel.Summary" class="form-control"></textarea>
+                <span asp-validation-for="InputModel.Summary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InputModel.Type" class="control-label"></label>
+                <select asp-for="InputModel.Type" class="form-control" asp-items="Html.GetEnumSelectList<ClinicTypes>()"></select>
+                <span asp-validation-for="InputModel.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InputModel.Status" class="control-label"></label>
+                <select asp-for="InputModel.Status" class="form-control" asp-items="Html.GetEnumSelectList<StatusTypes>()"></select>
+                <span asp-validation-for="InputModel.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
