@@ -27,6 +27,7 @@ namespace V___Medicals.Models
 
         public DateTime CreatedDate { get; set; }
         public string? Description { get; set; }
+        public ClinicTypes? AppointmentType { get; set; }
         public AppointmentStatus Status { get; set; }
         public DateTime UpdatedOn { get; set; }
         public String? LastModifiedBy { get; set; }
@@ -40,5 +41,7 @@ public enum AppointmentStatus
     Completed,
     Hold,
     Unpaid_Invoice,
-    Paid_Invoice
+    Paid_Invoice,
+    DNA,
+    Cancelled
 }

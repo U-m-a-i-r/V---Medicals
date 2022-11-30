@@ -28,7 +28,7 @@ namespace V___Medicals.Data
         public DbSet<Clinic> Clinic { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<AppointmentDocument> AppointmentDocuments { get; set; }
-
+        public DbSet<PatientVitals> PatientVitals { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -1,4 +1,5 @@
 ﻿@page
+@using V___Medicals.Constants
 @model V___Medicals.Pages.Clinics.EditModel
 
 @{
@@ -52,12 +53,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Clinic.Type" class="control-label"></label>
-                <select asp-for="Clinic.Type" class="form-control"></select>
+                <select asp-for="Clinic.Type" class="form-control" asp-items="Html.GetEnumSelectList<ClinicTypes>()"></select>
                 <span asp-validation-for="Clinic.Type" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Clinic.Status" class="control-label"></label>
-                <select asp-for="Clinic.Status" class="form-control"></select>
+                <select asp-for="Clinic.Status" class="form-control" asp-items="Html.GetEnumSelectList<StatusTypes>()"> </select>
                 <span asp-validation-for="Clinic.Status" class="text-danger"></span>
             </div>
             <div class="form-group">

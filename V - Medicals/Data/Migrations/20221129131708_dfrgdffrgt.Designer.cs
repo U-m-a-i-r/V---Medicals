@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using V___Medicals.Data;
 
@@ -11,9 +12,10 @@ using V___Medicals.Data;
 namespace V___Medicals.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221129131708_dfrgdffrgt")]
+    partial class dfrgdffrgt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,9 +165,6 @@ namespace V___Medicals.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppointmentId"), 1L, 1);
 
-                    b.Property<int?>("AppointmentType")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ClinicDate")
                         .HasColumnType("datetime2");
 
@@ -223,9 +222,6 @@ namespace V___Medicals.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("type")
-                        .HasColumnType("int");
 
                     b.HasKey("AppointmentDocumentId");
 
@@ -544,51 +540,6 @@ namespace V___Medicals.Data.Migrations
                     b.ToTable("PatientDocuments");
                 });
 
-            modelBuilder.Entity("V___Medicals.Models.PatientVitals", b =>
-                {
-                    b.Property<int>("PatientVitalsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientVitalsId"), 1L, 1);
-
-                    b.Property<DateTime>("AddedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("AppointmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BMI")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiastolicBP1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HeartRate")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Height")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SystolicBP1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Temprature")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Weight")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PatientVitalsId");
-
-                    b.HasIndex("AppointmentId");
-
-                    b.ToTable("PatientVitals");
-                });
-
             modelBuilder.Entity("V___Medicals.Models.Slot", b =>
                 {
                     b.Property<int>("SlotId")
@@ -891,17 +842,6 @@ namespace V___Medicals.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("V___Medicals.Models.PatientVitals", b =>
-                {
-                    b.HasOne("V___Medicals.Models.Appointment", "Appointment")
-                        .WithMany()
-                        .HasForeignKey("AppointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Appointment");
                 });
 
             modelBuilder.Entity("V___Medicals.Models.Slot", b =>

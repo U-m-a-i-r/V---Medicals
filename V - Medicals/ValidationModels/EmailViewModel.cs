@@ -31,4 +31,12 @@ namespace V___Medicals.ValidationModels
 
         public int PatientId { get; set; }
     }
+    public class AppointmentIdViewModel
+    {
+
+        [Display(Name = "AppointmentId")]
+
+        public int AppointmentId { get; set; }
+        public int? AppointmentStatus { get; set; }
+    }
 }

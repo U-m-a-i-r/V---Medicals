@@ -15,7 +15,14 @@ namespace V___Medicals.Models
         public string DocumentName { get; set; }
         [Required]
         public string DocumentPath { get; set; }
+        public AppointmentDocumentType type { get; set; }
         [Required]
         public bool IsDeleted { get; set; } = false;
+    }
+
+    public enum AppointmentDocumentType
+    {
+        Prescriotion,
+        History
     }
 }

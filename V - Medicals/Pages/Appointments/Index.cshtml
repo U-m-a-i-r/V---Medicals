@@ -23,14 +23,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.Appointment[0].ClinicDate)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Appointment[0].Time)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Appointment[0].CreatedDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Appointment[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].AppointmentType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Appointment[0].Status)
@@ -48,22 +51,25 @@
 @foreach (var item in Model.Appointment) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Patient.PatientId)
+                @Html.DisplayFor(modelItem => item.Patient.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Doctor.FirstName)
+                @Html.DisplayFor(modelItem => item.Doctor.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ClinicDate)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Time)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentType)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)

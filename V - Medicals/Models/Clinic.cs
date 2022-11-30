@@ -32,6 +32,6 @@ namespace V___Medicals.Models
 }
 public enum ClinicTypes
 {
-    Remote,
+    Online,
     Face_To_Face
 }

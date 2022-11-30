@@ -13,32 +13,32 @@
         <form enctype="multipart/form-data" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="InputModel.Title" class="control-label"></label>
+                <label asp-for="InputModel.Title" class="control-label">Title <span class="text-danger">*</span> </label>
                 <select asp-for="InputModel.Title" class="form-control" asp-items="Html.GetEnumSelectList<Title>()"></select>
                 <span asp-validation-for="InputModel.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InputModel.FirstName" class="control-label"></label>
+                <label asp-for="InputModel.FirstName" class="control-label">First Name <span class="text-danger">*</span></label>
                 <input asp-for="InputModel.FirstName" class="form-control" />
                 <span asp-validation-for="InputModel.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InputModel.MiddleName" class="control-label"></label>
+                <label asp-for="InputModel.MiddleName" class="control-label">Middle Name</label>
                 <input asp-for="InputModel.MiddleName" class="form-control" />
                 <span asp-validation-for="InputModel.MiddleName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InputModel.LastName" class="control-label"></label>
+                <label asp-for="InputModel.LastName" class="control-label"> Last Name <span class="text-danger">*</span></label>
                 <input asp-for="InputModel.LastName" class="form-control" />
                 <span asp-validation-for="InputModel.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InputModel.Gender" class="control-label"></label>
+                <label asp-for="InputModel.Gender" class="control-label">Gender <span class="text-danger">*</span></label>
                 <select asp-for="InputModel.Gender" class="form-control" asp-items="Html.GetEnumSelectList<Gender>()"></select>
                 <span asp-validation-for="InputModel.Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InputModel.SpecialityId" class="control-label">Speciality</label>
+                <label asp-for="InputModel.SpecialityId" class="control-label">Speciality <span class="text-danger">*</span></label>
                 <select asp-for="InputModel.SpecialityId" class="form-control" asp-items="ViewBag.Specialityid"></select>
             </div>
             <div class="form-group">
@@ -47,13 +47,13 @@
                 <span asp-validation-for="InputModel.DOB" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InputModel.Email" class="control-label"></label>
+                <label asp-for="InputModel.Email" class="control-label">Email <span class="text-danger">*</span></label>
                 <input asp-for="InputModel.Email" class="form-control" />
                 <span asp-validation-for="InputModel.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InputModel.PhoneNumber" class="control-label"></label>
-                <input asp-for="InputModel.PhoneNumber" class="form-control" />
+                <label asp-for="InputModel.PhoneNumber" class="control-label">Phone No <span class="text-danger">*</span></label>
+                <input max="9"  prefix="03" placeholder="0000-0000000" asp-for="InputModel.PhoneNumber" class="form-control" />
                 <span asp-validation-for="InputModel.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">

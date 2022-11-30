@@ -36,8 +36,8 @@ namespace V___Medicals.Pages.Appointments
                 return NotFound();
             }
             Appointment = appointment;
-           ViewData["DoctorId"] = new SelectList(_context.Doctors, "DoctorId", "FirstName");
-           ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "PatientId");
+           ViewData["DoctorId"] = new SelectList(_context.Doctors, "DoctorId", "FullName");
+           ViewData["PatientId"] = new SelectList(_context.Patients, "PatientId", "FullName");
             return Page();
         }
 
