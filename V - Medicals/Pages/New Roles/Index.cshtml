@@ -1,0 +1,46 @@
+@page
+@model V___Medicals.Pages.NewRoles.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_DashBoardLayout";
+}
+<p>
+    <a class="btn btn-primary" asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Role[0].Name)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Role[0].NormalizedName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role[0].ConcurrencyStamp)
+            </th>*@
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Role) {
+        <tr>
+            <td>
+              <a asp-page="./Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>  
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.NormalizedName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConcurrencyStamp)
+            </td>*@
+        <td>
+            <a asp-page="./Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a> |
+            <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
+            <a asp-page="./Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
+        </td>
+        </tr>
+}
+    </tbody>
+</table>
