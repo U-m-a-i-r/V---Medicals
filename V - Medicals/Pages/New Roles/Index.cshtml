@@ -5,6 +5,10 @@
     ViewData["Title"] = "Index";
     Layout = "_DashBoardLayout";
 }
+<div class="text-center text-dark">
+    <p class="text-center p-2 Monospace d-inline-flex border border-info">Roles</p>
+</div>
+
 <p>
     <a class="btn btn-primary" asp-page="Create">Create New</a>
 </p>
@@ -15,32 +19,33 @@
                 @Html.DisplayNameFor(model => model.Role[0].Name)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.Role[0].NormalizedName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Role[0].ConcurrencyStamp)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.Role[0].NormalizedName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Role[0].ConcurrencyStamp)
+                </th>*@
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Role) {
-        <tr>
-            <td>
-              <a asp-page="./Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>  
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.NormalizedName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ConcurrencyStamp)
-            </td>*@
-        <td>
-            <a asp-page="./Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a> |
-            <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
-            <a asp-page="./Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
-        </td>
-        </tr>
-}
+        @foreach (var item in Model.Role)
+        {
+            <tr>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.NormalizedName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ConcurrencyStamp)
+                    </td>*@
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i></a> |
+                    <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash text-danger"></i></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

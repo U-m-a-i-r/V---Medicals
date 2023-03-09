@@ -5,142 +5,198 @@
     ViewData["Title"] = "Details";
     Layout = "_DashBoardLayout";
 }
+<a class="btn btn-primary" asp-page="./Index">Back</a>
+<h4 class="text-center Monospace">Doctor's Details</h4>
 <div>
-    <h4>Doctor's Detail</h4>
+    <div class="row my-3 d-flex justify-content-center">
+        <div class="col m-2 text-center col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Created on:
+                @*@Html.DisplayNameFor(model => model.User.Created)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.CreatedOn)
+            </dd>
+        </div>
+        <div class="col text-center m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Created by:
+                @*@Html.DisplayNameFor(model => model.User.Created)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.CreatedBy)
+            </dd>
+        </div>
+        <div class="col text-center m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Last Modified on:
+                @*@Html.DisplayNameFor(model => model.User.Updated)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.UpdatedOn)
+            </dd>
+        </div>
+        <div class="col text-center m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Last Modified by:
+                @*@Html.DisplayNameFor(model => model.User.Updated)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.ModefiedBy)
+            </dd>
+        </div>
+    </div>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.FirstName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.MiddleName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.MiddleName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.LastName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.LastName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.Gender)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.Gender)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.Speciality)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.Speciality.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.DOB)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.DOB)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.PhoneNumber)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.PhoneNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.AddressLine)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.AddressLine)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.District)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.District)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.City)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.City)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.PostalCode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.PostalCode)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.Status)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.Status)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.IsDeleted)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.IsDeleted)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doctor.User)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doctor.User.Id)
-        </dd>
+    <dl class="row my-2 d-flex justify-content-center">
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                Full Name
+                @*@Html.DisplayNameFor(model => model.Doctor.FullName)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.FullName)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Doctor.Gender)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.Gender)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Doctor.Speciality)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.Speciality.Name)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Doctor.DOB)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.DOB)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Doctor.Email)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.Email)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                Phone No
+                @*@Html.DisplayNameFor(model => model.Doctor.PhoneNumber)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.PhoneNumber)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                Address
+                @*@Html.DisplayNameFor(model => model.Doctor.AddressLine)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.AddressLine)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                State/Province
+                @*@Html.DisplayNameFor(model => model.Doctor.District)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.District)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Doctor.City)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.City)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                Postal Code
+                @*@Html.DisplayNameFor(model => model.Doctor.PostalCode)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.PostalCode)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Doctor.Status)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.Status)
+            </dd>
+        </div>
+        @*<div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Doctor.IsDeleted)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.IsDeleted)
+            </dd>
+        </div>*@
+        @*<div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Doctor.User)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Doctor.User.)
+            </dd>
+            </div>*@
     </dl>
     <hr />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Document Name
-                </th>
-                <th>
-                    Document
-                </th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Doctor.Documents!)
-            {
+    <div class="d-flex justify-content-center">
+        <table class="table w-50 ">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DocumentName)
-                    </td>
-                    <td>
-                        <a href="/@Html.DisplayFor(modelItem => item.DocumentPath)">@Html.DisplayFor(modelItem => item.DocumentPath)</a>
-                    </td>
-                    <td>
-                       @* <a asp-page="./Edit" asp-route-id="@item.DoctorDocumentId">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item.DoctorDocumentId">Details</a> |*@
-                        <a asp-page="./Documents/Delete" asp-route-id="@item.DoctorDocumentId">Delete</a>
-                    </td>
+                    @*<th>
+                        Document Name
+                    </th>*@
+                    <th>
+                        Document
+                    </th>
+                    <th>Action</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Doctor.Documents!)
+                {
+                    <tr>
+                        <td>
+                          <a href="/@Html.DisplayFor(modelItem => item.DocumentPath)"> <i class="fa-regular fa-file shadow"></i>  @Html.DisplayFor(modelItem => item.DocumentName)</a>
+                        </td>
+                        @*<td>
+                            <a href="/@Html.DisplayFor(modelItem => item.DocumentPath)">@Html.DisplayFor(modelItem => item.DocumentPath)</a>
+                        </td>*@
+                        <td>
+                            @* <a asp-page="./Edit" asp-route-id="@item.DoctorDocumentId">Edit</a> |
+                            <a asp-page="./Details" asp-route-id="@item.DoctorDocumentId">Details</a> |*@
+                            <a href="/@Html.DisplayFor(modelItem => item.DocumentPath)"><i class="fa-solid fa-eye"></i></a> |
+                            <a asp-page="./Documents/Delete" asp-route-id="@item.DoctorDocumentId"><i class="fa-solid fa-trash text-danger"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-<div>
-    <a asp-page="./Documents/Create" asp-route-id="@Model.Doctor?.DoctorId">Add Documents</a> |
+<div class="text-center">
+    <a class="btn btn-primary text-center" asp-page="./Documents/Create" asp-route-id="@Model.Doctor?.DoctorId">New Document</a>
+    @*|
     <a asp-page="./Edit" asp-route-id="@Model.Doctor?.DoctorId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index">Back to List</a>*@
 </div>

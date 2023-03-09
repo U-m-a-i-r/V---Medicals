@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using V___Medicals.Models;
 
 namespace V___Medicals.Pages.Availability
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly V___Medicals.Data.ApplicationDbContext _context;
@@ -28,7 +30,8 @@ namespace V___Medicals.Pages.Availability
                 return NotFound();
             }
 
-            var availability = await _context.Availabilities.FirstOrDefaultAsync(m => m.AvailabilityId == id);
+            var availability = await _context.Availabilities.Include(a => a.Clinic)
+                .Include(a => a.Doctor).FirstOrDefaultAsync(m => m.AvailabilityId == id);
             if (availability == null)
             {
                 return NotFound();

@@ -6,72 +6,145 @@
     Layout = "_DashBoardLayout";
 }
 
+<div class="text-center text-dark">
+    <p class="text-center p-2 Monospace d-inline-flex border border-info">Doctor's Availability</p>
+</div>
+
 <p>
-    <a asp-page="Create">Add New Availability</a>
+    <a class="btn btn-primary" asp-page="Create">Create New</a>
 </p>
+<div class="form-group">
+    <div class="input-group p-0 col-lg-4 col-md-5 col-sm-6 col-xs-12">
+
+        <select id="selectdoctor" asp-for="DoctorId" class="form-control" asp-items="ViewBag.DoctorId"><option value="-1" selected>All Doctors</option></select>
+        <div class="input-group-prepend">
+            <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+
+</div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Availability[0].Clinic)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Availability[0].Doctor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Availability[0].ClinicDate)
+                @Html.DisplayNameFor(model => model.Availability[0].Clinic)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Availability[0].StartTime)
+                Clinic Date
+                @*@Html.DisplayNameFor(model => model.Availability[0].ClinicDate)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Availability[0].EndTime)
+                Start Time
+                @*@Html.DisplayNameFor(model => model.Availability[0].StartTime)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Availability[0].SlotLenght)
+                End Time
+                @*@Html.DisplayNameFor(model => model.Availability[0].EndTime)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Availability[0].AvailableSlots)
+                Slot Lenght
+                @*@Html.DisplayNameFor(model => model.Availability[0].SlotLenght)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Availability[0].BookedSlots)
+                Available Slots
+                @*@Html.DisplayNameFor(model => model.Availability[0].AvailableSlots)*@
             </th>
-            <th></th>
+            <th>
+                Booked Slots
+                @*@Html.DisplayNameFor(model => model.Availability[0].BookedSlots)*@
+            </th>
+            <th>Action</th>
         </tr>
     </thead>
+
     <tbody>
-@foreach (var item in Model.Availability) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Clinic.AddressLine)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Doctor.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClinicDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SlotLenght)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AvailableSlots)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookedSlots)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.AvailabilityId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.AvailabilityId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.AvailabilityId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Availability)
+        {
+            <tr>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.AvailabilityId"> @Html.DisplayFor(modelItem => item.Doctor.FullName)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Clinic.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClinicDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SlotLenght)
+                </td>
+                <td onclick="getAvailableSlots(@item.AvailabilityId)">
+                    <a data-toggle="modal" data-target="#exampleModalCenter">
+                        <strong class="cursor-pointer">
+                            @Html.DisplayFor(modelItem => item.AvailableSlots)
+                        </strong>
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookedSlots)
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.AvailabilityId"><i class="fa-solid fa-eye"></i></a> |
+                    <a asp-page="./Edit" asp-route-id="@item.AvailabilityId"><i class="fas fa-edit"></i></a> |
+                    <a asp-page="./Delete" asp-route-id="@item.AvailabilityId"><i class="fa-solid fa-trash text-danger"></i></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Available Slots</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center text-dark" id="availableSlots">
+            </div>
+            <div class="modal-footer d-flex justify-content-center text-center">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        function getAvailableSlots( id) {
+            console.log("Availability Id:" + id);
+            $.ajax({
+                url: '?handler=AvailableSLots&id=' + id,
+                data: "{}",
+                success: function (data) {
+                    console.log(data.length);
+                    console.log(data);
+                    var s = '';
+                    for (var i = 0; i < data.length; i++) {
+                        const date = new Date(data[i]);
+                        const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+                        s += '<option>' + timeString + '</option>';
+
+
+                    }
+                    $("#availableSlots").html(s);
+
+                },
+                error: function (error) {
+                    alert("Error: " + error);
+                }
+            });
+        }</script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

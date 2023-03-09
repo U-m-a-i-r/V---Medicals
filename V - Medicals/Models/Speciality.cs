@@ -16,5 +16,9 @@ namespace V___Medicals.Models
         [Required(ErrorMessage = "Please choose icon")]
         public String Icon{ get; set; }
         public bool IsActive { get; set; } = true;
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? ModefiedBy { get; set; }
     }
 }   

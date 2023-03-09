@@ -19,7 +19,10 @@ namespace V___Medicals.Models
         public string? HeartRate { get; set; }
         public string? SystolicBP1 { get; set; }
         public string? DiastolicBP1 { get; set; }
-        public DateTime AddedOn { get; set; }
         public bool IsDeleted { get; set; } = false;
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? ModefiedBy { get; set; }
     }
 }

@@ -6,73 +6,186 @@
     Layout = "_DashBoardLayout";
 }
 
-<h1>Create</h1>
-
-<h4>Appointment</h4>
+<a class="btn btn-primary" asp-page="./Index">Back</a>
+<h4 class="text-center Monospace">New Appointment</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row my-3 justify-content-center">
+    <div class="">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Appointment.PatientId" class="control-label"></label>
-                <select asp-for="Appointment.PatientId" class ="form-control" asp-items="ViewBag.PatientId"></select>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row">
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="Appointment.PateintId" class="control-label"> Patient</label>
+                    <select asp-for="Appointment.PateintId" class="form-control" asp-items="ViewBag.PatientId"><option selected>Please select patient</option></select>
+                    <span asp-validation-for="Appointment.PateintId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="Appointment.specialityId" class="control-label">Speciality</label>
+                    <select id="selectspeciality" asp-for="Appointment.specialityId" class="form-control" asp-items="ViewBag.SpecialityId"><option selected>Please select speciality</option></select>
+                    <span asp-validation-for="Appointment.specialityId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="Appointment.DoctorId" class="control-label">Doctor</label>
+                    <select id="selectdoctor" asp-for="Appointment.DoctorId" class="form-control" asp-items="ViewBag.DoctorId"><option selected>Please select doctor</option></select>
+                    <span asp-validation-for="Appointment.DoctorId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="Appointment.availabilityId" class="control-label">Clinic & appointment date</label>
+                    <select id="selectclinic" asp-for="Appointment.availabilityId" class="form-control" asp-items="ViewBag.ClinicId"></select>
+                    <span asp-validation-for="Appointment.availabilityId" class="text-danger"></span>
+                </div>
+                <!--<div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+    <label asp-for="Appointment.ClinicDate" class="control-label"></label>
+    <select id="selectclinicDate" asp-for="Appointment.ClinicDate" class="form-control" asp-items="ViewBag.ClinicDate"></select>-->
+                @*<input asp-for="Appointment.ClinicDate" class="form-control" />*@
+                <!--<span asp-validation-for="Appointment.ClinicDate" class="text-danger"></span>
+    </div>-->
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="Appointment.SlotId" class="control-label">Time slot</label>
+                    <select id="selectslot" asp-for="Appointment.SlotId" class="form-control" asp-items="ViewBag.SlotId"></select>
+                    <span asp-validation-for="Appointment.SlotId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="Appointment.Description" class="control-label"></label>
+                    <textarea asp-for="Appointment.Description" class="form-control"></textarea>
+                    <span asp-validation-for="Appointment.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="Appointment.AdminNotes" class="control-label">Admin notes</label>
+                    <textarea asp-for="Appointment.AdminNotes" class="form-control"></textarea>
+                    <span asp-validation-for="Appointment.AdminNotes" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="Appointment.DoctorNotes" class="control-label">Doctor notes</label>
+                    <textarea asp-for="Appointment.DoctorNotes" class="form-control"></textarea>
+                    <span asp-validation-for="Appointment.DoctorNotes" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="Appointment.PatientNotes" class="control-label">Patient notes</label>
+                    <textarea asp-for="Appointment.PatientNotes" class="form-control"></textarea>
+                    <span asp-validation-for="Appointment.PatientNotes" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="Appointment.AppointmentType" class="control-label">Appointment type</label>
+                    @*<input asp-for="Appointment.AppointmentType" class="form-control" />*@
+                    <select asp-for="Appointment.AppointmentType" class="form-control" asp-items="Html.GetEnumSelectList<ClinicTypes>()"></select>
+                    <span asp-validation-for="Appointment.AppointmentType" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="Appointment.Status" class="control-label"></label>
+                    <select asp-for="Appointment.Status" class="form-control" asp-items="Html.GetEnumSelectList<AppointmentStatus>()"> </select>
+                    <span asp-validation-for="Appointment.Status" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+            <label asp-for="Appointment.UpdatedOn" class="control-label"></label>
+            <input asp-for="Appointment.UpdatedOn" class="form-control" />
+            <span asp-validation-for="Appointment.UpdatedOn" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Appointment.LastModifiedBy" class="control-label"></label>
+            <input asp-for="Appointment.LastModifiedBy" class="form-control" />
+            <span asp-validation-for="Appointment.LastModifiedBy" class="text-danger"></span>
+        </div>*@
             </div>
-            <div class="form-group">
-                <label asp-for="Appointment.DoctorId" class="control-label"></label>
-                <select asp-for="Appointment.DoctorId" class ="form-control" asp-items="ViewBag.DoctorId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Appointment.ClinicDate" class="control-label"></label>
-                <input asp-for="Appointment.ClinicDate" class="form-control" />
-                <span asp-validation-for="Appointment.ClinicDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Appointment.Time" class="control-label"></label>
-                <input asp-for="Appointment.Time" class="form-control" />
-                <span asp-validation-for="Appointment.Time" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Appointment.CreatedDate" class="control-label"></label>
-                <input asp-for="Appointment.CreatedDate" class="form-control" />
-                <span asp-validation-for="Appointment.CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Appointment.Description" class="control-label"></label>
-                <input asp-for="Appointment.Description" class="form-control" />
-                <span asp-validation-for="Appointment.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Appointment.AppointmentType" class="control-label"></label>
-                <input asp-for="Appointment.AppointmentType" class="form-control" />
-                <span asp-validation-for="Appointment.AppointmentType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Appointment.Status" class="control-label"></label>
-                <select asp-for="Appointment.Status" class="form-control"></select>
-                <span asp-validation-for="Appointment.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Appointment.UpdatedOn" class="control-label"></label>
-                <input asp-for="Appointment.UpdatedOn" class="form-control" />
-                <span asp-validation-for="Appointment.UpdatedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Appointment.LastModifiedBy" class="control-label"></label>
-                <input asp-for="Appointment.LastModifiedBy" class="form-control" />
-                <span asp-validation-for="Appointment.LastModifiedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+            <hr />
+                <div class="form-group text-center my-3">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
         </form>
     </div>
 </div>
 
-<div>
+@*<div>
     <a asp-page="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
+    <script>
+        var selectspeciality = document.getElementById('selectspeciality');
+        selectspeciality.addEventListener('change', function () {
+            var x = document.getElementById("selectspeciality").value;
+            $.ajax({
+                url: '?handler=Doctors&id=' + x,
+                data: "{}",
+                success: function (data) {
+                    console.log(data.length);
+                    console.log(data);
+                    var s = '<option value="-1">Please select a doctor</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        s += '<option value="' + data[i].doctorId + '">' + data[i].fullName + '</option>';
+                    }
+                    $("#selectdoctor").html(s);
+                },
+                error: function (error) {
+                    alert("Error: " + error);
+                }
+            });
+        }, false);
+        var selectdoctor = document.getElementById('selectdoctor');
+        selectdoctor.addEventListener('change', function () {
+
+            var x = document.getElementById("selectdoctor").value;
+
+            $.ajax({
+                url: '?handler=Clinic&id=' + x,
+                data: "{}",
+                success: function (data) {
+                    console.log(data.length);
+                    console.log(data);
+                    var s = '<option value="-1">Please select a clinic</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        const dateString = data[i].clinicDate.split("T")[0];
+                        const date = new Date(dateString);
+                        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                        const formattedDate = date.toLocaleDateString('en-GB', options);
+                        s += '<option value="' + data[i].availabilityId + '">' + formattedDate +'--'+ data[i].clinic.address + '</option>';
+                           
+                       
+                        
+
+                      //  s += '<option value="' + data[i].clinicId + '">' +  data[i].address + '</option>';
+
+
+                    }
+                    $("#selectclinic").html(s);
+                },
+                error: function (error) {
+                    alert("Error: " + error);
+                }
+            });
+        }, false);
+        var selectclinic = document.getElementById('selectclinic');
+        selectclinic.addEventListener('change', function () {
+
+            var x = document.getElementById("selectclinic").value;
+
+            $.ajax({
+                url: '?handler=ClinicSlots&id=' + x,
+                data: "{}",
+                success: function (data) {
+                    console.log(data.length);
+                    console.log(data);
+                    var s = '<option value="-1">Please select a slot</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        const date = new Date(data[i].slotTime);
+                        const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+                        s += '<option value="' + data[i].slotId + '">' + timeString + '</option>';
+
+
+
+
+                        //  s += '<option value="' + data[i].clinicId + '">' +  data[i].address + '</option>';
+
+
+                    }
+                    $("#selectslot").html(s);
+                },
+                error: function (error) {
+                    alert("Error: " + error);
+                }
+            });
+        }, false);
+        
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

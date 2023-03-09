@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -44,9 +45,12 @@ namespace V___Medicals.Pages.Specialities
                 return Page();
             }
             string uniqueFileName = UploadedFile(model);
-
+            ClaimsPrincipal _user = HttpContext?.User!;
+            var userName = _user.Identity.Name;
             Speciality speciality = new Speciality
             {
+                CreatedOn = DateTime.UtcNow,
+                CreatedBy = userName,
                 Name = model.Name,
                 Icon = uniqueFileName,
                 IsActive = true
@@ -63,9 +67,9 @@ namespace V___Medicals.Pages.Specialities
 
             if (model.Icon != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Files");
+                string uploadsFolder = System.IO.Path.Combine(webHostEnvironment.WebRootPath, "Files");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Icon.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                string filePath = System.IO.Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     model.Icon.CopyTo(fileStream);

@@ -7,72 +7,149 @@
     Layout = "_DashBoardLayout";
 }
 
-<h4>Create New Clinic</h4>
+<a class="btn btn-primary" asp-page="./Index">Back</a>
+<h4 class="text-center Monospace">Create New Clinic</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row my-3 justify-content-center">
+    <div class="">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="DoctorId" class="control-label">Speciality</label>
-                <select asp-for="DoctorId" class="form-control" asp-items="ViewBag.Doctor"></select>
+            <div class="row">
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="DoctorId" class="control-label">Doctor</label>
+                    <select asp-for="DoctorId" class="form-control" asp-items="ViewBag.Doctor"></select>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.Name" class="control-label">Clinic Name</label>
+                    <input placeholder="e.g remote clinic" asp-for="InputModel.Name" class="form-control" />
+                    <span asp-validation-for="InputModel.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.AddressLine" class="control-label">Clinic Address</label>
+                    <input id="pac-input" asp-for="InputModel.AddressLine" class="form-control" />
+                    <span asp-validation-for="InputModel.AddressLine" class="text-danger"></span>
+                </div>
+                @*<div id="infowindow-content">
+                    <span id="place-name" class="title"></span><br />
+                    <span id="place-address"></span>
+                </div>*@
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.District" class="control-label">State/Province</label>
+                    <input id="state" asp-for="InputModel.District" class="form-control" />
+                    <span asp-validation-for="InputModel.District" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.City" class="control-label"></label>
+                    <input id="locality" asp-for="InputModel.City" class="form-control" />
+                    <span asp-validation-for="InputModel.City" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.PostalCode" class="control-label">Postal Code</label>
+                    <input id="postcode" asp-for="InputModel.PostalCode" class="form-control" />
+                    <span asp-validation-for="InputModel.PostalCode" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.MapLink" class="control-label">Map Link</label>
+                    <input asp-for="InputModel.MapLink" class="form-control" />
+                    <span asp-validation-for="InputModel.MapLink" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.Summary" class="control-label"></label>
+                    <textarea asp-for="InputModel.Summary" class="form-control"></textarea>
+                    <span asp-validation-for="InputModel.Summary" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.Type" class="control-label"></label>
+                    <select asp-for="InputModel.Type" class="form-control" asp-items="Html.GetEnumSelectList<ClinicTypes>()"></select>
+                    <span asp-validation-for="InputModel.Type" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.Status" class="control-label"></label>
+                    <select asp-for="InputModel.Status" class="form-control" asp-items="Html.GetEnumSelectList<StatusTypes>()"></select>
+                    <span asp-validation-for="InputModel.Status" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="InputModel.Name" class="control-label"></label>
-                <input asp-for="InputModel.Name" class="form-control" />
-                <span asp-validation-for="InputModel.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.AddressLine" class="control-label"></label>
-                <input asp-for="InputModel.AddressLine" class="form-control" />
-                <span asp-validation-for="InputModel.AddressLine" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.District" class="control-label"></label>
-                <input asp-for="InputModel.District" class="form-control" />
-                <span asp-validation-for="InputModel.District" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.City" class="control-label"></label>
-                <input asp-for="InputModel.City" class="form-control" />
-                <span asp-validation-for="InputModel.City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.PostalCode" class="control-label"></label>
-                <input asp-for="InputModel.PostalCode" class="form-control" />
-                <span asp-validation-for="InputModel.PostalCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.MapLink" class="control-label"></label>
-                <input asp-for="InputModel.MapLink" class="form-control" />
-                <span asp-validation-for="InputModel.MapLink" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.Summary" class="control-label"></label>
-                <textarea asp-for="InputModel.Summary" class="form-control"></textarea>
-                <span asp-validation-for="InputModel.Summary" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.Type" class="control-label"></label>
-                <select asp-for="InputModel.Type" class="form-control" asp-items="Html.GetEnumSelectList<ClinicTypes>()"></select>
-                <span asp-validation-for="InputModel.Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.Status" class="control-label"></label>
-                <select asp-for="InputModel.Status" class="form-control" asp-items="Html.GetEnumSelectList<StatusTypes>()"></select>
-                <span asp-validation-for="InputModel.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            <hr />
+            <div class="form-group text-center my-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+@*<div>
+        <a asp-page="Index">Back to List</a>
+    </div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGO7cxITuAgXMtjPaYiHe0_Y56wYP1H78&callback=initMap&libraries=places&v=weekly"
+        defer></script>
+<script>function initMap() {
+    let postalField = document.querySelector("#postcode");
+    const input = document.getElementById("pac-input");
+        const biasInputElement = document.getElementById("use-location-bias");
+        const strictBoundsInputElement = document.getElementById("use-strict-bounds");
+        const options = {
+            componentRestrictions: { country: "pak" },
+            fields: ["address_components", "geometry", "icon", "name"],
+            strictBounds: false,
+            types: ["establishment"],
+        };
+
+        const autocomplete = new google.maps.places.Autocomplete(input, options);
+
+
+        const infowindow = new google.maps.InfoWindow();
+        const infowindowContent = document.getElementById("infowindow-content");
+
+        infowindow.setContent(infowindowContent);
+
+
+        autocomplete.addListener("place_changed", () => {
+            infowindow.close();
+            const place = autocomplete.getPlace();
+            if (!place.geometry || !place.geometry.location) {
+                // User entered the name of a Place that was not suggested and
+                // pressed the Enter key, or the Place Details request failed.
+                window.alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+            let address1 = "";
+            let postcode = "";
+            for (const component of place.address_components) {
+                const componentType = component.types[0];
+                switch (componentType) {
+                    case "street_number": {
+                        address1 = `${component.long_name} ${address1}`;
+                        break;
+                    }
+                    case "route": {
+                        address1 += component.short_name;
+                        break;
+                    }
+                    case "postal_code": {
+                        postcode = `${component.long_name}${postcode}`;
+                        break;
+                    }
+                    case "postal_code_suffix": {
+                        postcode = `${postcode}-${component.long_name}`;
+                        break;
+                    }
+                    case "locality":
+                        document.querySelector("#locality").value = component.long_name;
+                        break;
+                    case "administrative_area_level_1": {
+                        document.querySelector("#state").value = component.short_name;
+                        break;
+                    }
+                    //case "country":
+                    //  document.querySelector("#country").value = component.long_name;
+                    //  break;
+                }
+            }
+            postalField.value = postcode;
+        });
+}
+    window.initMap = initMap;</script>

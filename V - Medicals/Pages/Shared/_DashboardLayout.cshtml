@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using V___Medicals.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -6,178 +11,253 @@
     <title>@ViewData["Title"] - V-Medicals</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/V___Medicals.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    @*<link rel="stylesheet" href="~/V___Medicals.styles.css" asp-append-version="true" />*@
     <link rel="stylesheet" href="~/css/Sidebar/css/style.css">
     <style>
-body {
-  margin: 0;
-  font-family: "Lato", sans-serif;
-}
+        body {
+            font-family: "Poppins", Arial, sans-serif;
+            font-size: 14px;
+            margin: 0;
+        }
 
-.sidebar {
-  padding-top:20px;
-  
-  width: 200px;
-  background-color: #f1f1f1;
-  height: 100%;
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  bottom:auto;
-  overflow-x: hidden;
-}
+        a {
+            -webkit-transition: .3s all ease;
+            -o-transition: .3s all ease;
+            transition: .3s all ease;
+            color: #33b5e5;
+        }
 
-.sidebar a {
-  display: block;
-  color: black;
-  padding: 10px;
-  text-decoration: none;
-  tab-size:inherit;
-}
- 
-.sidebar a.active {
-  background-color: #04AA6D;
-  color: white;
-}
+            a:hover, a:focus {
+                text-decoration: none !important;
+                outline: none !important;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
 
-.sidebar a:hover:not(.active) {
+
+        .sidebar {
+            width: 245px;
+            background-color: #f1f1f1;
+            height: 100%;
+            position: absolute;
+            z-index: 1;
+            left: 0;
+            bottom: auto;
+            overflow-x: hidden;
+        }
+
+            .sidebar a {
+                display: block;
+                color: black;
+                padding: 10px;
+                text-decoration: none;
+                tab-size: inherit;
+            }
+
+                .sidebar a.active {
+                    background-color: #04AA6D;
+                    color: white;
+                }
+
+                .sidebar a:hover:not(.active) {
                     background-color: #33b5e5;
-  color: white;
-}
+                    color: white;
+                }
 
-div.content {
-  margin-left: 200px;
-  padding: 1px 16px;
-  height: 2000px;
-}
+        div.content {
+            margin-left: 245px;
+            padding: 1px 16px;
+            height: 2000px;
+        }
+
+        div#content {
+            margin-left: 0;
+        }
 
 
-hr {
-    margin:0px;
-}
+        hr {
+            margin: 0px;
+        }
 
-@@media screen and (max-width: 700px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-  .sidebar a {float: left;}
-  div.content {margin-left: 0;}
-}
+        @@media screen and (max-width: 700px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
 
-@@media screen and (max-width: 400px) {
-  .sidebar a {
-    text-align: center;
-    float: none;
-  }
-}
-</style>
+                .sidebar a {
+                    float: left;
+                }
+
+            div.content {
+                margin-left: 0;
+            }
+        }
+
+        @@media screen and (max-width: 400px) {
+            .sidebar a {
+                text-align: center;
+                float: none;
+            }
+        }
+
+        #logo_dashboard a:hover {
+            background-color: white !important;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-info border-bottom box-shadow mb-0">
-            <div class="container" style="margin:0px;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-info border-bottom box-shadow px-2 d-flex justify-content-start">
+            <div class="container p-0 mx-2 mw-100">
                 @*<img width="100" height="100" src="~/css/Sidebar/images/logo.png" />*@
-                <a class="navbar-brand" asp-area="" asp-page="/Index">V-Medicals</a>
+                <a class="navbar-brand text-light Monospace" asp-area="" asp-page="/Index">V-Medicals</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
-                   
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-page="">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-page="">Privacy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-page="">About</a>
+                            </li>
+                        </ul>
+                    }
+
+
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
+    @if (SignInManager.IsSignedIn(User))
+    {
 
-    <div class="sidebar">
-        <ul class="list-unstyled components">
-            
-            
-            <li class="active">
-                <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Doctors & Clinics</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu1">
-                    <li>
-                        <a href="/Doctors/Index">Manage Doctors</a>
-                    </li>
-                    <li>
-                        <a href="/Clinics/Index">Manage Clinics</a>
-                    </li>
-                    <li>
-                        <a href="/Availability/Index">Manage Availability</a>
-                    </li>
-                </ul>
-            </li>
-            <hr />
-            <li>
-                <a  href="/Specialities/Index">Manage Specialities</a>
-            </li>
-            <hr />
-            <li class="active">
-                <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pr-2">Manage Users</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu2">
-                    <li>
-                        <a href="/Users/Index">All Users</a>
-                    </li>
-                    <li>
-                        <a href="/Roles/Index">Roles</a>
-                    </li>
-                </ul>
-            </li>
-            <hr />
-            <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Patients & Appointments</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li>
-                        <a href="/Patients/Index">All Patients</a>
-                    </li>
-                    <li>
-                        <a href="/Appointments/Index">All Appointments</a>
-                    </li>
-                    <li>
-                        <a href="#">OutStanding Appointments</a>
-                    </li>
-                    <li>
-                        <a href="#">Cancelled Appointments</a>
-                    </li>
-                    <li>
-                        <a href="#">Completed Appointments</a>
-                    </li>
-                    <li>
-                        <a href="#">Pending Approval</a>
-                    </li>
-                </ul>
-            </li>
-            <hr />
-        </ul>
-    </div>
+        <div class="sidebar">
+            <ul class="list-unstyled components">
+                <li id="logo_dashboard" class="text-center">  <a class="p-0" asp-area="" asp-page="/Index"><img width="245px" height="150px" src="~/Images/app_logo_transparent.png" /></a></li>
 
-    <div class="content">
-        <main role="main" class="pt-5">
-            @RenderBody()
-        </main>
-        
-    </div>
-    <footer class="border-top footer text-muted ml-5">
+                <li class="active">
+                    <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa-solid fa-user-doctor pr-1"></i>Doctors & Clinics</a>
+                    <ul class="collapse list-unstyled pl-3 " id="homeSubmenu1">
+                        <li>
+                            <a href="/Doctors/Index">Manage Doctors</a>
+                        </li>
+                        <li>
+                            <a href="/Clinics/Index">Manage Clinics</a>
+                        </li>
+                        <li>
+                            <a href="/Availability/Index">Manage Availability</a>
+                        </li>
+                    </ul>
+                </li>
+                <hr />
+                <li>
+                    <a href="/Specialities/Index"> <i class="fa-solid fa-notes-medical pr-1"></i>Manage Specialities</a>
+                </li>
+                <hr />
+                <li class="">
+                    <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pr-2"> <i class="fa-solid fa-user pr-1"></i>Manage Users</a>
+                    <ul class="collapse list-unstyled pl-3" id="homeSubmenu2">
+                        <li>
+                            <a href="/Users/Index"> Users</a>
+                        </li>
+                        <li>
+                            <a href="/New Roles/Index">Roles</a>
+                        </li>
+                    </ul>
+                </li>
+                <hr />
+                <li class="">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> <i class="fa-solid fa-user-nurse pr-1"></i>Patients & Appointments</a>
+                    <ul class="collapse list-unstyled pl-3" id="homeSubmenu">
+                        <li>
+                            <a href="/Patients/Index">All Patients</a>
+                        </li>
+                        <li>
+                            <a href="/Appointments/Index">All Appointments</a>
+                        </li>
+                        <li>
+                            <a href="#">OutStanding Appointments</a>
+                        </li>
+                        <li>
+                            <a href="#">Cancelled Appointments</a>
+                        </li>
+                        <li>
+                            <a href="#">Completed Appointments</a>
+                        </li>
+                        <li>
+                            <a href="#">Pending Approval</a>
+                        </li>
+                    </ul>
+                </li>
+                <hr />
+                <li class="">
+                    <a href="#homeSettingMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa-solid fa-gear pr-1"></i>Settings</a>
+                    <ul class="collapse list-unstyled pl-3 " id="homeSettingMenu">
+                        <li>
+                            <a href="">Message For Team</a>
+                        </li>
+                        <li>
+                            <a href="">Document Types</a>
+                        </li>
+                        <li>
+                            <a href="">User's Questions</a>
+                        </li>
+                    </ul>
+                </li>
+                <hr />
+            </ul>
+        </div>
+        <div class="content">
+            <main role="main" class="my-5">
+                @RenderBody()
+            </main>
+
+        </div>
+}
+else
+{
+<div class="content" id="content">
+    <main role="main" class="py-5">
+        @RenderBody()
+    </main>
+
+</div>
+}
+
+
+    <footer class="border-top footer text-muted text-center">
         <div class="container">
             &copy; 2022 - V-Medicals - All Rights Reserved.
         </div>
     </footer>
 
     @*<div class="wrapper d-flex align-items-stretch">
-    </div>
+        </div>
 
 
-    <div class="mb-5">
-        <main role="main">
-            @RenderBody()
-        </main>
+        <div class="mb-5">
+            <main role="main">
+                @RenderBody()
+            </main>
 
-    </div>*@
-    
+        </div>*@
 
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
     <script src="~/css/Sidebar/js/jquery.min.js"></script>
     <script src="~/css/Sidebar/js/popper.js"></script>
     <script src="~/css/Sidebar/js/bootstrap.min.js"></script>

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +13,7 @@ using V___Medicals.ValidationModels;
 
 namespace V___Medicals.Pages.Clinics
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly V___Medicals.Data.ApplicationDbContext _context;
@@ -36,12 +39,14 @@ namespace V___Medicals.Pages.Clinics
             {
                 return Page();
             }
-          Doctor doctor = _context.Doctors.Where(d=>d.DoctorId== DoctorId).FirstOrDefault();
+          Doctor doctor = _context.Doctors.Where(d=>d.DoctorId== DoctorId).Where(d=>d.IsDeleted==false && d.Status==DoctorStatusTypes.Active).FirstOrDefault()!;
             if (doctor == null)
             {
                 ModelState.AddModelError(InputModel.AddressLine, "Please select a valid doctor!");
                 return Page();
             }
+            ClaimsPrincipal _user = HttpContext?.User!;
+            var userName = _user.Identity.Name;
             Clinic clinic = new Clinic {
                  AddressLine = InputModel.AddressLine,
                  City = InputModel.City,
@@ -52,6 +57,8 @@ namespace V___Medicals.Pages.Clinics
                  PostalCode = InputModel.PostalCode,
                  Summary = InputModel.Summary,
                  Type = InputModel.Type,
+                 CreatedBy = userName,
+                 CreatedOn = DateTime.UtcNow
             };
             _context.Clinic.Add(clinic);
             DoctorClinic doctorClinic = new DoctorClinic

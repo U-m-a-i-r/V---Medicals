@@ -27,7 +27,11 @@ namespace V___Medicals.Models
         public int BookedSlots { get; set; }
         [DataType(DataType.Time)]
         public IList<Slot> Slots { get; set; }
-        public StatusTypes Status { get; set; }  
+        public StatusTypes Status { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? ModefiedBy { get; set; }
     }
 }
 

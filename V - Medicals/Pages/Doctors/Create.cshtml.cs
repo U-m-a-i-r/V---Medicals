@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +13,7 @@ using V___Medicals.ValidationModels;
 
 namespace V___Medicals.Pages.Doctors
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly V___Medicals.Data.ApplicationDbContext _context;
@@ -24,7 +27,7 @@ namespace V___Medicals.Pages.Doctors
 
         public IActionResult OnGet()
         {
-        ViewData["SpecialityId"] = new SelectList(_context.Specialities, "SpecialityId", "Name");
+        ViewData["SpecialityId"] = new SelectList(_context.Specialities.Where(s=>s.IsActive==true), "SpecialityId", "Name");
         ViewData["Id"] = new SelectList(_context.Users, "Id", "Id");
             return Page();
         }
@@ -47,6 +50,8 @@ namespace V___Medicals.Pages.Doctors
             {
                  uniqueFileName = UploadedFile(InputModel);
             }
+            ClaimsPrincipal _user = HttpContext?.User!;
+            var userName = _user.Identity.Name;
             Doctor doctor = new Doctor()
             {
                 Title = InputModel.Title,
@@ -54,7 +59,7 @@ namespace V___Medicals.Pages.Doctors
                 MiddleName = InputModel.MiddleName,
                 LastName = InputModel.LastName,
                 SpecialityId = Speciality.SpecialityId,
-                Qualification= InputModel.Qualification,
+                Qualification = InputModel.Qualification,
                 Speciality = Speciality,
                 AddressLine = InputModel.AddressLine,
                 City = InputModel.City,
@@ -67,7 +72,11 @@ namespace V___Medicals.Pages.Doctors
                 Discription = InputModel.Discription,
                 Status = InputModel.Status,
                 ProfilePicture = uniqueFileName,
+                ContractType = InputModel.ContractType,
+                ContractValue = InputModel.ContractValue,
                 IsDeleted = false,
+                CreatedOn = DateTime.UtcNow,
+                CreatedBy = userName
             };
 
             _context.Doctors.Add(doctor);
@@ -81,9 +90,9 @@ namespace V___Medicals.Pages.Doctors
 
             if (model.ProfilePicture != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Files");
+                string uploadsFolder = System.IO.Path.Combine(webHostEnvironment.WebRootPath, "Files");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProfilePicture.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                string filePath = System.IO.Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     model.ProfilePicture.CopyTo(fileStream);

@@ -18,6 +18,7 @@ namespace V___Medicals.Data
        // public DbSet<Role> Roles { get; set; }
         public override DbSet<User>  Users { get; set; }
         public DbSet<Patient> Patients { get; set; }
+        //public DbSet<MaintainRecord> MaintainRecords { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Speciality> Specialities { get; set; }
         public DbSet<DoctorDocument> DoctorDocuments { get; set; }

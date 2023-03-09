@@ -17,5 +17,9 @@ namespace V___Medicals.Models
         public string DocumentPath { get; set; }
         [Required]
         public bool IsDeleted { get; set; } = false;
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? ModefiedBy { get; set; }
     }
 }

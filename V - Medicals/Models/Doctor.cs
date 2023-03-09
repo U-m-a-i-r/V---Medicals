@@ -19,7 +19,7 @@ namespace V___Medicals.Models
         public String LastName { get; set; }
         public string FullName
         {
-            get { return string.Format("{0} {1} {2}", Title, FirstName, LastName); }
+            get { return string.Format("{0} {1} {2} {3}", Title, FirstName, MiddleName, LastName); }
         }
         [Required]
         public Gender Gender { get; set; }
@@ -30,6 +30,7 @@ namespace V___Medicals.Models
 
 
         [DataType(DataType.Date)]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{MM/dd/yyyy}")]
         public DateTime? DOB { get; set; }
 
         public String? Email { get; set; }
@@ -52,12 +53,20 @@ namespace V___Medicals.Models
         public string? Discription { get; set; }
         [Required]
         public DoctorStatusTypes Status { get; set; }
+        [Required]
+        public ContractType ContractType { get; set; }
+        [Required]
+        public String ContractValue { get; set; } = default!;
         public bool IsDeleted { get; set; } = false;
 
         public String? Id { get; set; }
         [ForeignKey("Id")]
         public User? User { get; set; }
-        
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? ModefiedBy { get; set; }
+
     }
 }
 public enum DoctorStatusTypes
@@ -71,4 +80,9 @@ public enum Gender
 {
     Male,
     Female
+}
+public enum ContractType
+{
+    Per_Appointment,
+    Percentage
 }

@@ -21,7 +21,9 @@ namespace V___Medicals.Pages.Users
             _context = context;
         }
 
-      public User User { get; set; }
+        public User User { get; set; } = default!;
+        public IList<IDictionary<string, dynamic>> UserRoles { get; set; } = default!;
+        IDictionary<string, dynamic> item { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -30,14 +32,28 @@ namespace V___Medicals.Pages.Users
                 return NotFound();
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+            var user = await _context.Users.Include(u=>u.Roles).FirstOrDefaultAsync(m => m.Id == id);
+            
             if (user == null)
             {
                 return NotFound();
             }
             else 
             {
+                UserRoles = new List<IDictionary<string, dynamic>>();
                 User = user;
+                foreach (var role in User.Roles)
+                {
+                    var RoleId = role.RoleId;
+                    var Role = _context.Roles.Where(r => r.Id == RoleId).FirstOrDefault();
+                    item = new Dictionary<string, dynamic>();
+
+                    item.Add(new KeyValuePair<string, dynamic>("UserId", User.Id));
+                    item.Add(new KeyValuePair<string, dynamic>("UserRole", Role!.Name));
+                    UserRoles.Add(item);
+                    // Roles.Add(Role!);
+                    Console.Out.NewLine=item.ToString();
+                }
             }
             return Page();
         }

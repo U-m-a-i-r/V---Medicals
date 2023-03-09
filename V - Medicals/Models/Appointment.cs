@@ -19,18 +19,26 @@ namespace V___Medicals.Models
         [DataType(DataType.Date)]
         public DateTime ClinicDate { get; set; }
         [Required]
-        [DisplayFormat(DataFormatString = "{'HH:mm:tt'}")]
+        //[DisplayFormat(DataFormatString = "{'HH:mm:tt'}")]
         [DataType(DataType.Time)]
         public DateTime Time { get; set; }
 
         public ICollection<AppointmentDocument>? Documents { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        //public DateTime CreatedDate { get; set; }
         public string? Description { get; set; }
         public ClinicTypes? AppointmentType { get; set; }
         public AppointmentStatus Status { get; set; }
-        public DateTime UpdatedOn { get; set; }
-        public String? LastModifiedBy { get; set; }
+        public string? AdminNotes { get; set; }
+        public string SpecialityName { get; set; } = default!;
+        public string? DoctorNotes { get; set; }
+        public string? PatientNotes { get; set; }
+        //public DateTime UpdatedOn { get; set; }
+        //public String? LastModifiedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? ModefiedBy { get; set; }
 
     }
 }

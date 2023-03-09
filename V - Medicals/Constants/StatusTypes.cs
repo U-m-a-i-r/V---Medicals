@@ -3,7 +3,7 @@
     public enum StatusTypes
     {
         Active,
-        InActice,
+        InActive,
         Awaiting,
         Pending
     }

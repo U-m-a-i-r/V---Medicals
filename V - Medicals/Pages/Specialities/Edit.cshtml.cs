@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -49,7 +50,10 @@ namespace V___Medicals.Pages.Specialities
             {
                 return Page();
             }
-
+            ClaimsPrincipal _user = HttpContext?.User!;
+            var userName = _user.Identity.Name;
+            Speciality.UpdatedOn = DateTime.UtcNow;
+            Speciality.ModefiedBy = userName;
             _context.Attach(Speciality).State = EntityState.Modified;
 
             try

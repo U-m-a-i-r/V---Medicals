@@ -7,87 +7,93 @@
     Layout = "_DashBoardLayout";
 }
 
-<h4>Add Availability</h4>
+<a class="btn btn-primary" asp-page="./Index">Back</a>
+<h4 class="text-center Monospace">Add New Availability</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="my-3 justify-content-center">
+    <div class="">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="InputModel.DoctorId" class="control-label">Doctor: </label>
-                <select id="selectdoctor" onchange="getClinic()" asp-for="InputModel.DoctorId" class="form-control" asp-items="ViewBag.Doctor"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.ClinicId" class="control-label"> Clinic: </label>
-                <select id="selectclinic" asp-for="InputModel.ClinicId" class="form-control" asp-items="ViewBag.ClinicId"></select>
-            </div>
+            <div class="row">
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.DoctorId" class="control-label">Doctor: </label>
+                    <select id="selectdoctor" asp-for="InputModel.DoctorId" class="form-control" asp-items="ViewBag.Doctor"><option selected>Please select doctor</option></select>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.ClinicId" class="control-label"> Clinic: </label>
+                    <select id="selectclinic" asp-for="InputModel.ClinicId" class="form-control" asp-items="ViewBag.ClinicId"></select>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="InputModel.ClinicDate" class="control-label"> Clinic Date: </label>
-                <input asp-for="InputModel.ClinicDate" class="form-control" />
-                <span asp-validation-for="InputModel.ClinicDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.SlotLenght" class="control-label"> Slot Lenght: </label>
-                <input asp-for="InputModel.SlotLenght" class="form-control" />
-                <span asp-validation-for="InputModel.SlotLenght" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.StartTime" class="control-label"> Start Time: </label>
-                <input asp-for="InputModel.StartTime" class="form-control" />
-                <span asp-validation-for="InputModel.StartTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.EndTime" class="control-label"> End Time: </label>
-                <input asp-for="InputModel.EndTime" class="form-control" />
-                <span asp-validation-for="InputModel.EndTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InputModel.Status" class="control-label"></label>
-                <select asp-for="InputModel.Status" class="form-control" asp-items="Html.GetEnumSelectList<StatusTypes>()"></select>
-                <span asp-validation-for="InputModel.Status" class="text-danger"></span>
-            </div>
-            
-            @*<div class="form-group">
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.ClinicDate" class="control-label"> Clinic Date: </label>
+                    <input asp-for="InputModel.ClinicDate" class="form-control" />
+                    <span asp-validation-for="InputModel.ClinicDate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.SlotLenght" class="control-label"> Slot Lenght: </label>
+                    <input type="number" min="05" max="60" asp-for="InputModel.SlotLenght" class="form-control" />
+                    <span asp-validation-for="InputModel.SlotLenght" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.StartTime" class="control-label"> Start Time: </label>
+                    <input asp-for="InputModel.StartTime" class="form-control" />
+                    <span asp-validation-for="InputModel.StartTime" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.EndTime" class="control-label"> End Time: </label>
+                    <input asp-for="InputModel.EndTime" class="form-control" />
+                    <span asp-validation-for="InputModel.EndTime" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.Status" class="control-label"></label>
+                    <select asp-for="InputModel.Status" class="form-control" asp-items="Html.GetEnumSelectList<StatusTypes>()"></select>
+                    <span asp-validation-for="InputModel.Status" class="text-danger"></span>
+                </div>
+
+                @*<div class="form-group">
                 <label asp-for="Availability.AvailableSlots" class="control-label"> Available Slots:</label>
                 <input readonly asp-for="Availability.AvailableSlots" class="form-control" />
                 <span asp-validation-for="Availability.AvailableSlots" class="text-danger"></span>
             </div>*@
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+                </div>
+            <hr />
+                <div class="form-group text-center my-3">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
         </form>
     </div>
 </div>
 
-<div>
+@*<div>
     <a asp-page="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
-    <script>
-        function getClinic() {
+    <script>var selectdoctor = document.getElementById('selectdoctor');
+        selectdoctor.addEventListener('change', function () {
+
             var x = document.getElementById("selectdoctor").value;
+
             $.ajax({
                 url: '?handler=Clinic&id=' + x,
                 data: "{}",
                 success: function (data) {
                     console.log(data.length);
                     console.log(data);
-                    var s = '<option value="-1">Please Select a Clinic</option>';
+                    var s = '<option value="-1">Please select a clinic</option>';
                     for (var i = 0; i < data.length; i++) {
 
                         s += '<option value="' + data[i].clinicId + '">' + data[i].address + '</option>';
-                        
-                        
+
+
                     }
                     $("#selectclinic").html(s);
+                    
                 },
                 error: function (error) {
                     alert("Error: " + error);
                 }
             });
-        }
-    </script>
+        }, false);</script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

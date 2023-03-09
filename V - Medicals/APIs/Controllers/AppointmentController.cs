@@ -34,22 +34,27 @@ namespace V___Medicals.APIs.Controllers
         {
             if (ModelState.IsValid)
             {
-                Patient patient =  _appDbContext.Patients.Where(p => p.PatientId == model.PateintId).FirstOrDefault();
+                Patient patient =  _appDbContext.Patients.Where(p => p.PatientId == model.PateintId).FirstOrDefault()!;
                 if (patient == null)
                 {
                     return BadRequest(new Response {Status="Error",Message="Patient Id is wrong!" });
                 }
-                Doctor doctor = _appDbContext.Doctors.Where(p => p.DoctorId == model.DoctorId).FirstOrDefault();
+                Doctor doctor = _appDbContext.Doctors.Where(p => p.DoctorId == model.DoctorId).FirstOrDefault()!;
                 if (doctor == null)
                 {
                     return BadRequest(new Response { Status = "Error", Message = "Doctor Id is wrong!" });
                 }
-                Availability availability = _appDbContext.Availabilities.Where(p => p.AvailabilityId == model.availabilityId).FirstOrDefault();
+                Availability availability = _appDbContext.Availabilities.Where(p => p.AvailabilityId == model.availabilityId).FirstOrDefault()!;
                 if (availability == null)
                 {
                     return BadRequest(new Response { Status = "Error", Message = "Wrong availability" });
                 }
-                Slot slot = _appDbContext.Slots.Where(p => p.SlotId == model.SlotId).FirstOrDefault();
+                Speciality speciality = _appDbContext.Specialities.Where(sp => sp.SpecialityId == doctor.SpecialityId).FirstOrDefault()!;
+                if (availability == null)
+                {
+                    return BadRequest(new Response { Status = "Error", Message = "Wrong Speciality" });
+                }
+                Slot slot = _appDbContext.Slots.Where(p => p.SlotId == model.SlotId).FirstOrDefault()!;
                 if (slot == null)
                 {
                     return BadRequest(new Response { Status = "Error", Message = "Slot Id is wrong!" });
@@ -59,7 +64,7 @@ namespace V___Medicals.APIs.Controllers
                     return BadRequest(new Response { Status = "Error", Message = "Slot is already booked" });
                 }
 
-                Appointment appointment = new Appointment() {DoctorId =doctor.DoctorId,Status = AppointmentStatus.OutStanding_Examination,ClinicDate = availability.ClinicDate,CreatedDate = DateTime.UtcNow,PatientId = model.PateintId,Time = slot.SlotTime};
+                Appointment appointment = new Appointment() {DoctorId =doctor.DoctorId,Status = AppointmentStatus.OutStanding_Examination,ClinicDate = availability.ClinicDate,PatientId = model.PateintId,Time = slot.SlotTime, SpecialityName = speciality .Name};
                 var createdAppointment = await  _appDbContext.Appointments.AddAsync(appointment);
                 slot.Status = SlotStatus.Booked;
                 _appDbContext.Slots.Update(slot);
@@ -126,7 +131,7 @@ namespace V___Medicals.APIs.Controllers
         {
             if (ModelState.IsValid)
             {
-                PatientVitals PatientVitals = new PatientVitals() { AppointmentId = model.AppointmentId, AddedOn = DateTime.UtcNow, BMI = model.BMI, DiastolicBP1 = model.DiastolicBP1, HeartRate = model.HeartRate, Height = model.Height, SystolicBP1 = model.SystolicBP1, Temprature = model.Temprature, Weight = model.Weight };
+                PatientVitals PatientVitals = new PatientVitals() { AppointmentId = model.AppointmentId,  BMI = model.BMI, DiastolicBP1 = model.DiastolicBP1, HeartRate = model.HeartRate, Height = model.Height, SystolicBP1 = model.SystolicBP1, Temprature = model.Temprature, Weight = model.Weight };
 
                 var result = _appDbContext.PatientVitals.Add(PatientVitals);
                 _appDbContext.SaveChanges();

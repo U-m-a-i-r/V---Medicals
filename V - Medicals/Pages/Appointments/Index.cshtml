@@ -6,10 +6,12 @@
     Layout = "_DashBoardLayout";
 }
 
-<h1>Index</h1>
+<div class="text-center text-dark">
+    <p class="text-center p-2 Monospace d-inline-flex border border-info">Appointments</p>
+</div>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a class="btn btn-primary" asp-page="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -20,72 +22,79 @@
             <th>
                 @Html.DisplayNameFor(model => model.Appointment[0].Doctor)
             </th>
+            <!--<th>
+                Appointment Date-->
+                @*@Html.DisplayNameFor(model => model.Appointment[0].ClinicDate)*@
+            <!--</th>-->
             <th>
-                @Html.DisplayNameFor(model => model.Appointment[0].ClinicDate)
+                Appointment
+                @*@Html.DisplayNameFor(model => model.Appointment[0].Time)*@
+            </th>
+            <th>
+                Speciality
+                    @*@Html.DisplayNameFor(model => model.Appointment[0].SpecialityName)*@
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.Appointment[0].Time)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Appointment[0].CreatedDate)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Appointment[0].Description)
-            </th>
-            <th>
+            </th>*@
+            @*<th>
                 @Html.DisplayNameFor(model => model.Appointment[0].AppointmentType)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Appointment[0].Status)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Appointment[0].UpdatedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Appointment[0].LastModifiedBy)
-            </th>
-            <th></th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].UpdatedOn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Appointment[0].LastModifiedBy)
+                </th>*@
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Appointment) {
-        <tr>
+        @foreach (var item in Model.Appointment)
+        {
+            <tr>
+                <td>
+                 <a asp-page="./Details" asp-route-id="@item.AppointmentId">   @Html.DisplayFor(modelItem => item.Patient.FullName)</a>
+</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doctor.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClinicDate)
+                    |
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    
+                    @Html.DisplayFor(modelItem => item.SpecialityName)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>*@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>*@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.AppointmentType)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.UpdatedOn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastModifiedBy)
+                    </td>*@
             <td>
-                @Html.DisplayFor(modelItem => item.Patient.FullName)
+                <a asp-page="./Details" asp-route-id="@item.AppointmentId"><i class="fa-solid fa-eye"></i></a> |
+                <a asp-page="./Edit" asp-route-id="@item.AppointmentId"><i class="fas fa-edit"></i></a> |
+                <a asp-page="./Delete" asp-route-id="@item.AppointmentId"><i class="fa-solid fa-trash text-danger"></i></a>
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Doctor.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClinicDate)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AppointmentType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastModifiedBy)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.AppointmentId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.AppointmentId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.AppointmentId">Delete</a>
-            </td>
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>

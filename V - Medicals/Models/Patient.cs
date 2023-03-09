@@ -38,9 +38,13 @@ namespace V___Medicals.Models
         public User? User { get; set; }
 
         public bool? IsDeleted { get; set; } = false;
-        public DateTime CreatedOn { get; set; }
-        public DateTime UpdatedOn { get; set; }
-        public String? LastModifiedBy { get; set; }
+        //public DateTime CreatedOn { get; set; }
+        //public DateTime UpdatedOn { get; set; }
+        //public String? LastModifiedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? ModefiedBy { get; set; }
     }
 }
 

@@ -6,106 +6,142 @@
     Layout = "_DashBoardLayout";
 }
 
-<h1>Edit</h1>
-
-<h4>Doctor</h4>
+<a class="btn btn-primary" asp-page="./Index">Back</a>
+<h4 class="text-center Monospace">Edit Doctor</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Doctor.DoctorId" />
-            <div class="form-group">
-                <label asp-for="Doctor.Title" class="control-label"></label>
-                <select asp-for="Doctor.Title" class="form-control"></select>
-                <span asp-validation-for="Doctor.Title" class="text-danger"></span>
+<div class="row my-3 justify-content-center">
+    <div class="">
+        <form enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row">
+                <input type="hidden" asp-for="DoctorId" />
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.Title" class="control-label"></label>
+                    <select asp-for="InputModel.Title" class="form-control" asp-items="Html.GetEnumSelectList<Title>()"></select>
+                    <span asp-validation-for="InputModel.Title" class="text-danger"></span>
+                </div>
+                @*<input type="hidden" asp-for="Doctor.Speciality" class="form-control" />*@
+                @*<input type="hidden" asp-for="Doctor.CreatedBy" class="form-control" />
+        <input type="hidden" asp-for="Doctor.CreatedOn" class="form-control" />*@
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.FirstName" class="control-label">First Name</label>
+                    <input asp-for="InputModel.FirstName" class="form-control" />
+                    <span asp-validation-for="InputModel.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.MiddleName" class="control-label">Middle Name</label>
+                    <input asp-for="InputModel.MiddleName" class="form-control" />
+                    <span asp-validation-for="InputModel.MiddleName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.LastName" class="control-label">Last Name</label>
+                    <input asp-for="InputModel.LastName" class="form-control" />
+                    <span asp-validation-for="InputModel.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.Gender" class="control-label"></label>
+                    <select asp-for="InputModel.Gender" class="form-control" asp-items="Html.GetEnumSelectList<Gender>()"></select>
+                    <span asp-validation-for="InputModel.Gender" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.SpecialityId" class="control-label">Speciality</label>
+                    <select asp-for="InputModel.SpecialityId" class="form-control" asp-items="ViewBag.SpecialityId"></select>
+                    <span asp-validation-for="InputModel.SpecialityId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.DOB" class="control-label"></label>
+                    <input id="SelectDOB" onchange="myFunction()" type="date" asp-for="InputModel.DOB" class="form-control" />
+                    <span asp-validation-for="InputModel.DOB" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.Email" class="control-label"></label>
+                    <input asp-for="InputModel.Email" class="form-control" />
+                    <span asp-validation-for="InputModel.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.PhoneNumber" class="control-label">Phone No</label>
+                    <input asp-for="InputModel.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="InputModel.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.AddressLine" class="control-label">Address</label>
+                    <input asp-for="InputModel.AddressLine" class="form-control" />
+                    <span asp-validation-for="InputModel.AddressLine" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.District" class="control-label">State/Province</label>
+                    <input asp-for="InputModel.District" class="form-control" />
+                    <span asp-validation-for="InputModel.District" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.City" class="control-label"></label>
+                    <input asp-for="InputModel.City" class="form-control" />
+                    <span asp-validation-for="InputModel.City" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.PostalCode" class="control-label">Postal Code</label>
+                    <input asp-for="InputModel.PostalCode" class="form-control" />
+                    <span asp-validation-for="InputModel.PostalCode" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.ProfilePicture" class="control-label"></label>
+                    <input asp-for="InputModel.ProfilePicture" accept=".png,.jpeg,.jpg" class="form-control" />
+                    <span asp-validation-for="InputModel.ProfilePicture" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.ContractType" class="control-label">Contract Type <span class="text-danger">*</span></label>
+                    <select asp-for="InputModel.ContractType" class="form-control" asp-items="Html.GetEnumSelectList<ContractType>()"></select>
+                    <span asp-validation-for="InputModel.ContractType" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.ContractValue" class="control-label">Amount/Percentage<span class="text-danger">*</span></label>
+                    <input asp-for="InputModel.ContractValue" class="form-control" />
+                    <span asp-validation-for="InputModel.ContractValue" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.Qualification" class="control-label"></label>
+                    <input asp-for="InputModel.Qualification" class="form-control" />
+                    <span asp-validation-for="InputModel.Qualification" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.Discription" class="control-label"></label>
+                    <textarea asp-for="InputModel.Discription" class="form-control"></textarea>
+                    <span asp-validation-for="InputModel.Discription" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.Status" class="control-label"></label>
+                    <select asp-for="InputModel.Status" class="form-control" asp-items="Html.GetEnumSelectList<DoctorStatusTypes>()"></select>
+                    <span asp-validation-for="InputModel.Status" class="text-danger"></span>
+                </div>
+                @*<div class="form-group form-check ">
+        <label class="form-check-label">*@
+                <!--<input type="hidden" class="form-check-input" asp-for="Doctor.IsDeleted" />--> @*@Html.DisplayNameFor(model => model.Doctor.IsDeleted)*@
+                @*</label>
+        </div>*@
+                @*<input type="hidden" asp-for="Doctor.Id" class="form-control" />*@
+                @*<div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+            <label asp-for="Doctor.Id" class="control-label"></label>
+            <select asp-for="Doctor.Id" class="form-control" asp-items="ViewBag.Id"></select>
+            <span asp-validation-for="Doctor.Id" class="text-danger"></span>
+        </div>*@
             </div>
-            <div class="form-group">
-                <label asp-for="Doctor.FirstName" class="control-label"></label>
-                <input asp-for="Doctor.FirstName" class="form-control" />
-                <span asp-validation-for="Doctor.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.MiddleName" class="control-label"></label>
-                <input asp-for="Doctor.MiddleName" class="form-control" />
-                <span asp-validation-for="Doctor.MiddleName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.LastName" class="control-label"></label>
-                <input asp-for="Doctor.LastName" class="form-control" />
-                <span asp-validation-for="Doctor.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.Gender" class="control-label"></label>
-                <select asp-for="Doctor.Gender" class="form-control"></select>
-                <span asp-validation-for="Doctor.Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.SpecialityId" class="control-label"></label>
-                <select asp-for="Doctor.SpecialityId" class="form-control" asp-items="ViewBag.SpecialityId"></select>
-                <span asp-validation-for="Doctor.SpecialityId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.DOB" class="control-label"></label>
-                <input asp-for="Doctor.DOB" class="form-control" />
-                <span asp-validation-for="Doctor.DOB" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.Email" class="control-label"></label>
-                <input asp-for="Doctor.Email" class="form-control" />
-                <span asp-validation-for="Doctor.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.PhoneNumber" class="control-label"></label>
-                <input asp-for="Doctor.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Doctor.PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.AddressLine" class="control-label"></label>
-                <input asp-for="Doctor.AddressLine" class="form-control" />
-                <span asp-validation-for="Doctor.AddressLine" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.District" class="control-label"></label>
-                <input asp-for="Doctor.District" class="form-control" />
-                <span asp-validation-for="Doctor.District" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.City" class="control-label"></label>
-                <input asp-for="Doctor.City" class="form-control" />
-                <span asp-validation-for="Doctor.City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.PostalCode" class="control-label"></label>
-                <input asp-for="Doctor.PostalCode" class="form-control" />
-                <span asp-validation-for="Doctor.PostalCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.Status" class="control-label"></label>
-                <select asp-for="Doctor.Status" class="form-control"></select>
-                <span asp-validation-for="Doctor.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Doctor.IsDeleted" /> @Html.DisplayNameFor(model => model.Doctor.IsDeleted)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doctor.Id" class="control-label"></label>
-                <select asp-for="Doctor.Id" class="form-control" asp-items="ViewBag.Id"></select>
-                <span asp-validation-for="Doctor.Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            <hr />
+            <div class="form-group text-center my-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
+@*<div>
+        <a asp-page="./Index">Back to List</a>
+    </div>*@
 
 @section Scripts {
+    <script>function myFunction() {
+    var dob = document.getElementById("SelectDOB").value;
+    console.log(dob)
+}
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

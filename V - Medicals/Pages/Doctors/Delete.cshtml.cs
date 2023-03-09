@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using V___Medicals.Models;
 
 namespace V___Medicals.Pages.Doctors
 {
+    [Authorize]
     public class DeleteModel : PageModel
     {
         private readonly V___Medicals.Data.ApplicationDbContext _context;
@@ -54,6 +56,16 @@ namespace V___Medicals.Pages.Doctors
             {
                 Doctor = doctor;
                 Doctor.IsDeleted = true;
+                if (Doctor.DoctorClinics != null)
+                {
+                    foreach (var doctorClinic in Doctor.DoctorClinics!)
+                    {
+                        var ClinicId = doctorClinic.ClinicId;
+
+                        _context.Clinic.Remove(await _context.Clinic.Where(c => c.ClinicId == ClinicId).FirstOrDefaultAsync());
+                    }
+                }
+               
                 _context.Doctors.Update(Doctor);
                 await _context.SaveChangesAsync();
             }

@@ -15,13 +15,17 @@ namespace V___Medicals.Models
         public Availability Availability { get; set; }
 
         [Required]
-        [DisplayFormat(DataFormatString = "{'HH:mm:tt'}")]
+        //[DisplayFormat(DataFormatString = "{'HH:mm:tt'}")]
         [DataType(DataType.Time)]
         public DateTime SlotTime { get; set; }
         [Required]
         public int SlotLenght { get; set; }
         [Required]
         public SlotStatus Status { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
+        public string? CreatedBy { get; set; }
+        public string? ModefiedBy { get; set; }
     }
 }
 public enum SlotStatus

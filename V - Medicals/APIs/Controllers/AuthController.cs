@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using V___Medicals.ValidationModels;
 using V___Medicals.Constants;
 using V___Medicals.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace V___Medicals.APIs.Controllers
 {
@@ -254,12 +255,10 @@ namespace V___Medicals.APIs.Controllers
                     // return ValidationProblem();
                     return BadRequest(new Response { Status = "Error", Message = "Username already Registered" });
                 }
-
+                
                 User user = new()
                 { 
                     Name = model.Name!,
-                    Created = DateTime.UtcNow,
-                    Updated = DateTime.UtcNow,
                     Email = model.Email!.Trim(),
                     SecurityStamp = Guid.NewGuid().ToString(),
                     UserName = model.UserName.Trim(),
@@ -268,8 +267,8 @@ namespace V___Medicals.APIs.Controllers
                 };
 
 
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                var userResult = await _userManager.CreateAsync(user, model.Password);
+                if (userResult.Succeeded)
                 {
                     if (!await _roleManager.RoleExistsAsync(Constants.Constants.ROLE_PATIENT))
                     {
@@ -278,7 +277,14 @@ namespace V___Medicals.APIs.Controllers
 
                     // IdentityResult result3 = await _roleManager.CreateAsync(new IdentityRole(FYP_VMedicals.Constants.Constants.ROLE_PATIENT));
                     //var roleResult = await RoleManager<>.CreateAsync(new IdentityRole("Admin"));
-                    result = await _userManager.AddToRoleAsync(user, Constants.Constants.ROLE_PATIENT);
+                   var  result = await _userManager.AddToRoleAsync(user, Constants.Constants.ROLE_PATIENT);
+                    //MaintainRecord maintainRecord = new MaintainRecord();
+                    //maintainRecord.Created = DateTime.Now;
+                    //maintainRecord.UserName = user.Name;
+                    //var maintainRecordResult = await _appDbContext.MaintainRecords.AddAsync(maintainRecord);
+                    user.CreatedOn = DateTime.UtcNow;
+                    user.CreatedBy = user.Name;
+                    var updateUserResult = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)
                     {
                         var currentUser = HttpContext.User;
@@ -298,11 +304,12 @@ namespace V___Medicals.APIs.Controllers
 
 
 
+                    _appDbContext.SaveChanges();
                     return Ok(new { Status = "Success", Message = "User has been registered successfully." });
                 }
                 else
                 {
-                    return BadRequest(result.Errors);
+                    return BadRequest(userResult.Errors);
                 }
             }
 
@@ -329,7 +336,7 @@ namespace V___Medicals.APIs.Controllers
                 var token = CreateToken(user);
 
                 user.Token = token;
-                user.Updated = DateTime.UtcNow;
+                //user.maintainRecord.Updated = DateTime.UtcNow;
                 var UserRole =  await  _userManager.GetRolesAsync(user);
                 await _userManager.UpdateAsync(user);
                 var currentUser =  HttpContext.User;

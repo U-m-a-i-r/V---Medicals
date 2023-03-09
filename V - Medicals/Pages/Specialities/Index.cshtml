@@ -6,8 +6,12 @@
     Layout = "_DashBoardLayout";
 }
 
+<div class="text-center text-dark">
+    <p class="text-center p-2 Monospace d-inline-flex border border-info">Specialities</p>
+</div>
+
 <p>
-    <a asp-page="Create">Create New</a>
+    <a class="btn btn-primary" asp-page="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -21,30 +25,31 @@
             <th>
                 @Html.DisplayNameFor(model => model.Speciality[0].IsActive)
             </th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Speciality) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
+        @foreach (var item in Model.Speciality)
+        {
+            <tr>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.SpecialityId"> @Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                <td>
                     <img src="~/Files/@item.Icon"
-                     class="rounded-circle"
-                     height="40" width="40"
-                     asp-append-version="true" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.SpecialityId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.SpecialityId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.SpecialityId">Delete</a>
-            </td>
-        </tr>
-}
+                         class="rounded-circle shadow"
+                         height="40" width="40"
+                         asp-append-version="true" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.SpecialityId"><i class="fa-solid fa-eye"></i></a> |
+                    <a asp-page="./Edit" asp-route-id="@item.SpecialityId"><i class="fas fa-edit"></i></a> |
+                    <a asp-page="./Delete" asp-route-id="@item.SpecialityId"><i class="fa-solid fa-trash text-danger"></i></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Models;
 using System;
 using V___Medicals.Models;
+using HotChocolate.AspNetCore.Authorization;
 using V___Medicals.Services;
 using V___Medicals.Services.Implementation;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
+using V___Medicals.Models.TestGraphQL;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers().AddJsonOptions(x =>
@@ -48,6 +50,7 @@ builder.Services.AddAuthentication(options =>
                 };
             }).AddCookie(option=> { 
                 option.LoginPath = "/Identity/Account/Login";
+              //  option.AccessDeniedPath = "";
             })
 .AddJwtBearer(options =>
 {
@@ -75,7 +78,11 @@ builder.Services.AddAuthentication(options =>
 builder.Services.Configure<AuthenticationOptions>(options => options.DefaultScheme = "AppDefinedAuthentication");
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
-
+builder.Services
+    .AddGraphQLServer().AddAuthorization()
+    .AddQueryType<Query>().AddFiltering()
+    .AddProjections().AddSorting().
+    RegisterDbContext<ApplicationDbContext>();
 builder.Services.AddApiVersioning(config =>
 {
     config.AssumeDefaultVersionWhenUnspecified = true;
@@ -90,7 +97,6 @@ builder.Services.AddHttpClient();
 //builder.Services.AddTransient<IPatientService, PatientService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
-
 builder.Services.AddSwaggerGen(s =>
 {
     s.SwaggerDoc("v1", new OpenApiInfo
@@ -151,6 +157,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapDefaultControllerRoute();
     endpoints.MapControllers();
     endpoints.MapRazorPages();
+    endpoints.MapGraphQL();
 });
 app.UseSwagger()
    .UseStatusCodePages();
@@ -164,10 +171,10 @@ app.UseSwaggerUI(options =>
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
+//app.UseRouting();
 
 
 
 app.MapRazorPages();
-
+//app.MapGraphQL();
 app.Run();

@@ -20,7 +20,7 @@ namespace V___Medicals.ValidationModels
         public int SpecialityId { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{MM/dd/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{MM/dd/yyyy}")]
         public DateTime? DOB { get; set; }
 
         public String? Email { get; set; }
@@ -31,6 +31,11 @@ namespace V___Medicals.ValidationModels
         public String? PostalCode { get; set; }
         [Display(Name = "Profile Picture")]
         public IFormFile? ProfilePicture { get; set; }
+        [Required]
+        public ContractType ContractType { get; set; }
+        [Required]
+        public String ContractValue { get; set; } = default!;
+        public bool IsDeleted { get; set; } = false;
         public ICollection<DoctorDocument>? Documents { get; set; }
         [Required(ErrorMessage = "Qualification field is required")]
         public String Qualification { get; set; }

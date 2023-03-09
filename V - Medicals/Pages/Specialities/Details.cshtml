@@ -6,32 +6,82 @@
     Layout = "_DashBoardLayout";
 }
 
-<h1>Details of Speciality</h1>
+<a class="btn btn-primary" asp-page="./Index">Back</a>
+<h4 class="text-center Monospace"> Speciality Details</h4>
 
 <div>
+    <div class="row my-3 d-flex justify-content-center">
+        <div class="col m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Created on:
+                @*@Html.DisplayNameFor(model => model.User.Created)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Speciality.CreatedOn)
+            </dd>
+        </div>
+        <div class="col m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Created by:
+                @*@Html.DisplayNameFor(model => model.User.Created)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Speciality.CreatedBy)
+            </dd>
+        </div>
+        <div class="col m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Last Modified on:
+                @*@Html.DisplayNameFor(model => model.User.Updated)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Speciality.UpdatedOn)
+            </dd>
+        </div>
+        <div class="col m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Last Modified by:
+                @*@Html.DisplayNameFor(model => model.User.Updated)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Speciality.ModefiedBy)
+            </dd>
+        </div>
+    </div>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Speciality.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Speciality.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Speciality.Icon)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Speciality.Icon)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Speciality.IsActive)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Speciality.IsActive)
-        </dd>
+    <dl class="row my-2 d-flex justify-content-center">
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Speciality.Name)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Speciality.Name)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Speciality.Icon)
+            </dt>
+            <dd class="col">
+                <img src="~/Files/@Model.Speciality.Icon"
+                     class="rounded shadow"
+                     height="80" width="80"
+                     asp-append-version="true" />
+                @*@Html.DisplayFor(model => model.Speciality.Icon)*@
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Speciality.IsActive)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Speciality.IsActive)
+            </dd>
+        </div>
     </dl>
 </div>
-<div>
+<hr/>
+@*<div>
     <a asp-page="./Edit" asp-route-id="@Model.Speciality?.SpecialityId">Edit</a> |
     <a asp-page="./Index">Back to List</a>
-</div>
+</div>*@

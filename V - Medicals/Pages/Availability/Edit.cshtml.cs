@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using V___Medicals.Models;
 
 namespace V___Medicals.Pages.Availability
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly V___Medicals.Data.ApplicationDbContext _context;
@@ -36,8 +38,8 @@ namespace V___Medicals.Pages.Availability
                 return NotFound();
             }
             Availability = availability;
-           ViewData["ClinicId"] = new SelectList(_context.Clinic, "ClinicId", "AddressLine");
-           ViewData["DoctorId"] = new SelectList(_context.Doctors, "DoctorId", "FirstName");
+           ViewData["ClinicId"] = new SelectList(_context.DoctorClinics.Where(dc => dc.DoctorId == id).Include(dc => dc.Clinic).Select(dc => dc.Clinic), "ClinicId", "Name");
+           ViewData["DoctorId"] = new SelectList(_context.Doctors.Where(d => d.IsDeleted == false && d.Status == DoctorStatusTypes.Active), "DoctorId", "FullName");
             return Page();
         }
 

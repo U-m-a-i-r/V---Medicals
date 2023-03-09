@@ -6,123 +6,313 @@
     Layout = "_DashBoardLayout";
 }
 
-<h1>Details</h1>
+<a class="btn btn-primary" asp-page="./Index">Back</a>
+<h4 class="text-center Monospace">Patient's Details</h4>
 
 <div>
-    <h4>Patient</h4>
+    <div class="row my-3 d-flex justify-content-center">
+        <div class="col m-2 text-center col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Created on:
+                @*@Html.DisplayNameFor(model => model.User.Created)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Patient.CreatedOn)
+            </dd>
+        </div>
+        <div class="col text-center m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Created by:
+                @*@Html.DisplayNameFor(model => model.User.Created)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Patient.CreatedBy)
+            </dd>
+        </div>
+        <div class="col text-center m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Last Modified on:
+                @*@Html.DisplayNameFor(model => model.User.Updated)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Patient.UpdatedOn)
+            </dd>
+        </div>
+        <div class="col text-center m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Last Modified by:
+                @*@Html.DisplayNameFor(model => model.User.Updated)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Patient.ModefiedBy)
+            </dd>
+        </div>
+    </div>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.FirstName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.MiddleName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.MiddleName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.LastName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.LastName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.Gender)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.Gender)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.DOB)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.DOB)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.PhoneNumber)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.PhoneNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.CNIC)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.CNIC)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.AddressLine)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.AddressLine)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.District)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.District)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.City)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.City)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.PostalCode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.PostalCode)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.UserId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.UserId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.IsDeleted)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.IsDeleted)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.CreatedOn)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.CreatedOn)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.UpdatedOn)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.UpdatedOn)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient.LastModifiedBy)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Patient.LastModifiedBy)
-        </dd>
-    </dl>
+    <div class="row my-3 d-flex justify-content-center">
+        <div class="card shadow-sm text-center m-2 p-0 col-sm-6 col-xs-12 col-md-4 col-lg-2 ">
+            <button class="btn h-100 btn-primary text-light border border-dark border-5" style="height:60px !important;" id="case_info_button">Case Info</button>
+        </div>
+        <div class="card shadow-sm text-center m-2 p-0 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <button class="btn h-100 btn-primary text-light" style="height:60px !important;" id="appointment_details_button"> Appointment Details</button>
+        </div>
+        <div class="card shadow-sm text-center m-2 p-0 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <button class="btn h-100 btn-primary text-light" style="height:60px !important;"> Medical History</button>
+
+        </div>
+        <div class="card shadow-sm text-center m-2 p-0 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <button class="btn h-100 btn-primary text-light" style="height:60px !important;">  Prescription</button>
+        </div>
+        <div class="card shadow-sm text-center m-2 p-0 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <button class="btn h-100 btn-primary text-light" style="height:60px !important;">  Appointment Vitals</button>
+        </div>
+
+    </div>
+    <hr />
+    <div id="case_info" style="display:block">
+        <dl class="row my-2 d-flex justify-content-center">
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.Title)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.Title)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.FirstName)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.FirstName)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.MiddleName)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.MiddleName)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.LastName)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.LastName)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.Gender)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.Gender)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.DOB)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.DOB)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.Email)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.Email)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.PhoneNumber)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.PhoneNumber)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.CNIC)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.CNIC)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.AddressLine)
+                </dt>
+                <dd class="col ">
+                    @Html.DisplayFor(model => model.Patient.AddressLine)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    State/Province
+                    @*@Html.DisplayNameFor(model => model.Patient.District)*@
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.District)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.City)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.City)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.PostalCode)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.PostalCode)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.UserId)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.UserId)
+                </dd>
+            </div>
+            <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <dt class="col text-info">
+                    @Html.DisplayNameFor(model => model.Patient.IsDeleted)
+                </dt>
+                <dd class="col">
+                    @Html.DisplayFor(model => model.Patient.IsDeleted)
+                </dd>
+            </div>
+
+        </dl>
+    </div>
+    <div id="appointment_details" style="display:none">
+
+
+        <dl class="row my-2 d-flex justify-content-center">
+            @{ int count = 1;}
+            @foreach (var appointment in Model.Appointments)
+            {
+                <h5 class="text-center Monospace">Appointment: @count</h5>
+                @*<div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                    <dt class="col text-info">
+                        @Html.DisplayNameFor(model => appointment.Patient)
+                    </dt>
+                    <dd class="col">
+                        @Html.DisplayFor(model => appointment.Patient.PatientId)
+                    </dd>
+                </div>*@
+                <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                    <dt class="col text-info">
+                        @Html.DisplayNameFor(model => appointment.Doctor)
+                    </dt>
+                    <dd class="col">
+                        @Html.DisplayFor(model => appointment.Doctor.FullName)
+                    </dd>
+                </div>
+                <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                    <dt class="col text-info">
+                        Appointment Date
+                        @*@Html.DisplayNameFor(model => appointment.ClinicDate)*@
+                    </dt>
+                    <dd class="col">
+                        @Html.DisplayFor(model => appointment.ClinicDate)
+                    </dd>
+                </div>
+                <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                    <dt class="col text-info">
+                        @Html.DisplayNameFor(model => appointment.Time)
+                    </dt>
+                    <dd class="col">
+                        @Html.DisplayFor(model => appointment.Time)
+                    </dd>
+                </div>
+                @*<dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Appointment.CreatedDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Appointment.CreatedDate)
+            </dd>*@
+                @*<div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                    <dt class="col text-info">
+                        @Html.DisplayNameFor(model => appointment.Description)
+                    </dt>
+                    <dd class="col">
+                        @Html.DisplayFor(model => appointment.Description)
+                    </dd>
+                </div>*@
+                <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                    <dt class="col text-info">
+                        Appointment Type
+                        @*@Html.DisplayNameFor(model => appointment.AppointmentType)*@
+                    </dt>
+                    <dd class="col">
+                        @Html.DisplayFor(model => appointment.AppointmentType)
+                    </dd>
+                </div>
+                <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                    <dt class="col text-info">
+                        @Html.DisplayNameFor(model => appointment.Status)
+                    </dt>
+                    <dd class="col">
+                        @Html.DisplayFor(model => appointment.Status)
+                    </dd>
+                </div>
+             
+                    count++;
+                @*<div class="card shadow-sm text-center m-2 p-0 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+                <a class="btn btn-primary text-light"> @Html.DisplayFor(model => appointment.ClinicDate)</a>
+            </div>*@
+            }
+        </dl>
+    </div>
+    <hr />
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Patient?.PatientId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
+
+@*<div>
+        <a asp-page="./Edit" asp-route-id="@Model.Patient?.PatientId">Edit</a> |
+        <a asp-page="./Index">Back to List</a>
+    </div>*@
+@section Scripts {
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>var caseInfoButton = document.getElementById("case_info_button");
+        var appointmentDetailsButton = document.getElementById("appointment_details_button");
+
+        caseInfoButton.addEventListener("click", function () {
+            console.log("info pressed");
+            document.getElementById('case_info').style.display = "block ";
+            caseInfoButton.classList.add("border");
+            caseInfoButton.classList.add("border-dark");
+            caseInfoButton.classList.add("border-5");
+            appointmentDetailsButton.classList.remove("border");
+            appointmentDetailsButton.classList.remove("border-dark");
+            appointmentDetailsButton.classList.remove("border-5");
+            document.getElementById('appointment_details').style.display = "none ";
+            
+        });
+        appointmentDetailsButton.addEventListener("click", function () {
+            console.log("appointment pressed");
+            document.getElementById('appointment_details').style.display = "block ";
+            document.getElementById('case_info').style.display = "none ";
+            appointmentDetailsButton.classList.add("border");
+            appointmentDetailsButton.classList.add("border-dark");
+            appointmentDetailsButton.classList.add("border-5");
+            caseInfoButton.classList.remove("border");
+            caseInfoButton.classList.remove("border-dark");
+            caseInfoButton.classList.remove("border-5");
+            
+            
+        });</script>
+
+}

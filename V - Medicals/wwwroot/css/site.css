@@ -8,9 +8,18 @@ html {
   }
 }
 
+.Monospace {
+    font-family: Monospace !important;
+    font-style:italic;
+    font-size:24px;
+}
+/*a:hover {
+    color: ThreeDDarkShadow !important;
+}*/
+
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
@@ -18,8 +27,9 @@ body {
 }
 a {
     color: #007bff;
-    text-decoration: none;
+    text-decoration: none !important; 
     background-color: transparent;
+    
 }
 
     a:hover {

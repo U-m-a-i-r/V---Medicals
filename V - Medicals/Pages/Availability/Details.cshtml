@@ -6,63 +6,118 @@
     Layout = "_DashBoardLayout";
 }
 
-<h1>Details</h1>
+<a class="btn btn-primary" asp-page="./Index">Back</a>
+<h4 class="text-center Monospace">Availability Details</h4>
 
 <div>
-    <h4>Availability</h4>
+    <div class="row my-3 d-flex justify-content-center">
+        <div class="col m-2 text-center col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Created on:
+                @*@Html.DisplayNameFor(model => model.User.Created)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Availability.CreatedOn)
+            </dd>
+        </div>
+        <div class="col text-center m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Created by:
+                @*@Html.DisplayNameFor(model => model.User.Created)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Availability.CreatedBy)
+            </dd>
+        </div>
+        <div class="col text-center m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Last Modified on:
+                @*@Html.DisplayNameFor(model => model.User.Updated)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Availability.UpdatedOn)
+            </dd>
+        </div>
+        <div class="col text-center m-2 col-lg-2 col-md-4 col-sm-6 col-xs-12">
+            <dt class="col text-info">
+                Last Modified by:
+                @*@Html.DisplayNameFor(model => model.User.Updated)*@
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Availability.ModefiedBy)
+            </dd>
+        </div>
+    </div>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Availability.Clinic)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Availability.Clinic.AddressLine)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Availability.Doctor)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Availability.Doctor.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Availability.ClinicDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Availability.ClinicDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Availability.StartTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Availability.StartTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Availability.EndTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Availability.EndTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Availability.SlotLenght)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Availability.SlotLenght)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Availability.AvailableSlots)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Availability.AvailableSlots)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Availability.BookedSlots)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Availability.BookedSlots)
-        </dd>
+    <dl class="row my-2 d-flex justify-content-center">
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Availability.Clinic)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Availability.Clinic.Name)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Availability.Doctor)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Availability.Doctor.FullName)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Availability.ClinicDate)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Availability.ClinicDate)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Availability.StartTime)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Availability.StartTime)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Availability.EndTime)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Availability.EndTime)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Availability.SlotLenght)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Availability.SlotLenght)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Availability.AvailableSlots)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Availability.AvailableSlots)
+            </dd>
+        </div>
+        <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
+            <dt class="col text-info">
+                @Html.DisplayNameFor(model => model.Availability.BookedSlots)
+            </dt>
+            <dd class="col">
+                @Html.DisplayFor(model => model.Availability.BookedSlots)
+            </dd>
+        </div>
     </dl>
+    <hr />
 </div>
-<div>
+@*<div>
     <a asp-page="./Edit" asp-route-id="@Model.Availability?.AvailabilityId">Edit</a> |
     <a asp-page="./Index">Back to List</a>
-</div>
+</div>*@

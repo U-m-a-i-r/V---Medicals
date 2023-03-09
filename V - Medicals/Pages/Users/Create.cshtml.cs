@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -13,7 +16,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using V___Medicals.Data;
 using V___Medicals.Models;
+using V___Medicals.Services;
 using V___Medicals.ValidationModels;
+
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace V___Medicals.Pages.Users
@@ -24,26 +29,29 @@ namespace V___Medicals.Pages.Users
         private readonly ApplicationDbContext _context;
         private readonly RoleManager<IdentityRole<string>> _roleManager;
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public CreateModel(ApplicationDbContext context, RoleManager<IdentityRole<string>> roleManager, UserManager<User> userManager, IWebHostEnvironment webHostEnvironment)
+        public CreateModel(ApplicationDbContext context, IHttpContextAccessor httpContext, RoleManager<IdentityRole<string>> roleManager, UserManager<User> userManager, SignInManager<User> signInManager, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _roleManager = roleManager;
             _userManager = userManager;
+            _signInManager = signInManager;
             this.webHostEnvironment = webHostEnvironment;
         }
         [BindProperty]
         public IList<IdentityRole<string>> Roles { get; set; } = default!;
         [BindProperty]
         public IList<Doctor> Doctors { get; set; } = default!;
-
+        public IList<Patient> Patients { get; set; } = default!;
         public async Task OnGetAsync()
         {
             if (_context.UserRoles != null)
             {
                 Roles = await _context.Roles.ToListAsync();
-                Doctors = await _context.Doctors.Where(d=>d.IsDeleted==false).ToListAsync();
+                Doctors = await _context.Doctors.Where(d=>d.IsDeleted==false).Where(d=>d.Status==DoctorStatusTypes.Active).ToListAsync();
+                Patients = await _context.Patients.Where(p => p.IsDeleted == false).ToListAsync();
             }
         }
 
@@ -52,7 +60,9 @@ namespace V___Medicals.Pages.Users
         [BindProperty]
         public String RoleName { get; set; }
         [BindProperty]
-        public String SelectedDoctorId { get; set; }
+        public String? SelectedDoctorId { get; set; }
+        [BindProperty]
+        public String? SelectedPatientId { get; set; }
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -66,8 +76,16 @@ namespace V___Medicals.Pages.Users
                 return Page();
             }
             User user = new User();
-            Doctor doctor = null;
-            string uniqueFileName = null;
+            //MaintainRecord maintainRecord = new MaintainRecord();
+            ClaimsPrincipal _user = HttpContext?.User!;
+            var userEmail = _user.GetUserEmail();
+            var Loggeduser = await _userManager.FindByEmailAsync(userEmail);
+            //maintainRecord.Created = DateTime.Now;
+            //maintainRecord.UserName = Loggeduser.Name;
+            //var maintainRecordResult = await _context.MaintainRecords.AddAsync(maintainRecord);
+            Doctor? doctor = null;
+            Patient? patient = null;
+            string? uniqueFileName = null;
             if (RoleName == Constants.Constants.ROLE_DOCTOR)
             {
                 if(SelectedDoctorId == null)
@@ -86,11 +104,43 @@ namespace V___Medicals.Pages.Users
                     user.Name = doctor.FullName;
                     user.PhoneNumber = doctor.PhoneNumber;
                     user.Email = doctor.Email;
-                    user.Created = DateTime.UtcNow;
-                    user.Updated = DateTime.UtcNow;
+                    user.CreatedOn = DateTime.UtcNow;
+                    user.CreatedBy = Loggeduser.Name;
+                    //user.maintainRecord = maintainRecordResult.Entity;
                     user.SecurityStamp = Guid.NewGuid().ToString();
                     user.UserName = User.UserName.Trim();
                     user.ProfilePicture = doctor.ProfilePicture;
+                    user.IsActive = true;
+                }
+            }
+            if (RoleName == Constants.Constants.ROLE_PATIENT)
+            {
+                if (SelectedPatientId == null)
+                {
+                    ModelState.AddModelError(nameof(SelectedPatientId), "Please select a doctor.");
+                    return Page();
+                }
+                patient = _context.Patients.Where(d => d.PatientId == int.Parse(SelectedPatientId)).FirstOrDefault()!;
+                if (patient != null)
+                {
+                    if (patient.UserId != null)
+                    {
+                        ModelState.AddModelError(nameof(SelectedPatientId), "User already exist for this Patient!");
+                        return Page();
+                    }
+                    if (User.ProfilePicture != null)
+                    {
+                        uniqueFileName = UploadedFile(User);
+                    }
+                    user.Name = patient.FullName;
+                    user.PhoneNumber = patient.PhoneNumber;
+                    user.Email = patient.Email;
+                    user.CreatedOn = DateTime.UtcNow;
+                    user.CreatedBy = Loggeduser.Name;
+                    //user.maintainRecord = maintainRecordResult.Entity;
+                    user.SecurityStamp = Guid.NewGuid().ToString();
+                    user.UserName = User.UserName.Trim();
+                    user.ProfilePicture = uniqueFileName;
                     user.IsActive = true;
                 }
             }
@@ -119,8 +169,9 @@ namespace V___Medicals.Pages.Users
                     user.Email = User.Email!.Trim();
                 }
                 user.Name = User.Name!;
-                user.Created = DateTime.UtcNow;
-                user.Updated = DateTime.UtcNow;
+                user.CreatedOn = DateTime.UtcNow;
+                user.CreatedBy = Loggeduser.Name;
+                //user.maintainRecord = maintainRecordResult.Entity;
                 user.SecurityStamp = Guid.NewGuid().ToString();
                 user.UserName = User.UserName.Trim();
                 
@@ -144,7 +195,19 @@ namespace V___Medicals.Pages.Users
                     await _userManager.AddToRoleAsync(user, Constants.Constants.ROLE_DOCTOR);
                     doctor.Id = user.Id;
                     doctor.User = user;
+                    doctor.ModefiedBy = Loggeduser.Name;
+                    doctor.UpdatedOn = DateTime.UtcNow;
                     _context.Doctors.Update(doctor);
+                    _context.SaveChanges();
+                }
+                else if (RoleName == Constants.Constants.ROLE_PATIENT)
+                {
+                    await _userManager.AddToRoleAsync(user, Constants.Constants.ROLE_PATIENT);
+                    patient!.UserId = user.Id;
+                    patient.User = user;
+                    patient.ModefiedBy = Loggeduser.Name;
+                    patient.UpdatedOn = DateTime.UtcNow;
+                    _context.Patients.Update(patient);
                     _context.SaveChanges();
                 }
                 else
@@ -152,6 +215,8 @@ namespace V___Medicals.Pages.Users
                     ModelState.AddModelError(nameof(RoleName), "Please select a valid user's role.");
                     return Page();
                 }
+                //user.maintainRecord = maintainRecord;
+                //await _userManager.UpdateAsync(user);
                 return RedirectToPage("./Index");
 
             }
@@ -167,9 +232,9 @@ namespace V___Medicals.Pages.Users
 
             if (model.ProfilePicture != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Files");
+                string uploadsFolder = System.IO.Path.Combine(webHostEnvironment.WebRootPath, "Files");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProfilePicture.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                string filePath = System.IO.Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     model.ProfilePicture.CopyTo(fileStream);

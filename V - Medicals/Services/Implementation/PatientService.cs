@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using V___Medicals.Data;
 using V___Medicals.Models;
@@ -25,6 +26,11 @@ namespace V___Medicals.Services.Implementation
             }
             //var model = _mapper.Map<Patient>(Model);
             Patient patient = new Patient();
+            //MaintainRecord maintainRecord = new MaintainRecord();
+            //maintainRecord.Created = DateTime.Now;
+            //maintainRecord.UserName = user.Name;
+            //var maintainRecordResult = await _dbContext.MaintainRecords.AddAsync(maintainRecord);
+            
             patient.Title = Model.Title;
             patient.FirstName = Model.FirstName;
             patient.MiddleName = Model.MiddleName;
@@ -33,8 +39,8 @@ namespace V___Medicals.Services.Implementation
             patient.DOB = Model.DOB;
             patient.Email = Model.Email;
             patient.PhoneNumber = Model.PhoneNumber;
-            patient.CreatedOn = DateTime.Now;
-            patient.UpdatedOn = DateTime.Now;
+            patient.CreatedOn = DateTime.UtcNow;
+            patient.CreatedBy = user.Name;
             patient.IsDeleted = false;
             patient.User = user;
             patient.UserId = user.Id;
@@ -83,12 +89,16 @@ namespace V___Medicals.Services.Implementation
                 Documents = p.Documents,
                 UserId = p.UserId,
                 PostalCode = p.PostalCode,
-                LastModifiedBy = p.LastModifiedBy,
+                CreatedBy = p.CreatedBy,
+                CreatedOn = p.CreatedOn,
+                UpdatedOn = p.UpdatedOn,
+                ModefiedBy = p.ModefiedBy,
+                //LastModifiedBy = p.LastModifiedBy,
                 //User = p.User,
                 // User =p.User,
                 AddressLine = p.AddressLine,
-                CreatedOn = p.CreatedOn,
-                UpdatedOn = p.UpdatedOn
+                //CreatedOn = p.CreatedOn,
+                //UpdatedOn = p.UpdatedOn
             }).ToList();
         }
 
