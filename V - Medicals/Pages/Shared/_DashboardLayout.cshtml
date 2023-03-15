@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+
     @*<link rel="stylesheet" href="~/V___Medicals.styles.css" asp-append-version="true" />*@
     <link rel="stylesheet" href="~/css/Sidebar/css/style.css">
     <style>
@@ -53,10 +54,15 @@
                 padding: 10px;
                 text-decoration: none;
                 tab-size: inherit;
+                font-style: normal;
+                letter-spacing: 1px;
+                font-family: Copperplate !important;
+                font-weight: normal;
+                font-size: 15px;
             }
 
                 .sidebar a.active {
-                    background-color: #04AA6D;
+                    background-color: #04AA6D !important;
                     color: white;
                 }
 
@@ -159,33 +165,50 @@
                         <li>
                             <a href="/Availability/Index">Manage Availability</a>
                         </li>
+                        <li>
+                            <a href="/Specialities/Index">Manage Specialities</a>
+                        </li>
                     </ul>
                 </li>
-                <hr />
-                <li>
-                    <a href="/Specialities/Index"> <i class="fa-solid fa-notes-medical pr-1"></i>Manage Specialities</a>
-                </li>
+                @*<hr />
+        <li>
+            <a href="/Specialities/Index"> <i class="fa-solid fa-notes-medical pr-1"></i>Manage Specialities</a>
+        </li>*@
                 <hr />
                 <li class="">
-                    <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pr-2"> <i class="fa-solid fa-user pr-1"></i>Manage Users</a>
+                    <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pr-1"> <i class="fa-solid fa-user pr-1"></i>Users</a>
                     <ul class="collapse list-unstyled pl-3" id="homeSubmenu2">
                         <li>
-                            <a href="/Users/Index"> Users</a>
+                            <a href="/Users/Index">Manage Users</a>
                         </li>
                         <li>
-                            <a href="/New Roles/Index">Roles</a>
+                            <a href="/New Roles/Index">Manage Roles</a>
                         </li>
                     </ul>
                 </li>
                 <hr />
+
                 <li class="">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> <i class="fa-solid fa-user-nurse pr-1"></i>Patients & Appointments</a>
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> <i class="fa-solid fa-user-nurse pr-1"></i>Patients</a>
                     <ul class="collapse list-unstyled pl-3" id="homeSubmenu">
                         <li>
-                            <a href="/Patients/Index">All Patients</a>
+                            <a href="/Patients/Index">Manage Patients</a>
                         </li>
                         <li>
-                            <a href="/Appointments/Index">All Appointments</a>
+                            <a href="/Patients/Create">New Patient</a>
+                        </li>
+
+                    </ul>
+                </li>
+                <hr />
+                <li class="">
+                    <a href="#appointments" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa-solid fa-notes-medical pr-1"></i>Appointments</a>
+                    <ul class="collapse list-unstyled pl-3 " id="appointments">
+                        <li>
+                            <a href="/Appointments/Index">Manage Appointments</a>
+                        </li>
+                        <li>
+                            <a href="/Appointments/Create">New Appointment</a>
                         </li>
                         <li>
                             <a href="#">OutStanding Appointments</a>
@@ -198,6 +221,24 @@
                         </li>
                         <li>
                             <a href="#">Pending Approval</a>
+                        </li>
+                    </ul>
+                </li>
+                <hr />
+                <li class="">
+                    <a href="#invoices" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pr-1"> <i class="fa-solid fa-file-invoice-dollar pr-1"></i>Invoices</a>
+                    <ul class="collapse list-unstyled pl-3" id="invoices">
+                        <li>
+                            <a href="/Invoices/Index">Manage Invoices</a>
+                        </li>
+                        <li>
+                            <a href="/Invoices/Create">New Invoice</a>
+                        </li>
+                        <li>
+                            <a href="/Invoices/Index">Unpaid Invoices</a>
+                        </li>
+                        <li>
+                            <a href="/Invoices/Index">Paid Invoices</a>
                         </li>
                     </ul>
                 </li>

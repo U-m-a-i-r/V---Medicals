@@ -55,7 +55,16 @@ namespace V___Medicals.Pages.Patients
             if (patient != null)
             {
                 Patient = patient;
-                _context.Patients.Remove(Patient);
+                if (Patient.UserId != null)
+                {
+                    var user = _context.Users.Where(u => u.Id == Patient.UserId).FirstOrDefault();
+                    if (user != null)
+                    {
+                        _context.Users.Remove(user);
+                    }
+                }
+                    _context.Patients.Remove(Patient);
+                
                 await _context.SaveChangesAsync();
             }
 

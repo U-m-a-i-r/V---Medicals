@@ -30,154 +30,106 @@
 <div class="row my-3 d-flex justify-content-center">
     <div id="chartContainer1" class="col m-2 col-lg-5 col-md-4 col-sm-12 col-xs-12"></div>
     <div id="chartContainer2" class="col m-2 col-lg-5 col-md-4 col-sm-12 col-xs-12"></div>
+    <canvas id="myChart"></canvas>
+    <canvas id="appointmentsChart"></canvas>
 </div>
-<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Launch demo modal
-</button>-->
-
-<!-- Modal -->
-<!--<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>-->
 
 @section Scripts {
-    <script>window.onload = function () {
-
-            var chart2 = new CanvasJS.Chart("chartContainer2", {
-                animationEnabled: true,
-                theme: "light2", // "light1", "light2", "dark1", "dark2"
-                title: {
-                    text: "LAST 7 DAYS SPECIALITIES"
-                },
-                axisY: {
-                    title: "",
-                    suffix: ""
-                },
-                axisX: {
-                    title: ""
-                },
-                data: [{
-                    type: "column",
-                    yValueFormatString: "#,##0#",
-                    dataPoints: [
-                        { label: "GP", y: 7 },
-                        { label: "Orthopaedic", y: 6 },
-                        { label: "Physiotherapist", y: 5 },
-                        { label: "Psychologist", y: 2 },
-                        { label: "Neurologist", y: 1 },
-                        //{ label: "UK", y: 1.80 },
-                        //{ label: "United States", y: 1.60 },
-                        //{ label: "Japan", y: 1.60 }
-
-                    ]
-                }]
-            });
-            chart2.render();
-            var chart1 = new CanvasJS.Chart("chartContainer1", {
-                animationEnabled: true,
-                title: {
-                    text: "APPOINTMENTS"
-                },
-                axisY: {
-                    title: "No. of appointments",
-
-
-                    // suffix: "mn",
-                    stripLines: [{
-                        value: 25,
-                        label: "Average"
-                    }]
-                },
-                data: [{
-                    yValueFormatString: "#,##0#",
-                    xValueFormatString: "DD/MM/YYYY",
-                    type: "spline",
-                    dataPoints: [
-                        { x: new Date(2023, 2, 01), y: 25 },
-                        { x: new Date(2023, 2, 02), y: 27 },
-                        { x: new Date(2023, 2, 03), y: 33 },
-                        { x: new Date(2023, 2, 04), y: 69 },
-                        { x: new Date(2023, 2, 05), y: 60 },
-                        { x: new Date(2023, 2, 06), y: 23 },
-                        { x: new Date(2023, 2, 07), y: 18 },
-                        { x: new Date(2023, 2, 08), y: 21 },
-                        { x: new Date(2023, 2, 09), y: 72 },
-                        { x: new Date(2023, 2, 10), y: 48 },
-                        { x: new Date(2023, 2, 11), y: 30 },
-                        { x: new Date(2023, 2, 12), y: 02 },
-                        { x: new Date(2023, 2, 13), y: 12 },
-                        { x: new Date(2023, 2, 14), y: 50 },
-                        { x: new Date(2023, 2, 15), y: 15 },
-                        { x: new Date(2023, 2, 16), y: 18 }
-                    ]
-                }]
-            });
-            chart1.render();
-
-        }</script>
-
-    @*<script>window.onload = function () {
-
-            var chart = new CanvasJS.Chart("chartContainer", {
-                animationEnabled: true,
-                title: {
-                    text: "Appointments"
-                },
-                axisY: {
-                    title: "No. of appointments",
-                    valueFormatString: "#0,,.",
-
-                   // suffix: "mn",
-                    stripLines: [{
-                        value: 3366500,
-                        label: "Average"
-                    }]
-                },
-                data: [{
-                    yValueFormatString: "#,### Units",
-                    xValueFormatString: "YYYY",
-                    type: "spline",
-                    dataPoints: [
-                        { x: new Date(Date, 0), y: 2506000 },
-                        { x: new Date(2003, 0), y: 2798000 },
-                        { x: new Date(2004, 0), y: 3386000 },
-                        { x: new Date(2005, 0), y: 6944000 },
-                        { x: new Date(2006, 0), y: 6026000 },
-                        { x: new Date(2007, 0), y: 2394000 },
-                        { x: new Date(2008, 0), y: 1872000 },
-                        { x: new Date(2009, 0), y: 2140000 },
-                        { x: new Date(2010, 0), y: 7289000 },
-                        { x: new Date(2011, 0), y: 4830000 },
-                        { x: new Date(2012, 0), y: 2009000 },
-                        { x: new Date(2013, 0), y: 2840000 },
-                        { x: new Date(2014, 0), y: 2396000 },
-                        { x: new Date(2015, 0), y: 1613000 },
-                        { x: new Date(2016, 0), y: 2821000 },
-                        { x: new Date(2017, 0), y: 2000000 }
-                    ]
-                }]
-            });
-            chart.render();
-
-        }</script>*@
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
-
     }
+<script>
+    window.onload = function () {
+        var appointmentsByDate = @Html.Raw(Json.Serialize(Model.result));
+        var avgappointments = @Html.Raw(Json.Serialize(Model.avgAppointments));
+        console.log(avgappointments);
+        var appointmentsBySpeciality = @Html.Raw(Json.Serialize(Model.appointmentsBySpeciality));
+        console.log(appointmentsBySpeciality);
+        var dataPoints = appointmentsByDate.map(function (a) {
+            return { x: new Date(a.date), y: a.count };
+        });
+        console.log("data points:" + dataPoints);
+        var chart = new CanvasJS.Chart("chartContainer1", {
+                creditText: "",
+                animationEnabled: true,
+                title: {
+                    text: "APPOINTMENTS",
+                    //fontFamily: "Arial",
+                    //fontSize: 24,
+                    //fontWeight: "bold",
+                },
+            data: [{
+                type: "spline",
+               // type: "column",
+                dataPoints: dataPoints,
+                color: "rgba(54, 162, 235, 0.5)"
+            }],
+            axisY: {
+                title: "Number of Appointments",
+                includeZero: true,
+                interval: 1,
+                stripLines: [{
+                    value: avgappointments,
+                    label: "Average: " + avgappointments
+                    }]
+            },
+            axisX: {
+                //title: "Date",
+                valueFormatString: "DD MMM",
+                //interval: 1
+            }
+        });
+
+        chart.render();
+        var chart2 = new CanvasJS.Chart("chartContainer2", {
+            title: {
+                text: "LAST 7 DAYS SPECIALITIES",
+                //fontFamily: "Arial",
+                //fontSize: 24,
+                //fontWeight: "bold",
+            },
+            data: [{
+                type: "column",
+                dataPoints: appointmentsBySpeciality.map(a => ({ label: a.speciality, y: a.count }))
+            }]
+        });
+        chart2.render();
+            //var chart2 = new CanvasJS.Chart("chartContainer2", {
+            //    creditText: "",
+            //    animationEnabled: true,
+            //    theme: "light2", // "light1", "light2", "dark1", "dark2"
+            //    title: {
+
+            //        text: "LAST 7 DAYS SPECIALITIES",
+            //        fontFamily: "Arial",
+            //        fontSize: 24,
+            //        fontWeight: "bold",
+            //    },
+            //    axisY: {
+            //        title: "",
+            //        suffix: ""
+            //    },
+            //    axisX: {
+            //        title: ""
+            //    },
+            //    data: [{
+            //        type: "column",
+            //        yValueFormatString: "#,##0#",
+            //        dataPoints: [
+            //            { label: "GP", y: 7 },
+            //            { label: "Orthopaedic", y: 6 },
+            //            { label: "Physiotherapist", y: 5 },
+            //            { label: "Psychologist", y: 2 },
+            //            { label: "Neurologist", y: 1 },
+            //            //{ label: "UK", y: 1.80 },
+            //            //{ label: "United States", y: 1.60 },
+            //            //{ label: "Japan", y: 1.60 }
+
+            //        ]
+            //    }]
+            //});
+            //chart2.render();
+    }
+</script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
 }

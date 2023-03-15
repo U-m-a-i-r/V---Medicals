@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using V___Medicals.Data;
 using V___Medicals.Models;
 using V___Medicals.Services;
@@ -43,15 +44,26 @@ namespace V___Medicals.Pages.Patients
             {
                 return Page();
             }
-            //MaintainRecord maintainRecord = new MaintainRecord();
             ClaimsPrincipal _user = HttpContext?.User!;
             var userName = _user.Identity.Name;
-            //maintainRecord.Created = DateTime.Now;
-            //maintainRecord.UserName = Loggeduser.Name;
-            //var maintainRecordResult = await _context.MaintainRecords.AddAsync(maintainRecord);
+            //    var latestMRNumber = _context.Patients
+            //.OrderByDescending(p => p.MRNumber)
+            //.FirstOrDefault()?.MRNumber;
+            var latestMRNumber = _context.Patients
+                        .OrderByDescending(p => Convert.ToInt32(p.MRNumber.Substring(3)))
+                        .FirstOrDefault()?.MRNumber;
+            if (string.IsNullOrEmpty(latestMRNumber))
+            {
+                latestMRNumber = "VM-0";
+            }
+            var latestMRNumberWithoutPrefix = latestMRNumber.Substring(3);
+            var newMRNumber = int.Parse(latestMRNumberWithoutPrefix) + 1;
+            var newMRNumberString = "VM-" + newMRNumber.ToString();
+
             Patient patient = new Patient()
             {
                 Title = InputModel.Title,
+                MRNumber = newMRNumberString,
                 PhoneNumber = InputModel.PhoneNumber,
                 AddressLine = InputModel.Address!.AddressLine,
                 City = InputModel.Address!.City,

@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -19,15 +20,39 @@ namespace V___Medicals.Pages.Home
         public int TotalPatients { get; set; } = default!;
         public int TotalDoctors { get; set; } = default!;
         public int TotalAppointments { get; set; } = default!;
-        public IList<Appointment> lastWeekAppointments { get; set; } = default!;
-
-        public async Task OnGetAsync()
+        
+        public object avgAppointments { get; set; }
+        public object appointmentsBySpeciality { get; set; }
+        public object result { get; set; }
+        public async Task<PageResult> OnGetAsync()
         {
             TotalPatients =  _context.Patients.Where(p => p.IsDeleted == false).Count();
             TotalDoctors = _context.Doctors.Where(d=>d.IsDeleted==false).Count();
             TotalAppointments = _context.Appointments.Count();
-            lastWeekAppointments = await _context.Appointments.Where(apt => apt.CreatedOn! >= DateTime.Now.AddDays(-7)).ToListAsync();
+            var endDate = DateTime.UtcNow;
+            var startDate = endDate.AddDays(-6);
+            var now = DateTime.UtcNow;
+            var dates = Enumerable.Range(0, 7).Select(i => now.AddDays(-i)).Reverse().ToList();
 
+            var appointmentsByDate = _context.Appointments
+                .Where(a => a.CreatedOn.HasValue && a.CreatedOn.Value >= now.AddDays(-6))
+                .GroupBy(a => a.CreatedOn!.Value.Date)
+                .Select(g => new { date = g.Key, count = g.Count() })
+                .ToList();
+
+             result = dates.Select(d => new {
+                date = d.ToString("yyyy-MM-dd"),
+                count = appointmentsByDate.FirstOrDefault(a => a.date == d.Date)?.count ?? 0
+            }).ToList();
+             avgAppointments = appointmentsByDate.Average(a => a.count);
+
+             appointmentsBySpeciality = _context.Appointments
+    .Where(a => a.CreatedOn.HasValue && a.CreatedOn.Value >= now.AddDays(-6))
+    .GroupBy(a => a.SpecialityName)
+    .Select(g => new { speciality = g.Key, count = g.Count() })
+    .ToList();
+
+            return Page();
 
         }
     }

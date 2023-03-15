@@ -1,0 +1,167 @@
+@page
+@model V___Medicals.Pages.Invoices.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_DashBoardLayout";
+}
+
+<a class="btn btn-primary" asp-page="./Index">Back</a>
+<h4 class="text-center Monospace">Create New Invoice</h4>
+<hr />
+<div class="row justify-content-center">
+    <div class="">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row">
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label class="control-label"> Invoice No:</label>
+                    <input readonly class="form-control" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="patientId" class="control-label"> Select Patient:</label>
+                    <select id="selectpatient" asp-for="patientId" class="form-control" asp-items="ViewBag.PatientId"><option value="-1">Select patient</option></select>
+                </div>
+
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label for="doctorName" class="control-label">Doctor:</label>
+                    <input readonly id="doctorName" name="doctorName" class="form-control" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.AppointmentId" class="control-label"> Select Appointment:</label>
+                    <select id="selectappointment" asp-for="InputModel.AppointmentId" class="form-control" asp-items="ViewBag.AppointmentId"></select>
+                    <span class="text-danger" asp-validation-for="InputModel.AppointmentId" id="selectappointmentspan"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label for="speciality" class="control-label">Speciality:</label>
+                    <input readonly id="speciality" name="speciality" class="form-control" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.TotalAmount" class="control-label">Total Amount:</label>
+                    <input id="totalAmount" asp-for="InputModel.TotalAmount" class="form-control" />
+                    <span asp-validation-for="InputModel.TotalAmount" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label for="appointmentType" class="control-label">Appointment Type:</label>
+                    <input readonly id="appointmentType" name="appointmentType" class="form-control" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.InvoiceDate" class="control-label"> Invoice Date:</label>
+                    <input asp-for="InputModel.InvoiceDate" class="form-control" />
+                    <span asp-validation-for="InputModel.InvoiceDate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label for="appointmentStatus" class="control-label">Appointment Status:</label>
+                    <input readonly id="appointmentStatus" name="appointmentStatus" class="form-control" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label for="doctorAmount" class="control-label">Doctor Amount:</label>
+                    <input readonly id="doctorAmount" name="doctorAmount" class="form-control" />
+                    <span  class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.PaidAmount" class="control-label"> Paid Amount</label>
+                    <input asp-for="InputModel.PaidAmount" class="form-control" />
+                    <span asp-validation-for="InputModel.PaidAmount" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.PaymentDate" class="control-label">Payment Date</label>
+                    <input asp-for="InputModel.PaymentDate" class="form-control" />
+                    <span asp-validation-for="InputModel.PaymentDate" class="text-danger"></span>
+                </div>
+                @*<div class="form-group form-check col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Invoice.isPaidToDoctor" /> @Html.DisplayNameFor(model => model.Invoice.isPaidToDoctor)
+                    </label>
+                </div>*@
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <label asp-for="InputModel.Status" class="control-label"></label>
+                    <select asp-for="InputModel.Status" class="form-control" asp-items="Html.GetEnumSelectList<InvoiceStatus>()"></select>
+                    <span asp-validation-for="InputModel.Status" class="text-danger"></span>
+                </div>
+            </div>
+            <hr />
+                <div class="form-group text-center my-3">
+                    <input type="submit" value="Generate Invoice" class="btn btn-primary" />
+                </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    var selectpatient = document.getElementById('selectpatient');
+    selectpatient.addEventListener('change', function () {
+
+        var x = document.getElementById("selectpatient").value;
+
+        $.ajax({
+            url: '?handler=Appointment&id=' + x,
+            data: "{}",
+            success: function (data) {
+                console.log(data.length);
+                console.log(data);
+                var s = '<option value="-1">Select appointment</option>';
+                for (var i = 0; i < data.length; i++) {
+                    const dateString = data[i].clinicDate.split("T")[0];
+                    const date = new Date(dateString);
+                    const time = new Date(data[i].time);
+                    const timeString = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+                    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                    const formattedDate = date.toLocaleDateString('en-GB', options);
+                    s += '<option value="' + data[i].appointmentId + '">' + formattedDate + " | " + timeString + '</option>';
+                }
+                $("#selectappointment").html(s);
+            },
+            error: function (error) {
+                alert("Error: " + error);
+            }
+        });
+    }, false);
+
+    var selectappointment = document.getElementById('selectappointment');
+    selectappointment.addEventListener('change', function () {
+
+        var x = document.getElementById("selectappointment").value;
+        console.log("id is: "+x);
+        $.ajax({
+            url: '?handler=Details&id=' + x,
+            data: "{}",
+            success: function (data) {
+                console.log(data.length);
+                console.log(data);
+                const myspan = document.getElementById('selectappointmentspan');
+                if (data[0].hasOwnProperty("error")) {
+                    console.log("ERROR:" + data[0].error);
+                    myspan.innerHTML = data[0].error;
+                    console.log("There is an error in the data");
+                } else {
+                    for (var i = 0; i < data.length; i++) {
+                        console.log(data[i].doctorName);
+
+                        $("#doctorName").val(data[i].doctorName);
+                        $("#doctorAmount").val(data[i].doctorCharges);
+                        $("#totalAmount").val(data[i].totalCharges);
+                        $("#appointmentType").val(data[i].appointmentType);
+                        $("#speciality").val(data[i].speciality);
+                        $("#appointmentStatus").val(data[i].appointmentStatus);
+
+                    }
+                }
+                
+            },
+            error: function (error) {
+                alert("Error: " + error);
+            }
+        });
+    }, false);
+</script>
+}

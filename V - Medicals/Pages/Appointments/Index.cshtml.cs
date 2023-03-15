@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,21 @@ namespace V___Medicals.Pages.Appointments
         }
 
         public IList<Appointment> Appointment { get;set; } = default!;
+
+        public async Task<IActionResult> OnGetExportCsvAsync()
+        {
+            var appointments = await _context.Appointments.Include(apt=>apt.Patient).Include(apt => apt.Doctor).ToListAsync();
+
+            var sb = new StringBuilder();
+            sb.AppendLine("Patient,Doctor,Date,Time,Speciality,Status");
+            foreach (var appointment in appointments)
+            {
+                sb.AppendLine($"{appointment.Patient.FullName},{appointment.Doctor.FullName},{appointment.ClinicDate},{appointment.Time},{appointment.SpecialityName},{appointment.Status.ToString()}");
+            }
+
+            var bytes = Encoding.UTF8.GetBytes(sb.ToString());
+            return File(bytes, "text/csv", "appointments.csv");
+        }
 
         public async Task OnGetAsync()
         {

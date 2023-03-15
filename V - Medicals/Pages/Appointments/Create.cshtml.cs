@@ -86,7 +86,7 @@ namespace V___Medicals.Pages.Appointments
                 return Page();
             }
             ClaimsPrincipal _user = HttpContext?.User!;
-            var userName = _user.Identity.Name;
+            var userName = _user.Identity!.Name;
             Patient patient = _context.Patients.Where(p => p.PatientId == Appointment.PateintId).FirstOrDefault()!;
             Doctor doctor = _context.Doctors.Where(p => p.DoctorId == Appointment.DoctorId).FirstOrDefault()!;
             Speciality speciality = _context.Specialities.Where(p => p.SpecialityId == Appointment.specialityId).FirstOrDefault()!;

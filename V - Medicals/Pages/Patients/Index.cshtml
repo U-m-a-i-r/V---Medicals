@@ -10,8 +10,9 @@
     <p class="text-center p-2 Monospace d-inline-flex border border-info">Patients</p>
 </div>
 
-<p>
+<p class="d-flex justify-content-between">
     <a class="btn btn-primary" asp-page="Create">Create New</a>
+    <a class="btn btn-secondary" asp-page-handler="ExportCsv">Export CSV</a>
 </p>
 <div class="form-group">
     <div class="input-group p-0 col-lg-4 col-md-5 col-sm-6 col-xs-12">
@@ -27,11 +28,11 @@
     <thead>
         <tr>
             <th>
-                Name
-                @*@Html.DisplayNameFor(model => model.Patient[0].FullName)*@
+               MR No
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Patient[0].Gender)
+                Name
+                @*@Html.DisplayNameFor(model => model.Patient[0].FullName)*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Patient[0].DOB)
@@ -43,9 +44,9 @@
                 Phone No
                 @*@Html.DisplayNameFor(model => model.Patient[0].PhoneNumber)*@
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Patient[0].CNIC)
-            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.Patient[0].CNIC)
+        </th>*@
             <th>Action</th>
         </tr>
     </thead>
@@ -54,10 +55,10 @@
         {
             <tr>
                 <td>
-                 <a asp-page="./Details" asp-route-id="@item.PatientId">   @Html.DisplayFor(modelItem => item.FullName)</a>
-</td>
+                    @Html.DisplayFor(modelItem => item.MRNumber)
+                </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Gender)
+                    <a asp-page="./Details" asp-route-id="@item.PatientId">   @Html.DisplayFor(modelItem => item.FullName)</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DOB)
@@ -68,9 +69,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CNIC)
-                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.CNIC)
+        </td>*@
                 <td>
                     <a asp-page="./Details" asp-route-id="@item.PatientId"><i class="fa-solid fa-eye"></i></a> |
                     <a asp-page="./Edit" asp-route-id="@item.PatientId"><i class="fas fa-edit"></i></a> |

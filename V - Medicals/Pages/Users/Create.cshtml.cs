@@ -44,15 +44,17 @@ namespace V___Medicals.Pages.Users
         public IList<IdentityRole<string>> Roles { get; set; } = default!;
         [BindProperty]
         public IList<Doctor> Doctors { get; set; } = default!;
+        [BindProperty]
         public IList<Patient> Patients { get; set; } = default!;
-        public async Task OnGetAsync()
+        public  IActionResult OnGetAsync()
         {
-            if (_context.UserRoles != null)
+            if (_context.Roles != null)
             {
-                Roles = await _context.Roles.ToListAsync();
-                Doctors = await _context.Doctors.Where(d=>d.IsDeleted==false).Where(d=>d.Status==DoctorStatusTypes.Active).ToListAsync();
-                Patients = await _context.Patients.Where(p => p.IsDeleted == false).ToListAsync();
+                Roles =  _context.Roles.ToList();
+                Doctors =  _context.Doctors.Where(d=>d.IsDeleted==false).Where(d=>d.Status==DoctorStatusTypes.Active).ToList();
+                Patients =  _context.Patients.Where(p => p.IsDeleted == false).ToList();
             }
+            return Page();
         }
 
         [BindProperty]
@@ -72,17 +74,13 @@ namespace V___Medicals.Pages.Users
             var userByName = await _userManager.FindByNameAsync(User.UserName);
             if (userByName != null)
             {
-                ModelState.AddModelError(nameof(UserRegisterModel.UserName), "Username already registed.");
+                ModelState.AddModelError(nameof(UserRegisterModel.UserName), "Username already registered.");
                 return Page();
             }
             User user = new User();
-            //MaintainRecord maintainRecord = new MaintainRecord();
             ClaimsPrincipal _user = HttpContext?.User!;
             var userEmail = _user.GetUserEmail();
-            var Loggeduser = await _userManager.FindByEmailAsync(userEmail);
-            //maintainRecord.Created = DateTime.Now;
-            //maintainRecord.UserName = Loggeduser.Name;
-            //var maintainRecordResult = await _context.MaintainRecords.AddAsync(maintainRecord);
+            var userNAME = _user.GetName();
             Doctor? doctor = null;
             Patient? patient = null;
             string? uniqueFileName = null;
@@ -105,8 +103,7 @@ namespace V___Medicals.Pages.Users
                     user.PhoneNumber = doctor.PhoneNumber;
                     user.Email = doctor.Email;
                     user.CreatedOn = DateTime.UtcNow;
-                    user.CreatedBy = Loggeduser.Name;
-                    //user.maintainRecord = maintainRecordResult.Entity;
+                    user.CreatedBy = userNAME;
                     user.SecurityStamp = Guid.NewGuid().ToString();
                     user.UserName = User.UserName.Trim();
                     user.ProfilePicture = doctor.ProfilePicture;
@@ -117,7 +114,7 @@ namespace V___Medicals.Pages.Users
             {
                 if (SelectedPatientId == null)
                 {
-                    ModelState.AddModelError(nameof(SelectedPatientId), "Please select a doctor.");
+                    ModelState.AddModelError(nameof(SelectedPatientId), "Please select a patient.");
                     return Page();
                 }
                 patient = _context.Patients.Where(d => d.PatientId == int.Parse(SelectedPatientId)).FirstOrDefault()!;
@@ -136,8 +133,7 @@ namespace V___Medicals.Pages.Users
                     user.PhoneNumber = patient.PhoneNumber;
                     user.Email = patient.Email;
                     user.CreatedOn = DateTime.UtcNow;
-                    user.CreatedBy = Loggeduser.Name;
-                    //user.maintainRecord = maintainRecordResult.Entity;
+                    user.CreatedBy = userNAME;
                     user.SecurityStamp = Guid.NewGuid().ToString();
                     user.UserName = User.UserName.Trim();
                     user.ProfilePicture = uniqueFileName;
@@ -170,7 +166,7 @@ namespace V___Medicals.Pages.Users
                 }
                 user.Name = User.Name!;
                 user.CreatedOn = DateTime.UtcNow;
-                user.CreatedBy = Loggeduser.Name;
+                user.CreatedBy = userNAME;
                 //user.maintainRecord = maintainRecordResult.Entity;
                 user.SecurityStamp = Guid.NewGuid().ToString();
                 user.UserName = User.UserName.Trim();
@@ -195,7 +191,7 @@ namespace V___Medicals.Pages.Users
                     await _userManager.AddToRoleAsync(user, Constants.Constants.ROLE_DOCTOR);
                     doctor.Id = user.Id;
                     doctor.User = user;
-                    doctor.ModefiedBy = Loggeduser.Name;
+                    doctor.ModefiedBy = userNAME;
                     doctor.UpdatedOn = DateTime.UtcNow;
                     _context.Doctors.Update(doctor);
                     _context.SaveChanges();
@@ -205,7 +201,7 @@ namespace V___Medicals.Pages.Users
                     await _userManager.AddToRoleAsync(user, Constants.Constants.ROLE_PATIENT);
                     patient!.UserId = user.Id;
                     patient.User = user;
-                    patient.ModefiedBy = Loggeduser.Name;
+                    patient.ModefiedBy = userNAME;
                     patient.UpdatedOn = DateTime.UtcNow;
                     _context.Patients.Update(patient);
                     _context.SaveChanges();

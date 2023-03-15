@@ -72,8 +72,10 @@ namespace V___Medicals.Pages.Doctors
                 Discription = InputModel.Discription,
                 Status = InputModel.Status,
                 ProfilePicture = uniqueFileName,
-                ContractType = InputModel.ContractType,
-                ContractValue = InputModel.ContractValue,
+                VideoConsultancyCharges = InputModel.VideoConsultancyCharges,
+                VideoConsultancyPercentage = InputModel.VideoConsultancyPercentage,
+                PhysicalConsultancyCharges = InputModel.PhysicalConsultancyCharges,
+                PhysicalConsultancyPercentage = InputModel.PhysicalConsultancyPercentage,
                 IsDeleted = false,
                 CreatedOn = DateTime.UtcNow,
                 CreatedBy = userName

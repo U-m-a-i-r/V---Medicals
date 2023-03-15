@@ -53,10 +53,14 @@ namespace V___Medicals.Models
         public string? Discription { get; set; }
         [Required]
         public DoctorStatusTypes Status { get; set; }
-        [Required]
-        public ContractType ContractType { get; set; }
-        [Required]
-        public String ContractValue { get; set; } = default!;
+        public string? VideoConsultancyCharges { get; set; }
+        public string? VideoConsultancyPercentage { get; set; }
+        public string? PhysicalConsultancyCharges { get; set; }
+        public string? PhysicalConsultancyPercentage { get; set; }
+        //[Required]
+        //public ContractType ContractType { get; set; }
+        //[Required]
+        //public String ContractValue { get; set; } = default!;
         public bool IsDeleted { get; set; } = false;
 
         public String? Id { get; set; }
@@ -85,4 +89,9 @@ public enum ContractType
 {
     Per_Appointment,
     Percentage
+}
+public enum InvoiceStatus
+{
+    Unpaid,
+    Paid
 }

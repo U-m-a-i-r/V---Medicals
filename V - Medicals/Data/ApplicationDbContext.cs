@@ -20,6 +20,7 @@ namespace V___Medicals.Data
         public DbSet<Patient> Patients { get; set; }
         //public DbSet<MaintainRecord> MaintainRecords { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Speciality> Specialities { get; set; }
         public DbSet<DoctorDocument> DoctorDocuments { get; set; }
         public DbSet<PatientDocument> PatientDocuments { get; set; }

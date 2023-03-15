@@ -10,8 +10,9 @@
     <p class="text-center p-2 Monospace d-inline-flex border border-info">Appointments</p>
 </div>
 
-<p>
+<p class="d-flex justify-content-between">
     <a class="btn btn-primary" asp-page="Create">Create New</a>
+    <a class="btn btn-secondary" asp-page-handler="ExportCsv">Export CSV</a>
 </p>
 <table class="table">
     <thead>

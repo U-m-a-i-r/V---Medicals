@@ -54,19 +54,23 @@ namespace V___Medicals.Pages.Doctors
                 Title = Doctor.Title,
                 AddressLine = Doctor.AddressLine,
                 City = Doctor.City,
-                 Discription = Doctor.Discription,
-                  District = Doctor.District,
-                   DOB = Doctor.DOB,
-                    Email = Doctor.Email,
-                     Gender = Doctor.Gender,
-                      PhoneNumber = Doctor.PhoneNumber,
-                      Status = Doctor.Status,
-                      SpecialityId = Doctor.SpecialityId,
-                      PostalCode = Doctor.PostalCode,
-                       Qualification = Doctor.Qualification,
-                       ContractType = Doctor.ContractType,
-                       ContractValue = Doctor.ContractValue
+                Discription = Doctor.Discription,
+                District = Doctor.District,
+                DOB = Doctor.DOB,
+                Email = Doctor.Email,
+                Gender = Doctor.Gender,
+                PhoneNumber = Doctor.PhoneNumber,
+                Status = Doctor.Status,
+                SpecialityId = Doctor.SpecialityId,
+                PostalCode = Doctor.PostalCode,
+                Qualification = Doctor.Qualification,
+
+                VideoConsultancyCharges = Doctor.VideoConsultancyCharges,
+                VideoConsultancyPercentage = Doctor.VideoConsultancyPercentage,
+                PhysicalConsultancyCharges = Doctor.PhysicalConsultancyCharges,
+                PhysicalConsultancyPercentage = Doctor.PhysicalConsultancyPercentage,
             };
+            
            ViewData["SpecialityId"] = new SelectList(_context.Specialities, "SpecialityId", "Name");
            ViewData["Id"] = new SelectList(_context.Users, "Id", "Id");
             return Page();
@@ -101,9 +105,10 @@ namespace V___Medicals.Pages.Doctors
             Doctor.Email = InputModel.Email;
             Doctor.PhoneNumber = InputModel.PhoneNumber;
             Doctor.PostalCode = InputModel.PostalCode;
-            Doctor.ContractType = InputModel.ContractType;
-            Doctor.ContractValue = InputModel.ContractValue;
-
+            Doctor.VideoConsultancyCharges = InputModel.VideoConsultancyCharges;
+            Doctor.VideoConsultancyPercentage = InputModel.VideoConsultancyPercentage;
+            Doctor.PhysicalConsultancyCharges = InputModel.PhysicalConsultancyCharges;
+            Doctor.PhysicalConsultancyPercentage = InputModel.PhysicalConsultancyPercentage;
             Doctor.Gender = InputModel.Gender;
             Doctor.Discription = InputModel.Discription;
             Doctor.Status = InputModel.Status;

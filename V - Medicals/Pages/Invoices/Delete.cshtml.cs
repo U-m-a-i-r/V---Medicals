@@ -1,17 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using V___Medicals.Data;
 using V___Medicals.Models;
 
-namespace V___Medicals.Pages.Doctors.Documents
+namespace V___Medicals.Pages.Invoices
 {
-    [Authorize]
     public class DeleteModel : PageModel
     {
         private readonly V___Medicals.Data.ApplicationDbContext _context;
@@ -22,47 +20,44 @@ namespace V___Medicals.Pages.Doctors.Documents
         }
 
         [BindProperty]
-      public DoctorDocument DoctorDocument { get; set; }
+      public Invoice Invoice { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.DoctorDocuments == null)
+            if (id == null || _context.Invoices == null)
             {
                 return NotFound();
             }
 
-            var doctordocument = await _context.DoctorDocuments.FirstOrDefaultAsync(m => m.DoctorDocumentId == id);
+            var invoice = await _context.Invoices.FirstOrDefaultAsync(m => m.InvoiceId == id);
 
-            if (doctordocument == null)
+            if (invoice == null)
             {
                 return NotFound();
             }
             else 
             {
-                DoctorDocument = doctordocument;
+                Invoice = invoice;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.DoctorDocuments == null)
+            if (id == null || _context.Invoices == null)
             {
                 return NotFound();
             }
-            var doctordocument = await _context.DoctorDocuments.FindAsync(id);
+            var invoice = await _context.Invoices.FindAsync(id);
 
-            if (doctordocument != null)
+            if (invoice != null)
             {
-                DoctorDocument = doctordocument;
-                _context.DoctorDocuments.Remove(DoctorDocument);
+                Invoice = invoice;
+                _context.Invoices.Remove(Invoice);
                 await _context.SaveChangesAsync();
             }
-           // string previousUrl = Request.Headers["Referer"].ToString();
 
-            // Redirect to the previous URL
-            //return Redirect(previousUrl);
-           return RedirectToPage("../Index");
+            return RedirectToPage("./Index");
         }
     }
 }

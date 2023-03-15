@@ -9,7 +9,7 @@ namespace V___Medicals.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PatientId { get; set; }
-
+        public string MRNumber { get; set; }
         public Title? Title { get; set; }
         public String? FirstName { get; set; }
         public String? MiddleName { get; set; }
@@ -31,6 +31,10 @@ namespace V___Medicals.Models
         public String? District { get; set; }
         public String? City { get; set; }
         public String? PostalCode { get; set; }
+        public string Address
+        {
+            get { return string.Format("{0} {1} {2} {3}", AddressLine, District, City, PostalCode); }
+        }
         public ICollection<PatientDocument>? Documents { get; set; }
 
         public String? UserId { get; set; }

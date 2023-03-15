@@ -31,10 +31,10 @@ namespace V___Medicals.ValidationModels
         public String? PostalCode { get; set; }
         [Display(Name = "Profile Picture")]
         public IFormFile? ProfilePicture { get; set; }
-        [Required]
-        public ContractType ContractType { get; set; }
-        [Required]
-        public String ContractValue { get; set; } = default!;
+        public String? VideoConsultancyCharges { get; set; }
+        public String? VideoConsultancyPercentage { get; set; }
+        public String? PhysicalConsultancyCharges { get; set; }
+        public String? PhysicalConsultancyPercentage { get; set; }
         public bool IsDeleted { get; set; } = false;
         public ICollection<DoctorDocument>? Documents { get; set; }
         [Required(ErrorMessage = "Qualification field is required")]

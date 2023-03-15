@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using V___Medicals.Data;
 
@@ -11,9 +12,10 @@ using V___Medicals.Data;
 namespace VMedicals.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230310094100_afterinvoice")]
+    partial class afterinvoice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -387,6 +389,13 @@ namespace VMedicals.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ContractType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ContractValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -432,12 +441,6 @@ namespace VMedicals.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhysicalConsultancyCharges")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhysicalConsultancyPercentage")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");
 
@@ -459,12 +462,6 @@ namespace VMedicals.Migrations
 
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("VideoConsultancyCharges")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VideoConsultancyPercentage")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DoctorId");
 
@@ -561,7 +558,7 @@ namespace VMedicals.Migrations
                     b.Property<double?>("PaidAmount")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("PaymentDate")
+                    b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")

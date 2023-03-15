@@ -154,7 +154,7 @@ sup {
 }
 
 a {
-    color: #007bff;
+/*    color: #007bff;*/
     text-decoration: none;
     background-color: transparent;
     font-family: Monospace !important;
@@ -10818,7 +10818,7 @@ a {
     -webkit-transition: .3s all ease;
     -o-transition: .3s all ease;
     transition: .3s all ease;
-    color: #f8b739;
+/*    color: #f8b739;*/
 }
 
     a:hover, a:focus {

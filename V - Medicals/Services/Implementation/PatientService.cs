@@ -24,13 +24,18 @@ namespace V___Medicals.Services.Implementation
                 var userEmail = User.GetUserEmail();
                 user = await _userManager.FindByEmailAsync(userEmail);
             }
-            //var model = _mapper.Map<Patient>(Model);
+            var latestMRNumber = _dbContext.Patients
+        .OrderByDescending(p => p.MRNumber)
+        .FirstOrDefault()?.MRNumber;
+            if (string.IsNullOrEmpty(latestMRNumber))
+            {
+                latestMRNumber = "VM-0";
+            }
+            var latestMRNumberWithoutPrefix = latestMRNumber.Substring(3);
+            var newMRNumber = int.Parse(latestMRNumberWithoutPrefix) + 1;
+            var newMRNumberString = "VM-" + newMRNumber.ToString();
             Patient patient = new Patient();
-            //MaintainRecord maintainRecord = new MaintainRecord();
-            //maintainRecord.Created = DateTime.Now;
-            //maintainRecord.UserName = user.Name;
-            //var maintainRecordResult = await _dbContext.MaintainRecords.AddAsync(maintainRecord);
-            
+            patient.MRNumber = newMRNumberString;
             patient.Title = Model.Title;
             patient.FirstName = Model.FirstName;
             patient.MiddleName = Model.MiddleName;

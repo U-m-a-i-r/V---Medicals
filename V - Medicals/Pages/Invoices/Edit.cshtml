@@ -1,0 +1,91 @@
+@page
+@model V___Medicals.Pages.Invoices.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "_DashBoardLayout";
+}
+
+<h1>Edit</h1>
+
+<h4>Invoice</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Invoice.InvoiceId" />
+            <div class="form-group">
+                <label asp-for="Invoice.InvoiceNumber" class="control-label"></label>
+                <input asp-for="Invoice.InvoiceNumber" class="form-control" />
+                <span asp-validation-for="Invoice.InvoiceNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.AppointmentId" class="control-label"></label>
+                <select asp-for="Invoice.AppointmentId" class="form-control" asp-items="ViewBag.AppointmentId"></select>
+                <span asp-validation-for="Invoice.AppointmentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.TotalAmount" class="control-label"></label>
+                <input asp-for="Invoice.TotalAmount" class="form-control" />
+                <span asp-validation-for="Invoice.TotalAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.PaidAmount" class="control-label"></label>
+                <input asp-for="Invoice.PaidAmount" class="form-control" />
+                <span asp-validation-for="Invoice.PaidAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.InvoiceDate" class="control-label"></label>
+                <input asp-for="Invoice.InvoiceDate" class="form-control" />
+                <span asp-validation-for="Invoice.InvoiceDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.PaymentDate" class="control-label"></label>
+                <input asp-for="Invoice.PaymentDate" class="form-control" />
+                <span asp-validation-for="Invoice.PaymentDate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Invoice.isPaidToDoctor" /> @Html.DisplayNameFor(model => model.Invoice.isPaidToDoctor)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.CreatedOn" class="control-label"></label>
+                <input asp-for="Invoice.CreatedOn" class="form-control" />
+                <span asp-validation-for="Invoice.CreatedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.UpdatedOn" class="control-label"></label>
+                <input asp-for="Invoice.UpdatedOn" class="form-control" />
+                <span asp-validation-for="Invoice.UpdatedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.CreatedBy" class="control-label"></label>
+                <input asp-for="Invoice.CreatedBy" class="form-control" />
+                <span asp-validation-for="Invoice.CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.ModefiedBy" class="control-label"></label>
+                <input asp-for="Invoice.ModefiedBy" class="form-control" />
+                <span asp-validation-for="Invoice.ModefiedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invoice.Status" class="control-label"></label>
+                <select asp-for="Invoice.Status" class="form-control"></select>
+                <span asp-validation-for="Invoice.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -10,7 +10,7 @@ namespace V___Medicals.Services
                 throw new ArgumentNullException(nameof(principal));
             //return principal.GetUserId();
             //  return principal.FindFirstValue(ClaimTypes.PrimarySid);
-            return principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return principal.FindFirst(ClaimTypes.NameIdentifier)?.Value!;
         }
         public static string GetUserEmail(this ClaimsPrincipal principal)
         {

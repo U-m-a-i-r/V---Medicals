@@ -16,19 +16,19 @@
             <div class="row">
                 <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
                     <label asp-for="RoleName" class="control-label">Select Role</label>
-                    <select required id="SelectRole" onchange="myFunction()" class="form-select" asp-for="RoleName" aria-label="Default select" asp-items="@(new SelectList(Model.Roles))"><option selected>Please Select</option></select>
+                    <select required id="SelectRole" class="form-select" asp-for="RoleName" aria-label="Default select" asp-items="@(new SelectList(Model.Roles))"><option selected>Please Select</option></select>
                 </div>
-                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12" id="SelectDoctor" onchange="myFunction2()" style="display:none;">
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12" id="SelectDoctor" style="display:none;">
                     <label asp-for="SelectedDoctorId" class="control-label">Select Doctor</label>
-                    <select class="form-select" asp-for="SelectedDoctorId" aria-label="Default select " asp-items="@(new SelectList(Model.Doctors,"DoctorId","FullName"))"><option selected>Please Select Doctor</option></select>
+                    <select class="form-select" asp-for="SelectedDoctorId" aria-label="Default select" asp-items="@(new SelectList(Model.Doctors,"DoctorId","FullName"))"><option selected>Please Select Doctor</option></select>
                 </div>
-                @*<div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12" id="SelectPatient" onchange="myFunction2()" style="display:none;">
+                <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12" id="SelectPatient" style="display:none;">
                     <label asp-for="SelectedPatientId" class="control-label">Select Patient</label>
                     <select class="form-select" asp-for="SelectedPatientId" aria-label="Default select"  asp-items="@(new SelectList(Model.Patients,"PatientId","FullName"))"><option selected>Please Select Patient</option></select>
-                </div>*@
+                </div>
                 <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12" id="Name">
                     <label asp-for="User.Name" class="control-label"></label>
-                    <input asp-for="User.Name" class="form-control" />
+                    <input id="Name" asp-for="User.Name" class="form-control" />
                     <span asp-validation-for="User.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
@@ -67,42 +67,40 @@
 </div>
 
 @*<div>
-    <a asp-page="Index">Back to List</a>
-</div>*@
+        <a asp-page="Index">Back to List</a>
+    </div>*@
 
 @section Scripts {
-    <script>function myFunction() {
-            var x = document.getElementById("SelectRole").value;
-    if (x == "Doctor") {
-        console.log("Doctor role");
-                document.getElementById("SelectDoctor").style.display = "block";
-                document.getElementById("SelectPatient").style.display = "none";
-                document.getElementById("Name").style.display = "none";
-                document.getElementById("Email").style.display = "none";
-                document.getElementById("ProfilePicture").style.display = "none";
-                document.getElementById("PhoneNumber").style.display = "none";
-    } else if (x == "Patient") {
-        console.log("Patient role");
-        document.getElementById("SelectPatient").style.display = "block";
-        document.getElementById("SelectDoctor").style.display = "none";
-        document.getElementById("Name").style.display = "none";
-        document.getElementById("Email").style.display = "none";
-       // document.getElementById("ProfilePicture").style.display = "none";
-        document.getElementById("PhoneNumber").style.display = "none";
-    }else {
-        document.getElementById("SelectDoctor").style.display = "none";
-        document.getElementById("SelectPatient").style.display = "none";
-                document.getElementById("Name").style.display = "block";
-                document.getElementById("Email").style.display = "block";
-                document.getElementById("ProfilePicture").style.display = "block";
-                document.getElementById("PhoneNumber").style.display = "block";
-            }
-            console.log(x);
-        }
-        function myFunction2() {
-            var x = document.getElementById("SelectDoctor").value;
-
-            console.log(x);
-        }</script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<script>
+    var selectrole = document.getElementById('SelectRole');
+    selectrole.addEventListener('change', function () {
+        var role = document.getElementById("SelectRole").value;
+        if (role == "Doctor") {
+            console.log("Doctor role");
+            document.getElementById("SelectDoctor").style.display = "block";
+            document.getElementById("SelectPatient").style.display = "none";
+            document.getElementById("Name").style.display = "none";
+            document.getElementById("Email").style.display = "none";
+            document.getElementById("ProfilePicture").style.display = "none";
+            document.getElementById("PhoneNumber").style.display = "none";
+        } else if (role == "Patient") {
+            console.log("Patient role");
+            document.getElementById("SelectPatient").style.display = "block";
+            document.getElementById("SelectDoctor").style.display = "none ";
+            document.getElementById("Name").style.display = "none ";
+            document.getElementById("Email").style.display = "none";
+            document.getElementById("ProfilePicture").style.display = "none";
+            document.getElementById("PhoneNumber").style.display = "none";
+        } else {
+            document.getElementById("SelectDoctor").style.display = "none";
+            document.getElementById("SelectPatient").style.display = "none";
+            document.getElementById("Name").style.display = "block";
+            document.getElementById("Email").style.display = "block";
+            document.getElementById("ProfilePicture").style.display = "block";
+            document.getElementById("PhoneNumber").style.display = "block";
+        }
+        console.log(role);
+    });
+      </script>
+    }
