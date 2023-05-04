@@ -27,7 +27,7 @@ namespace V___Medicals.Models
 
     public enum AppointmentDocumentType
     {
-        Prescriotion,
+        Prescription,
         History
     }
 }

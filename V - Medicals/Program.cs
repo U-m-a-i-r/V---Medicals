@@ -16,6 +16,7 @@ using V___Medicals.Services.Implementation;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
 using V___Medicals.Models.TestGraphQL;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers().AddJsonOptions(x =>
@@ -33,26 +34,21 @@ builder.Services.AddIdentity<User, IdentityRole<string>>().AddEntityFrameworkSto
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddRazorPages();
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = "AppDefinedAuthentication";
-    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-})
-            .AddPolicyScheme("AppDefinedAuthentication", "AppDefinedAuthentication", options =>
-            {
-                options.ForwardDefaultSelector = context =>
-                {
-                    // since all my api will be starting with /api, modify this condition as per your need.
-                    if (context.Request.Path.StartsWithSegments("/api", StringComparison.InvariantCulture))
-                        return JwtBearerDefaults.AuthenticationScheme;
-                    else
-                        return IdentityConstants.ApplicationScheme;
-                };
-            }).AddCookie(option=> { 
-                option.LoginPath = "/Identity/Account/Login";
-              //  option.AccessDeniedPath = "";
-            })
-.AddJwtBearer(options =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddPolicyScheme("AppDefinedAuthentication", "AppDefinedAuthentication", options =>
+    {
+        options.ForwardDefaultSelector = context =>
+        {
+            if (context.Request.Path.StartsWithSegments("/api", StringComparison.InvariantCulture))
+                return JwtBearerDefaults.AuthenticationScheme;
+            else
+                return IdentityConstants.ApplicationScheme;
+        };
+    })
+    .AddCookie(option => {
+    option.LoginPath = "/Identity/Account/Login";
+    //  option.AccessDeniedPath = "";
+}).AddJwtBearer(options =>
 {
     options.SaveToken = true;
     options.RequireHttpsMetadata = false;
@@ -75,7 +71,49 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
-builder.Services.Configure<AuthenticationOptions>(options => options.DefaultScheme = "AppDefinedAuthentication");
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = "AppDefinedAuthentication";
+//    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//})
+//            .AddPolicyScheme("AppDefinedAuthentication", "AppDefinedAuthentication", options =>
+//            {
+//                options.ForwardDefaultSelector = context =>
+//                {
+//                    // since all my api will be starting with /api, modify this condition as per your need.
+//                    if (context.Request.Path.StartsWithSegments("/api", StringComparison.InvariantCulture))
+//                        return JwtBearerDefaults.AuthenticationScheme;
+//                    else
+//                        return IdentityConstants.ApplicationScheme;
+//                };
+//            }).AddCookie(option=> { 
+//                option.LoginPath = "/Identity/Account/Login";
+//              //  option.AccessDeniedPath = "";
+//            })
+//.AddJwtBearer(options =>
+//{
+//    options.SaveToken = true;
+//    options.RequireHttpsMetadata = false;
+//    options.TokenValidationParameters = new TokenValidationParameters
+//    {
+//        ValidateIssuer = true,
+//        ValidateAudience = true,
+//        ValidateLifetime = true,
+//        ValidateIssuerSigningKey = true,
+//        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+//        ValidAudience = builder.Configuration["Jwt:Issuer"],
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+//    };
+//    options.Events = new JwtBearerEvents()
+//    {
+//        OnAuthenticationFailed = context =>
+//        {
+//            context.Response.StatusCode = 401;
+//            return Task.CompletedTask;
+//        }
+//    };
+//});
+//builder.Services.Configure<AuthenticationOptions>(options => options.DefaultScheme = "AppDefinedAuthentication");
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 builder.Services
@@ -173,7 +211,13 @@ app.UseStaticFiles();
 
 //app.UseRouting();
 
-
+//var host = new WebHostBuilder()
+//  .UseKestrel()
+//  .UseContentRoot(Directory.GetCurrentDirectory())
+//  .UseUrls("http://localhost:7049", "http://192.168.1.4:7049")
+//  .UseIISIntegration()
+//  .UseStartup<Startup>()
+//  .Build();
 
 app.MapRazorPages();
 //app.MapGraphQL();

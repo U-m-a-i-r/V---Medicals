@@ -24,7 +24,7 @@ namespace V___Medicals.Models
         public DateTime Time { get; set; }
 
         public ICollection<AppointmentDocument>? Documents { get; set; }
-
+        public PatientVitals? PatientVitals { get; set; }
         //public DateTime CreatedDate { get; set; }
         public string? Description { get; set; }
         public ClinicTypes? AppointmentType { get; set; }

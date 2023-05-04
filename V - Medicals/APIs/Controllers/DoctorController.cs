@@ -65,5 +65,35 @@ namespace V___Medicals.APIs.Controllers
             }
 
         }
+        [HttpPost]
+        [Route("getClinicAvailabilities")]
+        public async Task<IActionResult> GetClinicAvailabilities([FromBody] ClinicIdViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var availabilities = await _Doctorrepository.GetClinicAvailabilities(model.ClinicId);
+                return Ok(availabilities);
+            }
+            else
+            {
+                return ValidationProblem();
+            }
+
+        }
+        [HttpPost]
+        [Route("getAvailableSlots")]
+        public async Task<IActionResult> GetAvailableSlots([FromBody] AvailabilityIdViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var slots = await _Doctorrepository.GetAvailableSlots(model.AvailabilityId);
+                return Ok(slots);
+            }
+            else
+            {
+                return ValidationProblem();
+            }
+
+        }
     }
 }

@@ -95,3 +95,8 @@ public enum InvoiceStatus
     Unpaid,
     Paid
 }
+public enum PaymentMethod
+{
+    Manual,
+    Paypro
+}

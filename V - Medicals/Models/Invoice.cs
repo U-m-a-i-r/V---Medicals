@@ -21,6 +21,7 @@ namespace V___Medicals.Models
         public DateTime InvoiceDate { get; set; }
         [DataType(DataType.Date)]
         public DateTime? PaymentDate { get; set; }
+        public string? payproInvoiceURL { get; set; }
         public bool isPaidToDoctor { get; set; } = false;
         public DateTime? CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }

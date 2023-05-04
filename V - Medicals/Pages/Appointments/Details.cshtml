@@ -90,11 +90,11 @@
             </dd>
         </div>
         @*<dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.CreatedDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.CreatedDate)
-        </dd>*@
+                @Html.DisplayNameFor(model => model.Appointment.CreatedDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Appointment.CreatedDate)
+            </dd>*@
         <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
             <dt class="col text-info">
                 @Html.DisplayNameFor(model => model.Appointment.Description)
@@ -105,7 +105,7 @@
         </div>
         <div class="card shadow-sm text-center m-2 col-sm-6 col-xs-12 col-md-4 col-lg-2">
             <dt class="col text-info">
-               Appointment Type
+                Appointment Type
             </dt>
             <dd class="col">
                 @Html.DisplayFor(model => model.Appointment.AppointmentType)
@@ -120,21 +120,67 @@
             </dd>
         </div>
         @*<dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.UpdatedOn)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.UpdatedOn)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.LastModifiedBy)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.LastModifiedBy)
-        </dd>*@
+                @Html.DisplayNameFor(model => model.Appointment.UpdatedOn)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Appointment.UpdatedOn)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Appointment.LastModifiedBy)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Appointment.LastModifiedBy)
+            </dd>*@
     </dl>
     <hr />
 </div>
+@if (Model.Appointment.Documents != null)
+{
+    <div class="d-flex justify-content-center">
+        <table class="table w-50 ">
+            <thead>
+                <tr>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Uploaded on
+                    </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Appointment.Documents)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.type)
+                        </td>
+                        <td>
+                            <a href="/@Html.DisplayFor(modelItem => item.DocumentPath)"> <i class="fa-regular fa-file shadow"></i>  @Html.DisplayFor(modelItem => item.DocumentName)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedOn)
+                        </td>
+                        @*<td>
+            <a href="/@Html.DisplayFor(modelItem => item.DocumentPath)">@Html.DisplayFor(modelItem => item.DocumentPath)</a>
+        </td>*@
+                        <td>
+                            @* <a asp-page="./Edit" asp-route-id="@item.DoctorDocumentId">Edit</a> |
+            <a asp-page="./Details" asp-route-id="@item.DoctorDocumentId">Details</a> |*@
+                            <a href="/@Html.DisplayFor(modelItem => item.DocumentPath)"><i class="fa-solid fa-eye"></i></a>
+                            @*<a asp-page="./Documents/Delete" asp-route-id="@item.DoctorDocumentId"><i class="fa-solid fa-trash text-danger"></i></a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
 @*<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Appointment?.AppointmentId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>*@
+        <a asp-page="./Edit" asp-route-id="@Model.Appointment?.AppointmentId">Edit</a> |
+        <a asp-page="./Index">Back to List</a>
+    </div>*@

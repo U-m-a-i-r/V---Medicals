@@ -45,6 +45,16 @@ namespace V___Medicals.Services.Implementation
            return  _dbContext.DoctorClinics.Where(dc => dc.DoctorId == DoctorId).Include(d => d.Clinic).ThenInclude(c=>c.Availabilities).ThenInclude(a=>a.Slots).ToList();
            // throw new NotImplementedException();
         }
+        public async Task<IEnumerable<Availability>> GetClinicAvailabilities(int ClinicId)
+        {
+            return _dbContext.Availabilities.Where(avl => avl.ClinicId == ClinicId && avl.Status==Constants.StatusTypes.Active).ToList();
+            // throw new NotImplementedException();
+        }
+        public async Task<IEnumerable<Slot>> GetAvailableSlots(int AvailabilityId)
+        {
+            return _dbContext.Slots.Where(slot=> slot.AvailabilityId== AvailabilityId && slot.Status==SlotStatus.Available).ToList();
+            // throw new NotImplementedException();
+        }
 
         public Task<Doctor> UpdateAsync(DoctorViewModel model)
         {

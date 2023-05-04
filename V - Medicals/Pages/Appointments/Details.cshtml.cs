@@ -30,7 +30,7 @@ namespace V___Medicals.Pages.Appointments
                 return NotFound();
             }
 
-            var appointment = await _context.Appointments.Include(apt=>apt.Doctor).Include(apt => apt.Patient).FirstOrDefaultAsync(m => m.AppointmentId == id);
+            var appointment = await _context.Appointments.Include(apt=>apt.Doctor).Include(apt => apt.Documents).Include(apt => apt.Patient).FirstOrDefaultAsync(m => m.AppointmentId == id);
             if (appointment == null)
             {
                 return NotFound();

@@ -25,8 +25,8 @@ namespace V___Medicals.Services.Implementation
                 user = await _userManager.FindByEmailAsync(userEmail);
             }
             var latestMRNumber = _dbContext.Patients
-        .OrderByDescending(p => p.MRNumber)
-        .FirstOrDefault()?.MRNumber;
+                        .OrderByDescending(p => Convert.ToInt32(p.MRNumber.Substring(3)))
+                        .FirstOrDefault()?.MRNumber;
             if (string.IsNullOrEmpty(latestMRNumber))
             {
                 latestMRNumber = "VM-0";

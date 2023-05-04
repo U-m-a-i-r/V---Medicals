@@ -1,6 +1,7 @@
 ﻿
 
 using System.ComponentModel.DataAnnotations;
+using V___Medicals.Models;
 
 namespace V___Medicals.ValidationModels
 {
@@ -12,6 +13,8 @@ namespace V___Medicals.ValidationModels
         public int DoctorId { get; set; }
         public int availabilityId { get; set; }
         public int SlotId { get; set; }
+        public ICollection<AppointmentDocumentViewModel>? Documents { get; set; }
+        public PatientVitalsViewModel? PatientVitals { get; set; }
         //[DataType(DataType.Date)]
         /*public DateTime ClinicDate { get; set; }
         [Required]

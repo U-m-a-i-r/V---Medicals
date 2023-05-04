@@ -14,6 +14,7 @@ using V___Medicals.ValidationModels;
 using V___Medicals.Constants;
 using V___Medicals.Services;
 using Microsoft.EntityFrameworkCore;
+using Google.Protobuf.WellKnownTypes;
 
 namespace V___Medicals.APIs.Controllers
 {
@@ -356,8 +357,41 @@ namespace V___Medicals.APIs.Controllers
 
                     }
                     return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "INVALID_CREDENTIALS", Message = "User is not active!" });
+                }else if (UserRole.Contains(Constants.Constants.ROLE_PATIENT))
+                {
+                    var patient = _appDbContext.Patients.Where(p=>p.UserId == user.Id && p.IsDeleted == false).FirstOrDefault();
+                    if (patient != null)
+                    {
+                        PatientViewModel viewPatient = new PatientViewModel()
+                        {
+                            Title = patient.Title,
+                            Address = new AddressModel() { AddressLine = patient.AddressLine, City = patient.City, District = patient.District, PostalCode = patient.PostalCode },
+                            CNIC = patient.CNIC,
+                            DOB = patient.DOB,
+                            Documents = patient.Documents,
+                            Email = patient.Email,
+                            FirstName = patient.FirstName,
+                            Gender = patient.Gender,
+                            LastName = patient.LastName,
+                            MRNumber = patient.MRNumber,
+                            MiddleName = patient.MiddleName,
+                            PhoneNumber = patient.PhoneNumber
+
+                        };
+                        return Ok(new
+                        {
+                            Token = token,
+                            Role = UserRole,
+                            Name = user.Name,
+                            UserId = user.Id,
+                            PatientId= patient.PatientId,
+                            Patient = viewPatient
+                        });
+
+                    }
+                    return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "INVALID_CREDENTIALS", Message = "User is not active!" });
                 }
-                return Ok(new
+                    return Ok(new
                 {
                     Token = token,
                     Role =  UserRole,
@@ -367,6 +401,92 @@ namespace V___Medicals.APIs.Controllers
             }
 
             return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "INVALID_CREDENTIALS", Message = "Username or password is incorrect." });
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("registerPatient")]
+        public async Task<IActionResult> RegisterPatient([FromBody] PatientRegistrationModelFromMobile model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var userByEmail = await _userManager.FindByEmailAsync(model.Email);
+                if (userByEmail != null)
+                {
+                    //ModelState.AddModelError(nameof(UserRegisterModel.Email), "Email already Registered");
+                    return BadRequest(new Response { Status = "Error", Message = "Email already Registered" });
+                }
+
+                var userByName = await _userManager.FindByNameAsync(model.UserName);
+                if (userByName != null)
+                {
+                    //ModelState.AddModelError(nameof(UserRegisterModel.UserName), "Username already registed.");
+                    // return ValidationProblem();
+                    return BadRequest(new Response { Status = "Error", Message = "Username already Registered" });
+                }
+                string? titleText = System.Enum.GetName(typeof(Title), model.Title!)!;
+
+                User user = new()
+                {
+                    Name = titleText!+" "+model.FirstName!+" "+model.MiddleName!+ " " + model.LastName,
+                    Email = model.Email!.Trim(),
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    UserName = model.UserName.Trim(),
+                    PhoneNumber = model.PhoneNumber!.Trim(),
+                    IsActive = true
+                };
+                var userResult = await _userManager.CreateAsync(user, model.Password);
+                if (userResult.Succeeded)
+                {
+                    if (!await _roleManager.RoleExistsAsync(Constants.Constants.ROLE_PATIENT))
+                    {
+                        IdentityResult result3 = await _roleManager.CreateAsync(new IdentityRole(Constants.Constants.ROLE_PATIENT));
+                    }
+                    var result = await _userManager.AddToRoleAsync(user, Constants.Constants.ROLE_PATIENT);
+                    user.CreatedBy = user.Name;
+                    user.CreatedOn = DateTime.UtcNow;
+                    var updateUserResult = await _userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        var currentUser = HttpContext.User;
+                        var Model = new PatientViewModel()
+                        {
+                            Title = model.Title,
+                            FirstName = model.FirstName,
+                            MiddleName = model.MiddleName,
+                             Address = model.Address,
+                              CNIC = model.CNIC,
+                               DOB = model.DOB,
+                                 Gender = model.Gender,
+                            LastName = model.LastName,
+                            Email = model.Email.Trim(),
+                            PhoneNumber = model.PhoneNumber.Trim(),
+
+                        };
+                        var result2 = await _Patientrepository.CreateAsync(Model, user);
+                        _appDbContext.SaveChanges();
+                        return Ok(new { Status = "Success", Message = "User & Patient has been registered successfully." });
+
+                    }
+
+
+
+                    _appDbContext.SaveChanges();
+                    return Ok(new { Status = "Success", Message = "User has been registered successfully." });
+                }
+                else
+                {
+                    return BadRequest(userResult.Errors);
+                }
+            }
+
+            else
+            {
+                return ValidationProblem();
+            }
+
+            // return Ok(new { Status = "Success", Message = "User has been registered successfully." } );
         }
 
         private String CreateToken(User userInfo)

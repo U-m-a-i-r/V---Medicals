@@ -6,14 +6,12 @@ using V___Medicals.Data;
 
 namespace V___Medicals.Models.TestGraphQL
 {
-    [Authorize]
     public class Book
     {
         public string Title { get; set; }
 
         public Author Author { get; set; }
     }
-    [Authorize]
     public class Author
     {
         public string Name { get; set; }
@@ -25,6 +23,7 @@ namespace V___Medicals.Models.TestGraphQL
         [UseProjection]
         [UseFiltering]
         [UseSorting]
+        [Authorize]
         public IQueryable<Speciality> GetSpecialities(ApplicationDbContext context)=>context.Specialities.Where(s => s.IsActive == true);
         public Book GetBook() =>
             new Book

@@ -7,6 +7,8 @@ namespace V___Medicals.Services
     {
         Task<IEnumerable<Doctor>> GetAll();
         Task<IEnumerable<DoctorClinic>> GetDoctorClinics(int DoctorId);
+        Task<IEnumerable<Availability>> GetClinicAvailabilities(int ClinicId);
+        Task<IEnumerable<Slot>> GetAvailableSlots(int availabilityId);
         Task<Doctor> GetById(int Id);
         Task<IEnumerable<Doctor>> GetBySpecialityId(int SpecialityId);
         Task<Doctor> CreateAsync(DoctorViewModel Model, User user = null);

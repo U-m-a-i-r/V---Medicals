@@ -24,6 +24,20 @@ namespace V___Medicals.ValidationModels
 
         public int DoctorId { get; set; }
     }
+    public class ClinicIdViewModel
+    {
+
+        [Display(Name = "ClinicId")]
+
+        public int ClinicId { get; set; }
+    }
+    public class AvailabilityIdViewModel
+    {
+
+        [Display(Name = "AvailabilityId")]
+
+        public int AvailabilityId { get; set; }
+    }
     public class PatientIdViewModel
     {
 

@@ -23,6 +23,8 @@ namespace V___Medicals.Pages.Home
         
         public object avgAppointments { get; set; }
         public object appointmentsBySpeciality { get; set; }
+        public object appointmentsByStatus { get; set; }
+        
         public object result { get; set; }
         public async Task<PageResult> OnGetAsync()
         {
@@ -40,17 +42,23 @@ namespace V___Medicals.Pages.Home
                 .Select(g => new { date = g.Key, count = g.Count() })
                 .ToList();
 
-             result = dates.Select(d => new {
+             var result = dates.Select(d => new {
                 date = d.ToString("yyyy-MM-dd"),
                 count = appointmentsByDate.FirstOrDefault(a => a.date == d.Date)?.count ?? 0
             }).ToList();
-             avgAppointments = appointmentsByDate.Average(a => a.count);
+            this.result = result;
+             avgAppointments = result.Average(a => a.count);
 
              appointmentsBySpeciality = _context.Appointments
     .Where(a => a.CreatedOn.HasValue && a.CreatedOn.Value >= now.AddDays(-6))
     .GroupBy(a => a.SpecialityName)
     .Select(g => new { speciality = g.Key, count = g.Count() })
     .ToList();
+            appointmentsByStatus = _context.Appointments
+   //.Where(a => a.CreatedOn.HasValue && a.CreatedOn.Value >= now.AddDays(-6))
+   .GroupBy(a => a.Status)
+   .Select(g => new { status = g.Key.ToString(), count = g.Count() })
+   .ToList();
 
             return Page();
 

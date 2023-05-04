@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IronPdf;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -23,8 +24,14 @@ namespace V___Medicals.Pages.Patients
         {
             _context = context;
         }
-       
-
+        public IActionResult OnPostGeneratePdf([FromBody] dynamic data)
+        {
+            string htmlContent = data.htmlContent;
+            var renderer = new HtmlToPdf();
+            var pdfDoc = renderer.RenderHtmlAsPdf(htmlContent);
+            var pdfBytes = pdfDoc.BinaryData;
+            return File(pdfBytes, "application/pdf", "MyPdfDocument.pdf");
+        }
         public Patient Patient { get; set; }
         public IList<Appointment> Appointments { get; set; }
 
@@ -43,7 +50,7 @@ namespace V___Medicals.Pages.Patients
             }
             else 
             {
-                Appointments = await _context.Appointments.Where(apt => apt.PatientId == patient.PatientId).Include(apt=>apt.Doctor).ToListAsync();
+                Appointments = await _context.Appointments.Where(apt => apt.PatientId == patient.PatientId).Include(apt=>apt.Doctor).Include(apt => apt.Documents).ToListAsync();
                 Patient = patient;
             }
             return Page();
