@@ -42,7 +42,7 @@
                 Total Amount
             </th>
             <th>
-                Paid Amount
+                Paypro Invoice
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Invoice[0].Status)
@@ -72,7 +72,8 @@
                     @Html.DisplayFor(modelItem => item.TotalAmount)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PaidAmount)
+                    <a href="@Html.DisplayFor(modelItem => item.payproInvoiceURL)">  @Html.DisplayFor(modelItem => item.payproInvoiceURL)</a>
+                    @*@Html.DisplayFor(modelItem => item.payproInvoiceURL)*@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)

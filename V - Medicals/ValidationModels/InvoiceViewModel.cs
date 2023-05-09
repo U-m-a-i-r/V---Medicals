@@ -15,7 +15,8 @@ namespace V___Medicals.ValidationModels
         [DataType(DataType.Date)]
         public DateTime InvoiceDate { get; set; }
         [DataType(DataType.Date)]
-        public DateTime? PaymentDate { get; set; }
+        public DateTime? PaymentDate { get; set; } = DateTime.Today;
+        public string? payproInvoiceURL { get; set; }
         public InvoiceStatus Status { get; set; }
     }
 }

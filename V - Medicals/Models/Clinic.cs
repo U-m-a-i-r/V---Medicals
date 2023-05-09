@@ -31,6 +31,8 @@ namespace V___Medicals.Models
         public DateTime? CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public string? CreatedBy { get; set; }
+        public String? Latitude { get; set; }
+        public String? Longitude { get; set; }
         public string? ModefiedBy { get; set; }
     }
 }

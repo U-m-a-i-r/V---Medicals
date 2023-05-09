@@ -65,6 +65,13 @@ namespace V___Medicals.APIs.Controllers
             }
 
         }
+        [HttpGet]
+        [Route("getF2FClinics")]
+        public async Task<IActionResult> GetF2FClinics()
+        {
+            var clinics = await _Doctorrepository.GetF2FClinics();
+            return Ok(clinics);
+        }
         [HttpPost]
         [Route("getClinicAvailabilities")]
         public async Task<IActionResult> GetClinicAvailabilities([FromBody] ClinicIdViewModel model)

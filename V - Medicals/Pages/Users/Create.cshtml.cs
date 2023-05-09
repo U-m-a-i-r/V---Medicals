@@ -110,7 +110,7 @@ namespace V___Medicals.Pages.Users
                     user.IsActive = true;
                 }
             }
-            if (RoleName == Constants.Constants.ROLE_PATIENT)
+            else if (RoleName == Constants.Constants.ROLE_PATIENT)
             {
                 if (SelectedPatientId == null)
                 {

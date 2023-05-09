@@ -14,6 +14,8 @@ namespace V___Medicals.ValidationModels
         public String PostalCode { get; set; }
         public String? MapLink { get; set; }
         public String? Summary { get; set; }
+        public String? Latitude { get; set; }
+        public String? Longitude { get; set; }
         public ClinicTypes Type { get; set; }
         public StatusTypes Status { get; set; }
     }

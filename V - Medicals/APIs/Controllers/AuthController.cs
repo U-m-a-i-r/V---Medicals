@@ -346,12 +346,41 @@ namespace V___Medicals.APIs.Controllers
                     var doctor = _appDbContext.Doctors.Where(d=>d.Id == user.Id && d.IsDeleted==false && d.Status== DoctorStatusTypes.Active).FirstOrDefault();
                     if(doctor != null)
                     {
+                        DoctorViewModel veiwDoctor = new DoctorViewModel()
+                        {
+                            AddressLine = doctor.AddressLine,
+                            City = doctor.City,
+                            Discription = doctor.Discription,
+                            District = doctor.District,
+                            DOB = doctor.DOB,
+                            Documents = doctor.Documents,
+                            Email = doctor.Email,
+                            FirstName = doctor.FirstName,
+                            Gender = doctor.Gender,
+                            LastName = doctor.LastName,
+                            MiddleName = doctor.MiddleName,
+                            PhoneNumber = doctor.PhoneNumber,
+                            PhysicalConsultancyCharges = doctor.PhysicalConsultancyCharges,
+                            PhysicalConsultancyPercentage = doctor.PhysicalConsultancyPercentage,
+                            PostalCode = doctor.PostalCode,
+                            Qualification = doctor.Qualification,
+                            SpecialityId = doctor.SpecialityId,
+                            Status = doctor.Status,
+                            Title = doctor.Title,
+                           
+                            VideoConsultancyCharges = doctor.VideoConsultancyCharges,
+                            VideoConsultancyPercentage = doctor.VideoConsultancyPercentage
+
+
+                        };
+                      
                         return Ok(new
                         {
                             Token = token,
                             Role = UserRole,
                             Name = user.Name,
                             UserId = user.Id,
+                            DoctorId = doctor.DoctorId,
                             Doctor = doctor
                         });
 

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using V___Medicals.Data;
 using V___Medicals.Models;
+using V___Medicals.Services;
 using V___Medicals.ValidationModels;
 
 namespace V___Medicals.Pages.Clinics
@@ -46,7 +47,13 @@ namespace V___Medicals.Pages.Clinics
                 return Page();
             }
             ClaimsPrincipal _user = HttpContext?.User!;
-            var userName = _user.Identity.Name;
+            var userName = _user.Identity!.Name;
+            if (userName == null)
+                throw new Exception("Logged in User is null");
+            var loggedInUser = _context.Users.Where(user => user.UserName == userName).FirstOrDefault();
+            if (loggedInUser == null)
+                throw new Exception("Logged in Username is null");
+            
             Clinic clinic = new Clinic {
                  AddressLine = InputModel.AddressLine,
                  City = InputModel.City,
@@ -57,7 +64,9 @@ namespace V___Medicals.Pages.Clinics
                  PostalCode = InputModel.PostalCode,
                  Summary = InputModel.Summary,
                  Type = InputModel.Type,
-                 CreatedBy = userName,
+                 CreatedBy = loggedInUser.Name,
+                  Longitude= InputModel.Longitude??null,
+                   Latitude= InputModel.Latitude??null,
                  CreatedOn = DateTime.UtcNow
             };
             _context.Clinic.Add(clinic);

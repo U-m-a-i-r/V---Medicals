@@ -40,10 +40,11 @@
         .sidebar {
             width: 245px;
             background-color: #f1f1f1;
-            height: 100%;
-            position: absolute;
+            height: 100vh;
+            position: fixed;
             z-index: 1;
             left: 0;
+            top:0;
             bottom: auto;
             overflow-x: hidden;
         }
@@ -107,6 +108,10 @@
                 text-align: center;
                 float: none;
             }
+            .navbar{
+                left:0px !important
+            }
+
         }
 
         #logo_dashboard a:hover {
@@ -116,7 +121,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-info border-bottom box-shadow px-2 d-flex justify-content-start">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-info border-bottom box-shadow px-2 d-flex justify-content-start" style="position: fixed; left: 245px; right: 0px; z-index:5">
             <div class="container p-0 mx-2 mw-100">
                 @*<img width="100" height="100" src="~/css/Sidebar/images/logo.png" />*@
                 <a class="navbar-brand text-light Monospace" asp-area="" asp-page="/Index">V-Medicals</a>
@@ -261,7 +266,7 @@
             </ul>
         </div>
         <div class="content">
-            <main role="main" class="my-5">
+            <main role="main" class="" style="margin-top:80px; margin-bottom:10px;">
                 @RenderBody()
             </main>
 

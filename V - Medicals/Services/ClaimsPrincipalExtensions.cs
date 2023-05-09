@@ -56,7 +56,7 @@ namespace V___Medicals.Services
             if (principal == null)
                 throw new ArgumentNullException(nameof(principal));
 
-            var loggedInUserId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInUserId = principal.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             if (typeof(T) == typeof(string))
             {

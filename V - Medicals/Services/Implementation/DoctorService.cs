@@ -45,9 +45,14 @@ namespace V___Medicals.Services.Implementation
            return  _dbContext.DoctorClinics.Where(dc => dc.DoctorId == DoctorId).Include(d => d.Clinic).ThenInclude(c=>c.Availabilities).ThenInclude(a=>a.Slots).ToList();
            // throw new NotImplementedException();
         }
+        public async Task<IEnumerable<Clinic>> GetF2FClinics()
+        {
+            return _dbContext.Clinic.Where( clinic=>clinic.Type==ClinicTypes.Face_To_Face).Include(d => d.DoctorClinics).ThenInclude(c => c.Doctor).ThenInclude(d=>d.Speciality).ToList();
+            // throw new NotImplementedException();
+        }
         public async Task<IEnumerable<Availability>> GetClinicAvailabilities(int ClinicId)
         {
-            return _dbContext.Availabilities.Where(avl => avl.ClinicId == ClinicId && avl.Status==Constants.StatusTypes.Active).ToList();
+            return _dbContext.Availabilities.Where(avl => avl.ClinicId == ClinicId && avl.Status==Constants.StatusTypes.Active && avl.ClinicDate>=DateTime.Today).ToList();
             // throw new NotImplementedException();
         }
         public async Task<IEnumerable<Slot>> GetAvailableSlots(int AvailabilityId)

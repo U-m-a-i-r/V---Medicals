@@ -54,6 +54,11 @@ namespace V___Medicals.APIs.Controllers
                 {
                     return BadRequest(new Response { Status = "Error", Message = "Wrong availability" });
                 }
+                var clinic = _appDbContext.Clinic.Where(p => p.ClinicId == availability.ClinicId).FirstOrDefault()!;
+                if (clinic == null)
+                {
+                    return BadRequest(new Response { Status = "Error", Message = "Wrong Clinic" });
+                }
                 Speciality speciality = _appDbContext.Specialities.Where(sp => sp.SpecialityId == doctor.SpecialityId).FirstOrDefault()!;
                 if (availability == null)
                 {
@@ -68,10 +73,13 @@ namespace V___Medicals.APIs.Controllers
                 {
                     return BadRequest(new Response { Status = "Error", Message = "Slot is already booked" });
                 }
-                var appUserId = User.GetLoggedInUserId<string>();
-                if (appUserId == null)
+                var appUserName = User.GetLoggedInUserId<string>();
+                if (appUserName == null)
                     throw new Exception("Logged in User is null");
-                Appointment appointment = new Appointment() {DoctorId =doctor.DoctorId,Status = AppointmentStatus.OutStanding_Examination,ClinicDate = availability.ClinicDate,PatientId = model.PateintId,Time = slot.SlotTime, SpecialityName = speciality .Name};
+                var loggedInUser = _appDbContext.Users.Where(user => user.UserName == appUserName).FirstOrDefault();
+                if (loggedInUser == null)
+                    throw new Exception("Logged in Username is null");
+                Appointment appointment = new Appointment() {DoctorId =doctor.DoctorId,Status = AppointmentStatus.Pending_Approval,ClinicDate = availability.ClinicDate,PatientId = model.PateintId,Time = slot.SlotTime, SpecialityName = speciality .Name, CreatedOn=DateTime.UtcNow, AppointmentType= clinic.Type, CreatedBy= loggedInUser.Name, Doctor=doctor, Patient= patient, };
                 var createdAppointment = await  _appDbContext.Appointments.AddAsync(appointment);
                 slot.Status = SlotStatus.Booked;
                 _appDbContext.Slots.Update(slot);

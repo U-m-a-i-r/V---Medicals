@@ -14,6 +14,8 @@
     <div class="">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" id="lat" asp-for="InputModel.Latitude" class="form-control" />
+            <input type="hidden" id="lng" asp-for="InputModel.Longitude" class="form-control" />
             <div class="row">
                 <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
                     <label asp-for="DoctorId" class="control-label">Doctor</label>
@@ -30,9 +32,9 @@
                     <span asp-validation-for="InputModel.AddressLine" class="text-danger"></span>
                 </div>
                 @*<div id="infowindow-content">
-                    <span id="place-name" class="title"></span><br />
-                    <span id="place-address"></span>
-                </div>*@
+                <span id="place-name" class="title"></span><br />
+                <span id="place-address"></span>
+            </div>*@
                 <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
                     <label asp-for="InputModel.District" class="control-label">State/Province</label>
                     <input id="state" asp-for="InputModel.District" class="form-control" />
@@ -116,8 +118,11 @@
                 window.alert("No details available for input: '" + place.name + "'");
                 return;
             }
+            const lat = place.geometry.location.lat();
+            const lng = place.geometry.location.lng();
             let address1 = "";
             let postcode = "";
+            
             for (const component of place.address_components) {
                 const componentType = component.types[0];
                 switch (componentType) {
@@ -150,6 +155,10 @@
                 }
             }
             postalField.value = postcode;
+            document.querySelector("#lat").value = lat;
+            document.querySelector("#lng").value = lng;
+            console.log("Latitude:", lat);
+            console.log("Longitude:", lng);
         });
 }
     window.initMap = initMap;</script>
