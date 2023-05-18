@@ -327,109 +327,118 @@ namespace V___Medicals.APIs.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.UserName);
-
-            if (user != null && await  _userManager.CheckPasswordAsync(user, model.Password))
+            if (ModelState.IsValid)
             {
-                if (!user.IsActive)
-                    return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "USER_DELETED", Message = "This user is deleted." });
+                var user = await _userManager.FindByNameAsync(model.UserName);
 
-                var token = CreateToken(user);
-
-                user.Token = token;
-                //user.maintainRecord.Updated = DateTime.UtcNow;
-                var UserRole =  await  _userManager.GetRolesAsync(user);
-                await _userManager.UpdateAsync(user);
-                var currentUser =  HttpContext.User;
-                if (UserRole.Contains(Constants.Constants.ROLE_DOCTOR))
+                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    var doctor = _appDbContext.Doctors.Where(d=>d.Id == user.Id && d.IsDeleted==false && d.Status== DoctorStatusTypes.Active).FirstOrDefault();
-                    if(doctor != null)
+                    if (!user.IsActive)
+                        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "USER_DELETED", Message = "This user is deleted." });
+
+                    var token = CreateToken(user);
+
+                    user.Token = token;
+                    user.FcmTokem = model.FcmToken;
+                    //user.maintainRecord.Updated = DateTime.UtcNow;
+                    var UserRole = await _userManager.GetRolesAsync(user);
+                    await _userManager.UpdateAsync(user);
+                    var currentUser = HttpContext.User;
+                    if (UserRole.Contains(Constants.Constants.ROLE_DOCTOR))
                     {
-                        DoctorViewModel veiwDoctor = new DoctorViewModel()
+                        var doctor = _appDbContext.Doctors.Where(d => d.Id == user.Id && d.IsDeleted == false && d.Status == DoctorStatusTypes.Active).FirstOrDefault();
+                        if (doctor != null)
                         {
-                            AddressLine = doctor.AddressLine,
-                            City = doctor.City,
-                            Discription = doctor.Discription,
-                            District = doctor.District,
-                            DOB = doctor.DOB,
-                            Documents = doctor.Documents,
-                            Email = doctor.Email,
-                            FirstName = doctor.FirstName,
-                            Gender = doctor.Gender,
-                            LastName = doctor.LastName,
-                            MiddleName = doctor.MiddleName,
-                            PhoneNumber = doctor.PhoneNumber,
-                            PhysicalConsultancyCharges = doctor.PhysicalConsultancyCharges,
-                            PhysicalConsultancyPercentage = doctor.PhysicalConsultancyPercentage,
-                            PostalCode = doctor.PostalCode,
-                            Qualification = doctor.Qualification,
-                            SpecialityId = doctor.SpecialityId,
-                            Status = doctor.Status,
-                            Title = doctor.Title,
-                           
-                            VideoConsultancyCharges = doctor.VideoConsultancyCharges,
-                            VideoConsultancyPercentage = doctor.VideoConsultancyPercentage
+                            DoctorViewModel veiwDoctor = new DoctorViewModel()
+                            {
+                                AddressLine = doctor.AddressLine,
+                                City = doctor.City,
+                                Discription = doctor.Discription,
+                                District = doctor.District,
+                                DOB = doctor.DOB,
+                                Documents = doctor.Documents,
+                                Email = doctor.Email,
+                                FirstName = doctor.FirstName,
+                                Gender = doctor.Gender,
+                                LastName = doctor.LastName,
+                                MiddleName = doctor.MiddleName,
+                                PhoneNumber = doctor.PhoneNumber,
+                                PhysicalConsultancyCharges = doctor.PhysicalConsultancyCharges,
+                                PhysicalConsultancyPercentage = doctor.PhysicalConsultancyPercentage,
+                                PostalCode = doctor.PostalCode,
+                                Qualification = doctor.Qualification,
+                                SpecialityId = doctor.SpecialityId,
+                                Status = doctor.Status,
+                                Title = doctor.Title,
+
+                                VideoConsultancyCharges = doctor.VideoConsultancyCharges,
+                                VideoConsultancyPercentage = doctor.VideoConsultancyPercentage
 
 
-                        };
-                      
-                        return Ok(new
-                        {
-                            Token = token,
-                            Role = UserRole,
-                            Name = user.Name,
-                            UserId = user.Id,
-                            DoctorId = doctor.DoctorId,
-                            Doctor = doctor
-                        });
+                            };
 
+                            return Ok(new
+                            {
+                                Token = token,
+                                Role = UserRole,
+                                Name = user.Name,
+                                UserId = user.Id,
+                                DoctorId = doctor.DoctorId,
+                                Doctor = doctor
+                            });
+
+                        }
+                        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "INVALID_CREDENTIALS", Message = "User is not active!" });
                     }
-                    return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "INVALID_CREDENTIALS", Message = "User is not active!" });
-                }else if (UserRole.Contains(Constants.Constants.ROLE_PATIENT))
-                {
-                    var patient = _appDbContext.Patients.Where(p=>p.UserId == user.Id && p.IsDeleted == false).FirstOrDefault();
-                    if (patient != null)
+                    else if (UserRole.Contains(Constants.Constants.ROLE_PATIENT))
                     {
-                        PatientViewModel viewPatient = new PatientViewModel()
+                        var patient = _appDbContext.Patients.Where(p => p.UserId == user.Id && p.IsDeleted == false).FirstOrDefault();
+                        if (patient != null)
                         {
-                            Title = patient.Title,
-                            Address = new AddressModel() { AddressLine = patient.AddressLine, City = patient.City, District = patient.District, PostalCode = patient.PostalCode },
-                            CNIC = patient.CNIC,
-                            DOB = patient.DOB,
-                            Documents = patient.Documents,
-                            Email = patient.Email,
-                            FirstName = patient.FirstName,
-                            Gender = patient.Gender,
-                            LastName = patient.LastName,
-                            MRNumber = patient.MRNumber,
-                            MiddleName = patient.MiddleName,
-                            PhoneNumber = patient.PhoneNumber
+                            PatientViewModel viewPatient = new PatientViewModel()
+                            {
+                                Title = patient.Title,
+                                Address = new AddressModel() { AddressLine = patient.AddressLine, City = patient.City, District = patient.District, PostalCode = patient.PostalCode },
+                                CNIC = patient.CNIC,
+                                DOB = patient.DOB,
+                                Documents = patient.Documents,
+                                Email = patient.Email,
+                                FirstName = patient.FirstName,
+                                Gender = patient.Gender,
+                                LastName = patient.LastName,
+                                MRNumber = patient.MRNumber,
+                                MiddleName = patient.MiddleName,
+                                PhoneNumber = patient.PhoneNumber
 
-                        };
-                        return Ok(new
-                        {
-                            Token = token,
-                            Role = UserRole,
-                            Name = user.Name,
-                            UserId = user.Id,
-                            PatientId= patient.PatientId,
-                            Patient = viewPatient
-                        });
+                            };
+                            return Ok(new
+                            {
+                                Token = token,
+                                Role = UserRole,
+                                Name = user.Name,
+                                UserId = user.Id,
+                                PatientId = patient.PatientId,
+                                Patient = viewPatient
+                            });
 
+                        }
+                        return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "INVALID_CREDENTIALS", Message = "User is not active!" });
                     }
-                    return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "INVALID_CREDENTIALS", Message = "User is not active!" });
-                }
                     return Ok(new
-                {
-                    Token = token,
-                    Role =  UserRole,
-                    Name = user.Name,
-                    UserId = user.Id
-                });
-            }
+                    {
+                        Token = token,
+                        Role = UserRole,
+                        Name = user.Name,
+                        UserId = user.Id
+                    });
+                }
 
-            return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "INVALID_CREDENTIALS", Message = "Username or password is incorrect." });
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Code = "INVALID_CREDENTIALS", Message = "Username or password is incorrect." });
+            }
+            else
+            {
+                return ValidationProblem();
+            }
         }
 
         [AllowAnonymous]

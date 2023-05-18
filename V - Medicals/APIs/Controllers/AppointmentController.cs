@@ -109,7 +109,7 @@ namespace V___Medicals.APIs.Controllers
                     return BadRequest(new Response { Status = "Error", Message = "Patient Id is wrong!" });
                 }
 
-                return await _appDbContext.Appointments.Where(a=>a.PatientId == model.PatientId).Include(a=>a.Doctor).Include(a=>a.Documents).ToListAsync();
+                return await _appDbContext.Appointments.Where(a=>a.PatientId == model.PatientId).Include(a=>a.Doctor).ThenInclude(d=>d.User).Include(a => a.PatientVitals).Include(a=>a.Documents).ToListAsync();
             }
             else
             {
@@ -130,7 +130,7 @@ namespace V___Medicals.APIs.Controllers
                     return BadRequest(new Response { Status = "Error", Message = "Doctor Id is wrong!" });
                 }
 
-                return await _appDbContext.Appointments.Where(a => a.DoctorId == model.DoctorId && a.Status==AppointmentStatus.OutStanding_Examination).Include(a => a.Patient).ToListAsync();
+                return await _appDbContext.Appointments.Where(a => a.DoctorId == model.DoctorId && a.Status==AppointmentStatus.OutStanding_Examination).Include(a => a.Patient).ThenInclude(p=>p.User).Include(a => a.Documents).Include(a => a.PatientVitals).Include(a => a.Doctor).ToListAsync();
             }
             else
             {

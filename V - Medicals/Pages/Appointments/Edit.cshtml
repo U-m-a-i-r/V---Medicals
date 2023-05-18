@@ -13,8 +13,8 @@
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="Appointment.AppointmentId" />
-            <input type="hidden" asp-for="Appointment.Doctor" />
-            <input type="hidden" asp-for="Appointment.Patient" />
+            <input type="hidden" asp-for="Appointment.Doctor" value="@Model.doctor"/>
+            <input type="hidden" asp-for="Appointment.Patient" value="@Model.patient" />
             <div class="row">
                 <div class="form-group col-lg-5 col-md-5 col-sm-6 col-xs-12">
                     <label asp-for="Appointment.PatientId" class="control-label">Patient</label>

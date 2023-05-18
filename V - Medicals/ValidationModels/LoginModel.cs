@@ -15,7 +15,7 @@ namespace V___Medicals.ValidationModels
         [MinLength(6, ErrorMessage = "Minimum 6 characters are required")]
         [MaxLength(20, ErrorMessage = "Maximum 20 characters are required")]
         public string Password { get; set; }
-
+        public string? FcmToken { get; set; }
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }=false;
     }

@@ -24,7 +24,10 @@ namespace V___Medicals.Pages.Appointments
 
         [BindProperty]
         public Appointment Appointment { get; set; } = default!;
-
+      
+        public Doctor doctor { get; set; } = default!;
+      
+        public Patient patient { get; set; } = default!;
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Appointments == null)
